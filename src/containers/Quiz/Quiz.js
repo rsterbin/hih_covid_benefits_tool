@@ -198,6 +198,87 @@ class Quiz extends Component {
         }
     };
 
+    getSteps() {
+        let steps = [];
+        const stepCount = this.questions.order.length;
+        for (let i = 0; i < stepCount; ++i) {
+            const qstep = this.questions.order[i];
+            let step = {
+                title: this.questions.spec[qstep].t,
+                target: i,
+            };
+            if (this.state.step < i) {
+                step.timeline = 'future';
+            } else if (this.state.step === i) {
+                step.timeline = 'present';
+            } else {
+                step.timeline = 'past';
+            }
+            if (typeof(this.state.answers[qstep]) !== 'undefined') {
+                step.clicked = () => { this.goToStep(i); };
+            }
+            steps.push(step);
+        }
+        return steps;
+    }
+
+    buildAnswerKey() {
+        let answerKey = {};
+        for (const q of ['hoursperweek', 'havework', 'selfcovid', 'othercovid', 'children']) {
+            answerKey[q] = this.state.answers[q];
+        }
+        if (this.state.answers.status === 'A' || this.state.answers.status === 'B') {
+            answerKey.status = 'A|B';
+        } else {
+            answerKey.status = this.state.answers.status;
+        }
+        if (this.state.answers.length === 'B' || this.state.answers.hoursperyear === 'B') {
+            answerKey.durationok = 'Y';
+        } else {
+            answerKey.durationok = 'N';
+        }
+        return answerKey;
+    }
+
+    getFinalAnswer() {
+        let template = this.defaultResponseText;
+
+        // Build the answer key
+        let answerKey = this.buildAnswerKey();
+
+        // Check it against each response to find the correct one
+        for (const r of this.responses) {
+            let match = true;
+            for (const c of Object.keys(r.conditions)) {
+                if (answerKey[c] !== r.conditions[c]) {
+                    match = false;
+                }
+            }
+            if (match) {
+                template = r.text;
+                break;
+            }
+        }
+
+        // Add the off-the-books tag if necessary
+        if (this.state.answers.books === 'B') {
+            template.push(this.booksResponseText);
+        }
+
+        // Sub in the employee type
+        let employeeType = 'employee';
+        if (this.state.answers.type === 'A') {
+            employeeType = 'nanny';
+        } else if (this.state.answers.type === 'B') {
+            employeeType = 'house cleaner';
+        } else if (this.state.answers.type === 'C') {
+            employeeType = 'home care worker';
+        }
+        return template.map((item) => {
+            return item.replace(/\{\{employee_type\}\}/g, employeeType);
+        });
+    }
+
     render() {
 
         // Default to the intro
@@ -205,57 +286,7 @@ class Quiz extends Component {
 
         // If we're done, find the response
         if (this.state.completed) {
-            let template = this.defaultResponseText;
-
-            // Build the answer key
-            let answerKey = {};
-            for (const q of ['hoursperweek', 'havework', 'selfcovid', 'othercovid', 'children']) {
-                answerKey[q] = this.state.answers[q];
-            }
-            if (this.state.answers.status === 'A' || this.state.answers.status === 'B') {
-                answerKey.status = 'A|B';
-            } else {
-                answerKey.status = this.state.answers.status;
-            }
-            if (this.state.answers.length === 'B' || this.state.answers.hoursperyear === 'B') {
-                answerKey.durationok = 'Y';
-            } else {
-                answerKey.durationok = 'N';
-            }
-
-            // Check it against each response to find the correct one
-            for (const r of this.responses) {
-                let match = true;
-                for (const c of Object.keys(r.conditions)) {
-                    if (answerKey[c] !== r.conditions[c]) {
-                        match = false;
-                    }
-                }
-                if (match) {
-                    template = r.text;
-                    break;
-                }
-            }
-
-            // Add the off-the-books tag if necessary
-            if (this.state.answers.books === 'B') {
-                template.push(this.booksResponseText);
-            }
-
-            // Sub in the employee type
-            let employeeType = 'employee';
-            if (this.state.answers.type === 'A') {
-                employeeType = 'nanny';
-            } else if (this.state.answers.type === 'B') {
-                employeeType = 'house cleaner';
-            } else if (this.state.answers.type === 'C') {
-                employeeType = 'home care worker';
-            }
-            const finalAnswer = template.map((item) => {
-                return item.replace(/\{\{employee_type\}\}/g, employeeType);
-            });
-
-            // Show the response
+            const finalAnswer = this.getFinalAnswer();
             body = <Response
                 answerParas={finalAnswer}
                 backClicked={this.goBack}
@@ -281,27 +312,7 @@ class Quiz extends Component {
                             clicked: () => { this.clickAnswer(aKey); }
                         };
                     });
-                let steps = [];
-                const stepCount = this.questions.order.length;
-                for (let i = 0; i < stepCount; ++i) {
-                    const qstep = this.questions.order[i];
-                    let step = {
-                        title: this.questions.spec[qstep].t,
-                        target: i,
-                    };
-                    if (this.state.step < i) {
-                        step.timeline = 'future';
-                    } else if (this.state.step === i) {
-                        step.timeline = 'present';
-                    } else {
-                        step.timeline = 'past';
-                    }
-                    if (typeof(this.state.answers[qstep]) !== 'undefined') {
-                        step.clicked = () => { this.goToStep(i); };
-                    }
-                    steps.push(step);
-                }
-
+                const steps = this.getSteps();
                 body = (
                     <Question
                         questionText={qspec.q}
