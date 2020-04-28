@@ -262,7 +262,9 @@ class Quiz extends Component {
 
         // Add the off-the-books tag if necessary
         if (this.state.answers.books === 'B') {
-            template.push(this.booksResponseText);
+            for (const t of this.booksResponseText) {
+                template.push(t);
+            }
         }
 
         // Sub in the employee type
