@@ -9,7 +9,7 @@ import './Quiz.css';
 class Quiz extends Component {
 
     questions = {
-        order: [ 'type', 'books', 'status' ],
+        order: [ 'type', 'books', 'status', 'fulltime', 'illness', 'children' ],
         spec: {
             type: {
                 q: 'I employ a...',
@@ -33,6 +33,28 @@ class Quiz extends Component {
                     B: 'DACA Recipient/ Work Permit',
                     C: 'Undocumented',
                     D: 'Don\'t Know'
+                }
+            },
+            fulltime: {
+                q: 'Did your employee usually work 40 hours per week in your home before the stay-at-home order?',
+                a: {
+                    A: 'Yes',
+                    B: 'Over 40',
+                    C: 'Under 40'
+                }
+            },
+            illness: {
+                q: 'Has your employee needed to go into quarantine, or to care for a member of their household, due to known or suspected COVID-19?',
+                a: {
+                    A: 'Yes',
+                    B: 'No'
+                }
+            },
+            children: {
+                q: 'Does your employee have children whose school has been closed?',
+                a: {
+                    A: 'Yes',
+                    B: 'No'
                 }
             }
         }

@@ -5,7 +5,7 @@ import './Response.css';
 const response = (props) => {
     let answerTitle = 'Thanks for doing the right thing!';
     let answerText = (
-        <div class="ResponseText">
+        <div className="ResponseText">
             <p>Here is the response that we show when we don't have something already written up!</p>
         </div>
     );

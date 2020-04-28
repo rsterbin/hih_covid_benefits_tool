@@ -7,7 +7,7 @@ const question = (props) => {
     let answerButtons = Object.keys(props.answers)
         .map((aKey) => {
             return (
-                  <button className="Button AnswerButton" onClick={props.answers[aKey].clicked}>{props.answers[aKey].text}</button>
+                  <button key={aKey} className="Button AnswerButton" onClick={props.answers[aKey].clicked}>{props.answers[aKey].text}</button>
             );
         });
 
