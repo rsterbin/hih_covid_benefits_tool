@@ -8,8 +8,15 @@ import './Quiz.css';
 
 class Quiz extends Component {
 
+    state = {
+        started: false,
+        completed: false,
+        answers: {},
+        step: null
+    };
+
     questions = {
-        order: [ 'type', 'books', 'status', 'hoursperweek', 'length', 'hoursperyear', 'havework', 'illness', 'children' ],
+        order: [ 'type', 'books', 'status', 'hoursperweek', 'length', 'hoursperyear', 'havework', 'selfcovid', 'othercovid', 'children' ],
         spec: {
             type: {
                 q: 'I employ a...',
@@ -65,8 +72,15 @@ class Quiz extends Component {
                     B: 'No'
                 }
             },
-            illness: {
-                q: 'Has your employee needed to go into quarantine, or to care for a member of their household, due to known or suspected COVID-19?',
+            selfcovid: {
+                q: 'Has your employee needed to go into quarantine due to known or suspected COVID-19?',
+                a: {
+                    A: 'Yes',
+                    B: 'No'
+                }
+            },
+            othercovid: {
+                q: 'Has your employee needed to care for a member of their household due to known or suspected COVID-19?',
                 a: {
                     A: 'Yes',
                     B: 'No'
@@ -82,12 +96,46 @@ class Quiz extends Component {
         }
     };
 
-    state = {
-        started: false,
-        completed: false,
-        answers: {},
-        step: null
-    };
+    responses = [
+        {
+            conditions: {
+                status: 'A|B',
+                hoursperweek: 'B',
+                durationok: 'Y',
+                havework: 'A',
+                selfcovid: 'A',
+                othercovid: 'B',
+                children: 'B'
+            },
+            text: [
+                'Your {{employee_type}} is eligible for two days of paid leave under NYS Paid Safe and Sick Leave, two under the NYS DWBOR Paid Days of Rest, and a maximum of 80 under FFCRA Paid Sick Leave. (Not sure if these stack -- are they eligible for 4 days of their regular hours, plus 80, or two days total?)',
+                'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
+            ]
+        },
+        {
+            conditions: {
+                status: 'A|B',
+                hoursperweek: 'C',
+                durationok: 'Y',
+                havework: 'A',
+                selfcovid: 'A',
+                othercovid: 'B',
+                children: 'B'
+            },
+            text: [
+                'Your {{employee_type}} is eligible for two days of paid leave under NYS Paid Safe and Sick Leave, three under the NYS DWBOR Paid Days of Rest, and a maximum of 80 under FFCRA Paid Sick Leave. (Not sure if these stack -- are they eligible for 5 days of their regular hours, plus 80, or three days total?)',
+                'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
+            ]
+        }
+    ];
+
+    defaultResponseText = [
+        'Here is the response that we show when we don\'t have something already written up!'
+    ];
+
+    booksResponseText = [
+        'Because you pay off the books, you may be responsible for certain fees and back taxes should your {{employee_type}} claim the benefits they’re entitled to.  We recommend that you work with X company to get on the books, or contact a professional with experience in this area.'
+    ];
 
     startQuiz = () => {
         this.setState({ started: true, step: 0, completed: false, answers: {} });
@@ -105,7 +153,6 @@ class Quiz extends Component {
     };
 
     goBack = () => {
-        console.log(this.state.answers);
         if (this.state.completed) {
             this.setState({ step: this.questions.order.length - 1, completed: false });
         } else if (this.state.started) {
@@ -120,12 +167,68 @@ class Quiz extends Component {
 
     render() {
 
+        // Default to the intro
         let body = <Intro clicked={this.startQuiz} />;
+
+        // If we're done, find the response
         if (this.state.completed) {
+            let template = this.defaultResponseText;
+
+            // Build the answer key
+            let answerKey = {};
+            for (const q of ['hoursperweek', 'havework', 'selfcovid', 'othercovid', 'children']) {
+                answerKey[q] = this.state.answers[q];
+            }
+            if (this.state.answers.status === 'A' || this.state.answers.status === 'B') {
+                answerKey.status = 'A|B';
+            } else {
+                answerKey.status = this.state.answers.status;
+            }
+            if (this.state.answers.length === 'B' || this.state.answers.hoursperyear === 'B') {
+                answerKey.durationok = 'Y';
+            } else {
+                answerKey.durationok = 'N';
+            }
+
+            // Check it against each response to find the correct one
+            for (const r of this.responses) {
+                let match = true;
+                for (const c of Object.keys(r.conditions)) {
+                    if (answerKey[c] !== r.conditions[c]) {
+                        match = false;
+                    }
+                }
+                if (match) {
+                    template = r.text;
+                    break;
+                }
+            }
+
+            // Add the off-the-books tag if necessary
+            if (this.state.answers.books === 'B') {
+                template.push(this.booksResponseText);
+            }
+
+            // Sub in the employee type
+            let employeeType = 'employee';
+            if (this.state.answers.type === 'A') {
+                employeeType = 'nanny';
+            } else if (this.state.answers.type === 'B') {
+                employeeType = 'house cleaner';
+            } else if (this.state.answers.type === 'C') {
+                employeeType = 'home care worker';
+            }
+            const finalAnswer = template.map((item) => {
+                return item.replace(/\{\{employee_type\}\}/g, employeeType);
+            });
+
+            // Show the response
             body = <Response
-                answers={this.state.answers}
+                answerParas={finalAnswer}
                 backClicked={this.goBack}
                 restartClicked={this.startQuiz} />;
+
+        // Otherwise, show a question
         } else if (this.state.started) {
             let question = this.questions.order[this.state.step];
             if (typeof question == 'string') {

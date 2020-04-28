@@ -3,15 +3,14 @@ import React from 'react';
 import './Response.css';
 
 const response = (props) => {
-    let answerTitle = 'Thanks for doing the right thing!';
-    let answerText = (
-        <div className="ResponseText">
-            <p>Here is the response that we show when we don't have something already written up!</p>
-        </div>
-    );
+    let i = 0;
+    let answerText = props.answerParas.map((ptext) => {
+            ++i;
+            return <p key={i}>{ptext}</p>;
+        });
     return (
         <div>
-            <h2>{answerTitle}</h2>
+            <h2>Thanks for doing the right thing!</h2>
 
             {answerText}
 
