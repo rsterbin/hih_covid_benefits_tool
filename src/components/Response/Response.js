@@ -15,8 +15,9 @@ const response = (props) => {
             {answerText}
 
             <div className="ButtonContainer">
-                <button className="Button CTAButton">CTA Button #1</button>
+                <button className="Button CTAButton" onClick={() => { window.open('https://domesticemployers.org/take-the-pledge/', '_blank'); } }>Take the Pledge</button>
                 <button className="Button CTAButton">CTA Button #2</button>
+                <button className="Button CTAButton">CTA Button #3</button>
             </div>
 
             <div className="BackLink" onClick={props.backClicked}>go back</div>
