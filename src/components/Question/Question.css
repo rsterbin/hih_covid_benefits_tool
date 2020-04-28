@@ -21,12 +21,16 @@
     color: #ccc;
 }
 
-.StepCounter .CurrentBullet {
+.StepCounter .Bullet.Current {
     color: #ffcd03;
 }
 
-.StepCounter .VisitedBullet {
+.StepCounter .Bullet.Visited {
     color: #01bf90;
+}
+
+.StepCounter .Bullet.Clickable {
+    cursor: pointer;
 }
 
 .Question {

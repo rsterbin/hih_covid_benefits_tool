@@ -3,15 +3,27 @@
     background-color: white;
 }
 
+.Logo img {
+    height: 10%;
+    width: 50%;
+}
+
 .Header {
     background-color: #01BF90;
     color: white;
     font-weight: bold;
     text-align: center;
+    padding: 1em 0;
 }
 
-.Header a {
-    color: white;
+.Header h1 {
+    margin: 0;
+}
+
+.Header a,
+.Header a:hover,
+.Header a:visited,
+.Header a:active {
+    color: #fff;
     text-decoration: none;
 }
-

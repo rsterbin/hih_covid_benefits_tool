@@ -1,4 +1,4 @@
-.ButtonContainer {
+.ButtonContainer, .VertButtonContainer {
     text-align: center;
 }
 
@@ -17,3 +17,10 @@
 .Button.StartButton {
     background-color: #01BF90;
 }
+
+.VertButtonContainer .Button {
+    display: block;
+    margin: 1em auto;
+    width: 50%;
+}
+

@@ -20,78 +20,98 @@ class Quiz extends Component {
         spec: {
             type: {
                 q: 'I employ a...',
+                t: 'Employee Type',
                 a: {
                     A: 'Nanny',
                     B: 'House Cleaner',
                     C: 'Home Care Worker'
-                }
+                },
+                layout: 'horiz'
             },
             books: {
                 q: 'Are you paying your employee on the books?',
+                t: 'On The Books',
                 a: {
                     A: 'Yes',
                     B: 'No'
-                }
+                },
+                layout: 'horiz'
             },
             status: {
                 q: 'What is your employee’s immigration status?',
+                t: 'Immigration Status',
                 a: {
                     A: 'US Citizen / Green Card Holder / Permanent Resident',
                     B: 'DACA Recipient/ Work Permit',
                     C: 'Undocumented',
                     D: 'Don\'t Know'
-                }
+                },
+                layout: 'vert'
             },
             hoursperweek: {
                 q: 'How many hours per week did your employee work before the stay-at-home order?',
+                t: 'Hours Per Week',
                 a: {
                     A: 'Under 20',
                     B: '20-29',
                     C: '30-39',
                     D: 'Over 40'
-                }
+                },
+                layout: 'vert'
             },
             length: {
                 q: 'How long has your employee worked for you?',
+                t: 'Length of Employment',
                 a: {
                     A: 'Less than one year',
                     B: 'One year or more'
-                }
+                },
+                layout: 'horiz'
             },
             hoursperyear: {
                 q: 'In that time, how many hours did they work (per year, if more than one)?',
+                t: 'Hours Per Year',
                 a: {
                     A: 'Under 80',
                     B: '80 or more'
-                }
+                },
+                layout: 'horiz'
             },
             havework: {
                 q: 'Do you have work for your employee but can’t have them come in because of the stay-at-home order?',
+                t: 'Work Available',
                 a: {
                     A: 'Yes',
                     B: 'No'
-                }
+                },
+                layout: 'horiz'
             },
             selfcovid: {
                 q: 'Has your employee needed to go into quarantine due to known or suspected COVID-19?',
+                t: 'Illness (Self)',
                 a: {
                     A: 'Yes',
                     B: 'No'
-                }
+                },
+                layout: 'horiz'
             },
             othercovid: {
                 q: 'Has your employee needed to care for a member of their household due to known or suspected COVID-19?',
+                t: 'Illness (Family)',
                 a: {
                     A: 'Yes',
                     B: 'No'
-                }
+                },
+                layout: 'horiz'
             },
             children: {
                 q: 'Does your employee have children whose school has been closed?',
+                t: 'School Closed',
                 a: {
                     A: 'Yes',
                     B: 'No'
-                }
+                },
+                layout: 'horiz'
             }
         }
     };
@@ -165,6 +185,19 @@ class Quiz extends Component {
         }
     };
 
+    goToStep = (stepNum) => {
+        if (stepNum < 0 || stepNum >= this.questions.order.length) {
+            return;
+        }
+        if (this.state.completed) {
+            this.setState({ step: stepNum, completed: false });
+        } else if (!this.state.started) {
+            this.setState({ step: stepNum, started: true });
+        } else {
+            this.setState({ step: stepNum });
+        }
+    };
+
     render() {
 
         // Default to the intro
@@ -232,8 +265,8 @@ class Quiz extends Component {
         } else if (this.state.started) {
             let question = this.questions.order[this.state.step];
             if (typeof question == 'string') {
-                const q = this.questions.spec[question].q;
-                const a = Object.keys(this.questions.spec[question].a)
+                const qspec = this.questions.spec[question];
+                const aspec = Object.keys(qspec.a)
                     .map((aKey) => {
                         let selected = false;
                         if (typeof this.state.answers[question] != 'undefined') {
@@ -243,13 +276,39 @@ class Quiz extends Component {
                         }
                         return {
                             value: aKey,
-                            text: this.questions.spec[question].a[aKey],
+                            text: qspec.a[aKey],
                             selected: selected,
                             clicked: () => { this.clickAnswer(aKey); }
                         };
                     });
+                let steps = [];
+                const stepCount = this.questions.order.length;
+                for (let i = 0; i < stepCount; ++i) {
+                    const qstep = this.questions.order[i];
+                    let step = {
+                        title: this.questions.spec[qstep].t,
+                        target: i,
+                    };
+                    if (this.state.step < i) {
+                        step.timeline = 'future';
+                    } else if (this.state.step === i) {
+                        step.timeline = 'present';
+                    } else {
+                        step.timeline = 'past';
+                    }
+                    if (typeof(this.state.answers[qstep]) !== 'undefined') {
+                        step.clicked = () => { this.goToStep(i); };
+                    }
+                    steps.push(step);
+                }
+
                 body = (
-                    <Question questionText={q} answers={a} stepCount={this.questions.order.length} step={this.state.step} backClicked={this.goBack} />
+                    <Question
+                        questionText={qspec.q}
+                        answerLayout={qspec.layout}
+                        answers={aspec}
+                        steps={steps}
+                        backClicked={this.goBack} />
                 );
             }
         }

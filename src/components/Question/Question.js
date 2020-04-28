@@ -4,24 +4,28 @@ import './Question.css';
 
 const question = (props) => {
 
-    let stepBullets = [];
-    for (let i = 1; i <= props.stepCount; ++i) {
-        if (props.step + 1 < i) {
-            stepBullets.push((
-                <li key={i} className="UnvisitedBullet">&middot;</li>
-            ));
-        } else if (props.step + 1 === i) {
-            stepBullets.push((
-                <li key={i} className="CurrentBullet">&middot;</li>
-            ));
-        } else {
-            stepBullets.push((
-                <li key={i} className="VisitedBullet">&middot;</li>
-            ));
-        }
-    }
+    const stepBullets = props.steps
+        .map((step) => {
+            let className = 'Bullet';
+            if (step.timeline === 'present') {
+                className += ' Current';
+            } else if (step.timeline === 'past') {
+                className += ' Visited';
+            } else if (step.timeline === 'future') {
+                className += ' Unvisited';
+            }
+            if (typeof(step.clicked) === 'function') {
+                className += ' Clickable';
+            }
+            return (
+                <li key={step.title}
+                    className={className}
+                    title={step.title}
+                    onClick={step.clicked}>&middot;</li>
+            );
+        });
 
-    let answerButtons = Object.keys(props.answers)
+    const answerButtons = Object.keys(props.answers)
         .map((aKey) => {
             let classes = 'Button AnswerButton';
             if (props.answers[aKey].selected) {
@@ -42,7 +46,7 @@ const question = (props) => {
 
             <h2 className="Question">{props.questionText}</h2>
 
-            <div className="ButtonContainer">
+            <div className={props.answerLayout === 'horiz' ? 'ButtonContainer' : 'VertButtonContainer'}>
                 {answerButtons}
             </div>
 
