@@ -1,5 +1,50 @@
 
+.StepCounter {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.StepCounter ul {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.StepCounter ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0 0.05em;
+    line-height: 0.5em;
+    font-size: 4.5em;
+    color: #ccc;
+}
+
+.StepCounter .CurrentBullet {
+    color: #ffcd03;
+}
+
+.StepCounter .VisitedBullet {
+    color: #01bf90;
+}
+
+.Question {
+    margin: 0 0 1em 0;
+}
+
 .AnswerButton {
-    background-color: #01BF90;
+    background-color: #01bf90;
+}
+
+.AnswerButton.SelectedAnswerButton {
+    background-color: #ffcd03;
+}
+
+.BackLink {
+    cursor: pointer;
+    color: #01bf90;
+    text-decoration: underline;
+    text-align: center;
 }
 

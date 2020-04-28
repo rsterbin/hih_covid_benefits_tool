@@ -3,3 +3,10 @@
     background-color: #f85846;
 }
 
+.RestartLink {
+    cursor: pointer;
+    color: #01bf90;
+    text-decoration: underline;
+    text-align: center;
+}
+
