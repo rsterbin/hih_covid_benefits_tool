@@ -1,0 +1,17 @@
+.BenefitsTool {
+    width: 100%;
+    background-color: white;
+}
+
+.Header {
+    background-color: #01BF90;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Header a {
+    color: white;
+    text-decoration: none;
+}
+
