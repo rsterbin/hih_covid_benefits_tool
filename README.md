@@ -9,3 +9,9 @@ employees are entitled to, and provides links to find out more or apply.
 
 **NB:** This tool is currently a DRAFT.
 
+## Notes
+
+* The script `misc/matrix.pl` helps determine how many scenarios our question
+  set is generating. Eventually, I can use it to generate a CSV for Amalia to
+  fill in.
+
