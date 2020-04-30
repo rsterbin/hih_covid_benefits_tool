@@ -46,6 +46,8 @@ const question = (props) => {
 
             <h2 className="Question">{props.questionText}</h2>
 
+            {props.helpText ? <p className="Help">{props.helpText}</p> : null}
+
             <div className={props.answerLayout === 'horiz' ? 'ButtonContainer' : 'VertButtonContainer'}>
                 {answerButtons}
             </div>

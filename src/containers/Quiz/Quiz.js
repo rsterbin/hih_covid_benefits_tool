@@ -323,6 +323,7 @@ class Quiz extends Component {
                 body = (
                     <Question
                         questionText={qspec.q}
+                        helpText={qspec.help}
                         answerLayout={qspec.layout}
                         answers={aspec}
                         steps={steps}
