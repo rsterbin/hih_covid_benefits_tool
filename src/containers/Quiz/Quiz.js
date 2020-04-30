@@ -16,39 +16,41 @@ class Quiz extends Component {
     };
 
     questions = {
-        order: [ 'type', 'books', 'status', 'hoursperweek', 'length', 'hoursperyear', 'havework', 'selfcovid', 'othercovid', 'children' ],
+        order: [ 'type', 'agency', 'books', 'hours per week', 'length of employment', 'hours per year', 'self-quarantine', 'family quarantine', 'stay at home', 'school closed' ],
         spec: {
-            type: {
+            'type': {
                 q: 'I employ a...',
                 t: 'Employee Type',
                 a: {
                     A: 'Nanny',
                     B: 'House Cleaner',
-                    C: 'Home Care Worker'
+                    C: 'Home Attendant',
+                    D: 'Home Health Care Worker'
+                },
+                layout: 'vert',
+                help: 'If your home attendant provides any health care services, choose "HOME HEALTH CARE WORKER". If they do not provide any health care services, choose "HOME ATTENDANT".'
+            },
+            'agency': {
+                q: 'Is your employee paid through an agency?',
+                t: 'Agency',
+                a: {
+                    A: 'Yes',
+                    B: 'No',
                 },
                 layout: 'horiz'
             },
-            books: {
+            'books': {
                 q: 'Are you paying your employee on the books?',
                 t: 'On The Books',
                 a: {
-                    A: 'Yes',
-                    B: 'No'
+                    A: 'Yes, in compliance',
+                    B: 'Yes, partially',
+                    C: 'No'
                 },
-                layout: 'horiz'
+                layout: 'horiz',
+                help: 'To be in compliance, you would need to have unemployment, disability, worker\'s compensation, and Paid Family Leave insurance in place, and pay taxes. If your employee does not qualify for disability, workers compensation or PFL, choose "YES, PARTIALLY".'
             },
-            status: {
-                q: 'What is your employee’s immigration status?',
-                t: 'Immigration Status',
-                a: {
-                    A: 'US Citizen / Green Card Holder / Permanent Resident',
-                    B: 'DACA Recipient/ Work Permit',
-                    C: 'Undocumented',
-                    D: 'Don\'t Know'
-                },
-                layout: 'vert'
-            },
-            hoursperweek: {
+            'hours per week': {
                 q: 'How many hours per week did your employee work before the stay-at-home order?',
                 t: 'Hours Per Week',
                 a: {
@@ -59,16 +61,17 @@ class Quiz extends Component {
                 },
                 layout: 'vert'
             },
-            length: {
+            'length of employment': {
                 q: 'How long has your employee worked for you?',
                 t: 'Length of Employment',
                 a: {
-                    A: 'Less than one year',
-                    B: 'One year or more'
+                    A: 'Less than six months',
+                    B: 'Less than one year',
+                    C: 'One year or more'
                 },
                 layout: 'horiz'
             },
-            hoursperyear: {
+            'hours per year': {
                 q: 'In that time, how many hours did they work (per year, if more than one)?',
                 t: 'Hours Per Year',
                 a: {
@@ -77,17 +80,8 @@ class Quiz extends Component {
                 },
                 layout: 'horiz'
             },
-            havework: {
-                q: 'Do you have work for your employee but can’t have them come in because of the stay-at-home order?',
-                t: 'Work Available',
-                a: {
-                    A: 'Yes',
-                    B: 'No'
-                },
-                layout: 'horiz'
-            },
-            selfcovid: {
-                q: 'Has your employee needed to go into quarantine due to known or suspected COVID-19?',
+            'self-quarantine': {
+                q: 'Are they in quarantine because of known or suspected COVID-19?',
                 t: 'Illness (Self)',
                 a: {
                     A: 'Yes',
@@ -95,17 +89,27 @@ class Quiz extends Component {
                 },
                 layout: 'horiz'
             },
-            othercovid: {
-                q: 'Has your employee needed to care for a member of their household due to known or suspected COVID-19?',
+            'family quarantine': {
+                q: 'Are they caring for a family member because of known or suspected COVID-19?',
                 t: 'Illness (Family)',
+                a: {
+                    A: 'Yes',
+                    B: 'No'
+                },
+                layout: 'horiz',
+                help: 'Under NYC law, a family member is anyone you consider family.  Under NY state, a family member includes: "...".  Under federal law, family is not clearly defined. Answer YES if any of these apply.'
+            },
+            'stay at home': {
+                q: 'Do you have work for your employee but can’t have them come in because of the stay-at-home order?',
+                t: 'Stay-At-Home Order',
                 a: {
                     A: 'Yes',
                     B: 'No'
                 },
                 layout: 'horiz'
             },
-            children: {
-                q: 'Does your employee have children whose school has been closed?',
+            'school closed': {
+                q: 'Do they have children whose school or childcare has closed due to COVID-19?',
                 t: 'School Closed',
                 a: {
                     A: 'Yes',
@@ -116,6 +120,7 @@ class Quiz extends Component {
         }
     };
 
+    // TODO: move responses to csv
     responses = [
         {
             conditions: {
