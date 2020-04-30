@@ -7,12 +7,14 @@ my $list = "$ARGV[0]" || '';
 my $view = "$ARGV[1]" || '';
 
 my $options;
-if ($list eq 'federal') {
-    $options = get_federal_options();
-} elsif ($list eq 'state') {
-    $options = get_state_options();
-} elsif ($list eq 'reasons') {
-    $options = get_reasons_only_options();
+if ($list eq 'ffcra') {
+    $options = get_ffcra_options();
+} elsif ($list eq 'nys') {
+    $options = get_nys_options();
+} elsif ($list eq 'dwbor') {
+    $options = get_dwbor_options();
+} elsif ($list eq 'cares') {
+    $options = get_cares_options();
 } else {
     usage();
     exit;
@@ -37,12 +39,16 @@ if ($view eq 'options') {
     }
 } elsif ($view eq 'combos') {
     my $combos = all_combinations($options);
+    my $count = 0;
     foreach my $scenario (@$combos) {
         print "\n";
         foreach my $item (@$scenario) {
+            next if $item->{answer_code} eq '*';
             print "[$item->{question}] $item->{answer_text}\n";
         }
+        ++$count;
     }
+    print "\nCombo count: $count\n";
 } else {
     usage();
     exit;
@@ -101,13 +107,15 @@ sub all_combinations {
     return \@combos;
 }
 
-sub get_federal_options {
+# FFCRA
+sub get_ffcra_options {
+    # Questions 1, 2, 3, 7, 8, 9, and 10 would apply
     return [
         {
             q => 'type',
             a => [
                 { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
-                { t => 'HOME HEALTH CARE WORKER', c => 'A' },
+                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
             ],
         },
         {
@@ -121,7 +129,8 @@ sub get_federal_options {
             q => 'books',
             a => [
                 { t => 'YES, IN COMPLIANCE', c => 'A' },
-                { t => 'YES, PARTIALLY or NO', c => 'B|C' },
+                { t => 'YES, PARTIALLY', c => 'B' },
+                { t => 'NO', c => 'C' },
             ],
         },
         {
@@ -133,8 +142,7 @@ sub get_federal_options {
         {
             q => 'length of employment',
             a => [
-                { t => 'LESS THAN 30 DAYS', c => 'A' },
-                { t => 'LESS THAN ONE YEAR, or ONE YEAR OR MORE', c => 'B|C' },
+                { t => 'ANY', c => '*' },
             ],
         },
         {
@@ -158,14 +166,14 @@ sub get_federal_options {
             ],
         },
         {
-            q => 'school closed',
+            q => 'stay at home',
             a => [
                 { t => 'YES', c => 'A' },
                 { t => 'NO', c => 'B' },
             ],
         },
         {
-            q => 'stay at home',
+            q => 'school closed',
             a => [
                 { t => 'YES', c => 'A' },
                 { t => 'NO', c => 'B' },
@@ -174,24 +182,29 @@ sub get_federal_options {
     ];
 }
 
-sub get_state_options {
+# NYS Sick Days / PFL and DB
+sub get_nys_options {
+    # Questions 1,2,3,4,5,6,7,8, and 10 would apply
     return [
         {
             q => 'type',
             a => [
-                { t => 'ANY', c => '*' },
+                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
+                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
             ],
         },
         {
             q => 'agency',
             a => [
-                { t => 'ANY', c => 'A' },
+                { t => 'YES', c => 'A' },
+                { t => 'NO', c => 'B' },
             ],
         },
         {
             q => 'books',
             a => [
-                { t => 'YES (EITHER)', c => 'A|B' },
+                { t => 'YES, IN COMPLIANCE', c => 'A' },
+                { t => 'YES, PARTIALLY', c => 'B' },
                 { t => 'NO', c => 'C' },
             ],
         },
@@ -233,14 +246,13 @@ sub get_state_options {
             ],
         },
         {
-            q => 'school closed',
+            q => 'stay at home',
             a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'ANY', c => '*' },
             ],
         },
         {
-            q => 'stay at home',
+            q => 'school closed',
             a => [
                 { t => 'YES', c => 'A' },
                 { t => 'NO', c => 'B' },
@@ -249,34 +261,145 @@ sub get_state_options {
     ];
 }
 
-sub get_reasons_only_options {
+# NYC PSSL / NYS DWBoR
+sub get_dwbor_options {
+    # Questions 1, 4, 5, and 6
     return [
+        {
+            q => 'type',
+            a => [
+                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
+                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
+            ],
+        },
+        {
+            q => 'agency',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'books',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'hours per week',
+            a => [
+                { t => 'UNDER 20', c => 'A' },
+                { t => '20-29', c => 'B' },
+                { t => '30-39', c => 'C' },
+                { t => 'OVER 40', c => 'D' },
+            ],
+        },
+        {
+            q => 'length of employment',
+            a => [
+                { t => 'LESS THAN ONE YEAR', c => 'A' },
+                { t => 'ONE YEAR OR MORE', c => 'B' },
+            ],
+        },
+        {
+            q => 'hours per year',
+            a => [
+                { t => 'UNDER 80', c => 'A' },
+                { t => '80 OR MORE', c => 'B' },
+            ],
+        },
         {
             q => 'self-quarantine',
             a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'ANY', c => '*' },
             ],
         },
         {
             q => 'family quarantine',
             a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'school closed',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'ANY', c => '*' },
             ],
         },
         {
             q => 'stay at home',
             a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'school closed',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+    ];
+}
+
+# CARES UI Benefits
+sub get_cares_options {
+    # Questions 1, 3, and 5
+    return [
+        {
+            q => 'type',
+            a => [
+                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
+                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
+            ],
+        },
+        {
+            q => 'agency',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'books',
+            a => [
+                { t => 'YES, IN COMPLIANCE', c => 'A' },
+                { t => 'YES, PARTIALLY', c => 'B' },
+                { t => 'NO', c => 'C' },
+            ],
+        },
+        {
+            q => 'hours per week',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'length of employment',
+            a => [
+                { t => 'LESS THAN 30 DAYS', c => 'A' },
+                { t => '30 DAYS OR MORE', c => 'B|C' },
+            ],
+        },
+        {
+            q => 'hours per year',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'self-quarantine',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'family quarantine',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'stay at home',
+            a => [
+                { t => 'ANY', c => '*' },
+            ],
+        },
+        {
+            q => 'school closed',
+            a => [
+                { t => 'ANY', c => '*' },
             ],
         },
     ];
@@ -285,55 +408,55 @@ sub get_reasons_only_options {
 sub usage {
     print "matrix.pl <list> <view>\n";
     print "\n";
-    print "  <list> can be one of: 'federal', 'state', or 'reasons'\n";
+    print "  <list> can be one of: 'ffcra', 'nys', 'dwbor', or 'cares'\n";
     print "  <view> can be one of: 'options', 'codes', or 'combos'\n";
 }
 
 =pod ALL POSSIBLE ANSWERS
 
-[type]
+1. [type]
 NANNY
 HOUSE CLEANER
 HOME ATTENDANT
 HOME HEALTH CARE WORKER
 
-[agency]
+2. [agency]
 YES
 NO
 
-[books]
+3. [books]
 YES, IN COMPLIANCE
 YES, PARTIALLY
 NO
 
-[hours per week]
+4. [hours per week]
 UNDER 20
 20-29
 30-39
 OVER 40
 
-[length of employment]
+5. [length of employment]
 LESS THAN 30 DAYS
 LESS THAN ONE YEAR
 ONE YEAR OR MORE
 
-[hours per year]
+6. [hours per year]
 UNDER 80
 80 OR MORE
 
-[self-quarantine]
+7. [self-quarantine]
 YES
 NO
 
-[family quarantine]
+8. [family quarantine]
 YES
 NO
 
-[stay at home]
+9. [stay at home]
 YES
 NO
 
-[school closed]
+10. [school closed]
 YES
 NO
 
