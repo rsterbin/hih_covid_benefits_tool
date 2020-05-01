@@ -176,76 +176,15 @@ class Quiz extends Component {
         }
     };
 
-    // TODO: move responses to csv
-    responses = {
-        ffcra: [
-            {
-                conditions: {
-                    'type': 'N',
-                    'agency': 'B',
-                    'books': 'A',
-                    'reason': 'B',
-                },
-                text: [
-                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
-                    'Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days.'
-                ]
-            },
-            {
-                conditions: {
-                    'type': 'N',
-                    'agency': 'B',
-                    'books': 'A',
-                    'reason': 'Q',
-                },
-                text: [
-                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.'
-                ]
-            },
-            {
-                conditions: {
-                    'type': 'N',
-                    'agency': 'B',
-                    'books': 'A',
-                    'reasons': 'S',
-                },
-                text: [
-                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
-                    'Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days.'
-                ]
-            },
-            {
-                conditions: {
-                    'type': 'N',
-                    'agency': 'B',
-                    'books': 'A',
-                    'reason': 'F',
-                },
-                text: [
-                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
-                ]
-            },
-        ],
-        nys: [],
-        dwbor: [],
-        cares: [
-            {
-                conditions: {
-                    books: 'A'
-                },
-                text: [
-                    'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
-                ]
-            }
-        ],
-    };
+    // This will be loaded when it's needed
+    responses = null;
 
     defaultResponseText = [
         'Here is the response that we show when we don\'t have something already written up!'
     ];
 
     retaliationResponseText = [
-        'It is illegal to retaliate in any way if your {{employee_type}} tries to claim the benefits they’re entitled to.  We know that if you\'re using this tool, you want to do the right thing, but not every employer is like you!  It\'s important to be sure that when you discuss these benefits with your employee, you choose your words carefully so that they know you\'ll support them either way.'
+        'It is illegal to retaliate in any way if your {{employee_type}} tries to claim the benefits they’re entitled to.  We know that if you\'re using this tool, you want to do the right thing, but not every employer is like you!  It\'s important to be sure that when you discuss these benefits with your {{employee_type}}, you choose your words carefully so that they know you\'ll support them either way.'
     ];
 
     customAnswers = {
@@ -377,6 +316,24 @@ class Quiz extends Component {
         return steps;
     }
 
+    loadResponses() {
+        let responses = {};
+        for (const benefit of this.benefits.order) {
+            let r = null;
+            try {
+                r = require('../../../data/' + benefit + '.json');
+            } catch {
+                r = null;
+            }
+            if (r) {
+                responses[benefit] = r;
+            } else {
+                responses[benefit] = [];
+            }
+        }
+        this.responses = responses;
+    }
+
     buildAnswerKey(benefit) {
         let answerKey = {};
         for (const q of this.benefits.spec[benefit].conditions.simple) {
@@ -408,6 +365,11 @@ class Quiz extends Component {
     getFinalAnswer() {
         let sections = [];
         let resources = [];
+
+        // Load the responses
+        if (this.responses === null) {
+            this.loadResponses();
+        }
 
         // For each benefit, see if we have any text to add
         for (const b of this.benefits.order) {
@@ -517,6 +479,7 @@ class Quiz extends Component {
             </div>
         );
     }
+
 }
 
 export default Quiz;

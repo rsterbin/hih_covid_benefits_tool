@@ -1,0 +1,266 @@
+FFCRA,,
+Scenario,Code,Response
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'A','books':'A','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE","{'type':'N','agency':'A','books':'A','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SCHOOL CLOSED","{'type':'N','agency':'A','books':'A','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'A','books':'A','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] NONE","{'type':'N','agency':'A','books':'A','reason':'N'}",
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'A','books':'B','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE","{'type':'N','agency':'A','books':'B','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SCHOOL CLOSED","{'type':'N','agency':'A','books':'B','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, PARTIALLY
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'A','books':'B','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] YES, PARTIALLY
+[reason] NONE","{'type':'N','agency':'A','books':'B','reason':'N'}",
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] NO
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'A','books':'C','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] NO
+[reason] SELF-QUARANTINE","{'type':'N','agency':'A','books':'C','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] NO
+[reason] SCHOOL CLOSED","{'type':'N','agency':'A','books':'C','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] NO
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'A','books':'C','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. These provisions last until Dec. 31, 2020.  Your agency is responsible for up-front payment, which they may ask you to cover."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] YES
+[books] NO
+[reason] NONE","{'type':'N','agency':'A','books':'C','reason':'N'}",
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'B','books':'A','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE","{'type':'N','agency':'B','books':'A','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SCHOOL CLOSED","{'type':'N','agency':'B','books':'A','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'B','books':'A','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] NONE","{'type':'N','agency':'B','books':'A','reason':'N'}",
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'B','books':'B','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE","{'type':'N','agency':'B','books':'B','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SCHOOL CLOSED","{'type':'N','agency':'B','books':'B','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, PARTIALLY
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'B','books':'B','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] YES, PARTIALLY
+[reason] NONE","{'type':'N','agency':'B','books':'B','reason':'N'}",
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] NO
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'N','agency':'B','books':'C','reason':'B'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] NO
+[reason] SELF-QUARANTINE","{'type':'N','agency':'B','books':'C','reason':'Q'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] NO
+[reason] SCHOOL CLOSED","{'type':'N','agency':'B','books':'C','reason':'S'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.
+
+Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] NO
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'N','agency':'B','books':'C','reason':'F'}","Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020."
+"[type] NANNY, HOUSE CLEANER, or HOME ATTENDANT
+[agency] NO
+[books] NO
+[reason] NONE","{'type':'N','agency':'B','books':'C','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'A','books':'A','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE","{'type':'E','agency':'A','books':'A','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] SCHOOL CLOSED","{'type':'E','agency':'A','books':'A','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'A','books':'A','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, IN COMPLIANCE
+[reason] NONE","{'type':'E','agency':'A','books':'A','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'A','books':'B','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE","{'type':'E','agency':'A','books':'B','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, PARTIALLY
+[reason] SCHOOL CLOSED","{'type':'E','agency':'A','books':'B','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, PARTIALLY
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'A','books':'B','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] YES, PARTIALLY
+[reason] NONE","{'type':'E','agency':'A','books':'B','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] NO
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'A','books':'C','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] NO
+[reason] SELF-QUARANTINE","{'type':'E','agency':'A','books':'C','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] NO
+[reason] SCHOOL CLOSED","{'type':'E','agency':'A','books':'C','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] NO
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'A','books':'C','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] YES
+[books] NO
+[reason] NONE","{'type':'E','agency':'A','books':'C','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'B','books':'A','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SELF-QUARANTINE","{'type':'E','agency':'B','books':'A','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] SCHOOL CLOSED","{'type':'E','agency':'B','books':'A','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'B','books':'A','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, IN COMPLIANCE
+[reason] NONE","{'type':'E','agency':'B','books':'A','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'B','books':'B','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SELF-QUARANTINE","{'type':'E','agency':'B','books':'B','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, PARTIALLY
+[reason] SCHOOL CLOSED","{'type':'E','agency':'B','books':'B','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, PARTIALLY
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'B','books':'B','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] YES, PARTIALLY
+[reason] NONE","{'type':'E','agency':'B','books':'B','reason':'N'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] NO
+[reason] SELF-QUARANTINE AND SCHOOL CLOSED","{'type':'E','agency':'B','books':'C','reason':'B'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] NO
+[reason] SELF-QUARANTINE","{'type':'E','agency':'B','books':'C','reason':'Q'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] NO
+[reason] SCHOOL CLOSED","{'type':'E','agency':'B','books':'C','reason':'S'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] NO
+[reason] FAMILY QUARANTINE OR STAY AT HOME","{'type':'E','agency':'B','books':'C','reason':'F'}",
+"[type] HOME HEALTH CARE WORKER
+[agency] NO
+[books] NO
+[reason] NONE","{'type':'E','agency':'B','books':'C','reason':'N'}",

@@ -49,6 +49,18 @@ if ($view eq 'options') {
         ++$count;
     }
     print "\nCombo count: $count\n";
+} elsif ($view eq 'csv') {
+    my $combos = all_combinations($options);
+    foreach my $scenario (@$combos) {
+        my @visible = ();
+        my @invisible = ();
+        foreach my $item (@$scenario) {
+            next if $item->{answer_code} eq '*';
+            push @visible, "[$item->{question}] $item->{answer_text}";
+            push @invisible, "'" . $item->{question} . "':'" . $item->{answer_code} . "'";
+        }
+        print '"', join('XXX', @visible), '","{', join(',', @invisible), '}",""', "\n"; 
+    }
 } else {
     usage();
     exit;
@@ -114,8 +126,8 @@ sub get_ffcra_options {
         {
             q => 'type',
             a => [
-                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
-                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
+                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'N' },
+                { t => 'HOME HEALTH CARE WORKER', c => 'E' },
             ],
         },
         {
@@ -134,49 +146,13 @@ sub get_ffcra_options {
             ],
         },
         {
-            q => 'hours per week',
+            q => 'reason',
             a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'length of employment',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'hours per year',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'self-quarantine',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'family quarantine',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'stay at home',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'school closed',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'SELF-QUARANTINE AND SCHOOL CLOSED', c => 'B' },
+                { t => 'SELF-QUARANTINE', c => 'Q' },
+                { t => 'SCHOOL CLOSED', c => 'S' },
+                { t => 'FAMILY QUARANTINE OR STAY AT HOME', c => 'F' },
+                { t => 'NONE', c => 'N' },
             ],
         },
     ];
