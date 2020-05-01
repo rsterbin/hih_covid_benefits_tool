@@ -120,47 +120,197 @@ class Quiz extends Component {
         }
     };
 
-    // TODO: move responses to csv
-    responses = [
-        {
-            conditions: {
-                status: 'A|B',
-                hoursperweek: 'B',
-                durationok: 'Y',
-                havework: 'A',
-                selfcovid: 'A',
-                othercovid: 'B',
-                children: 'B'
+    benefits = {
+        order: ['ffcra', 'nys', 'dwbor', 'cares'],
+        spec: {
+            ffcra: {
+                long: 'Families First Coronavirus Response Act',
+                short: 'FFCRA',
+                link: 'http://www.example.com',
+                conditions: {
+                    simple: [ 'agency', 'books' ],
+                    complex: {
+                        'type': 'splitTypeByEssential',
+                        'reason': 'findReasonForFFCRA'
+                    }
+                }
             },
-            text: [
-                'Your {{employee_type}} is eligible for two days of paid leave under NYS Paid Safe and Sick Leave, two under the NYS DWBOR Paid Days of Rest, and a maximum of 80 under FFCRA Paid Sick Leave. (Not sure if these stack -- are they eligible for 4 days of their regular hours, plus 80, or two days total?)',
-                'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
-            ]
-        },
-        {
-            conditions: {
-                status: 'A|B',
-                hoursperweek: 'C',
-                durationok: 'Y',
-                havework: 'A',
-                selfcovid: 'A',
-                othercovid: 'B',
-                children: 'B'
+            nys: {
+                long: 'New York State Sick Days, Paid Family Leave and Disability',
+                short: 'NYS Sick Days, PFL and DB',
+                link: 'http://www.example.com',
+                conditions: {
+                    simple: [ 'agency', 'books', 'hours per week',
+                        'hours per year', 'self-quarantine',
+                        'family quarantine', 'school closed' ],
+                    complex: {
+                        'type': 'splitTypeByEssential',
+                        'length of employment': 'splitLengthByYear'
+                    }
+                }
             },
-            text: [
-                'Your {{employee_type}} is eligible for two days of paid leave under NYS Paid Safe and Sick Leave, three under the NYS DWBOR Paid Days of Rest, and a maximum of 80 under FFCRA Paid Sick Leave. (Not sure if these stack -- are they eligible for 5 days of their regular hours, plus 80, or three days total?)',
-                'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
-            ]
+            dwbor: {
+                long: 'New York City Paid Safe and Sick Leave / New York State Domestic Worker Bill of Rights',
+                short: 'NYC PSSL / NYS DWBoR',
+                link: 'http://www.example.com',
+                conditions: {
+                    simple: [ 'hours per week', 'hours per year' ],
+                    complex: {
+                        'type' : 'splitTypeByEssential',
+                        'length of employment' : 'splitLengthByYear'
+                    }
+                }
+            },
+            cares: {
+                long: 'Coronavirus Aid, Relief, and Economic Security Act Unemployment Benefits',
+                short: 'CARES UI Benefits',
+                link: 'http://www.example.com',
+                conditions: {
+                    simple: [ 'books' ],
+                    complex: {
+                        'type': 'splitTypeByEssential',
+                        'length of employment': 'splitLengthByMonths'
+                    }
+                }
+            }
         }
-    ];
+    };
+
+    // TODO: move responses to csv
+    responses = {
+        ffcra: [
+            {
+                conditions: {
+                    'type': 'N',
+                    'agency': 'B',
+                    'books': 'A',
+                    'reason': 'B',
+                },
+                text: [
+                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status or minimum work requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
+                    'Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days.'
+                ]
+            },
+            {
+                conditions: {
+                    'type': 'N',
+                    'agency': 'B',
+                    'books': 'A',
+                    'reason': 'Q',
+                },
+                text: [
+                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.'
+                ]
+            },
+            {
+                conditions: {
+                    'type': 'N',
+                    'agency': 'B',
+                    'books': 'A',
+                    'reasons': 'S',
+                },
+                text: [
+                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status or minimum work  requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
+                    'Your {{employee_type}} also qualifies for paid family and medical leave under the FFCRA Emergency Family and Medical Leave Expansion Act. This lasts for up to 12 weeks: the first two weeks are unpaid, and the rest should be at 2/3 their regular rate. To be eligible, your {{employee_type}} must have been employed for at least 30 days.'
+                ]
+            },
+            {
+                conditions: {
+                    'type': 'N',
+                    'agency': 'B',
+                    'books': 'A',
+                    'reason': 'F',
+                },
+                text: [
+                    'Your {{employee_type}} qualifies for paid sick leave under the Family First Coronavirus Response Act (FFCRA) Emergency Paid Sick Leave Act, to a maximum of 80 hours, at 2/3 their regular rate. This benefit does not have any immigration status requirements. Employers are responsible for up-front payment, but a tax credit might be available. Please contact your accountant to ask if you qualify. These provisions last until Dec. 31, 2020.',
+                ]
+            },
+        ],
+        nys: [],
+        dwbor: [],
+        cares: [
+            {
+                conditions: {
+                    books: 'A'
+                },
+                text: [
+                    'If you were to terminate your {{employee_type}}, they would be eligible for up to 39 weeks of unemployment.  This would provide $XXX-$YYY per week.  We usually recommend this as a fallback position if your own income shrinks to the point that paying your {{employee_type}} is no longer possible.'
+                ]
+            }
+        ],
+    };
 
     defaultResponseText = [
         'Here is the response that we show when we don\'t have something already written up!'
     ];
 
-    booksResponseText = [
-        'Because you pay off the books, you may be responsible for certain fees and back taxes should your {{employee_type}} claim the benefits they’re entitled to.  We recommend that you work with X company to get on the books, or contact a professional with experience in this area.'
+    retaliationResponseText = [
+        'It is illegal to retaliate in any way if your {{employee_type}} tries to claim the benefits they’re entitled to.  We know that if you\'re using this tool, you want to do the right thing, but not every employer is like you!  It\'s important to be sure that when you discuss these benefits with your employee, you choose your words carefully so that they know you\'ll support them either way.'
     ];
+
+    customAnswers = {
+        splitTypeByEssential: (answers) => {
+            if (answers.type === 'D') {
+                return 'E';
+            } else {
+                return 'N';
+            }
+        },
+
+        splitLengthByYear: (answers) => {
+            if (answers['length of employment'] === 'C') {
+                return 'O';
+            } else {
+                return 'U';
+            }
+        },
+
+        splitLengthByMonths: (answers) => {
+            if (answers['length of employment'] === 'A') {
+                return 'U';
+            } else {
+                return 'O';
+            }
+        },
+
+        // For FFCRA, reasons break down as--
+        // * self-quarantine + school closed + any [B]
+        // * self-quarantine + any (but not school closed) [Q]
+        // * school closed + any (but not self-quarantine) [S]
+        // * family quarantine and/or stay at home [F]
+        // * none [N]
+        // * unhandled case [U] (shouldn't happen)
+        findReasonForFFCRA: (answers) => {
+            if (
+                answers['self-quarantine'] === 'A' &&
+                answers['school closed'] === 'A'
+            ) {
+                return 'B';
+            }
+            if (answers['self-quarantine'] === 'A') {
+                return 'Q';
+            }
+            if (answers['school closed'] === 'A') {
+                return 'S';
+            }
+            if (
+                answers['family quarantine'] === 'A' ||
+                answers['stay at home'] === 'A'
+            ) {
+                return 'F';
+            }
+            if (
+                answers['self-quarantine'] === 'B' &&
+                answers['family quarantine'] === 'B' &&
+                answers['stay at home'] === 'B' &&
+                answers['school closed'] === 'B'
+            ) {
+                return 'N';
+            }
+            return 'U';
+        }
+
+    };
 
     startQuiz = () => {
         this.setState({ started: true, step: 0, completed: false, answers: {} });
@@ -227,63 +377,91 @@ class Quiz extends Component {
         return steps;
     }
 
-    buildAnswerKey() {
+    buildAnswerKey(benefit) {
         let answerKey = {};
-        for (const q of ['hoursperweek', 'havework', 'selfcovid', 'othercovid', 'children']) {
+        for (const q of this.benefits.spec[benefit].conditions.simple) {
             answerKey[q] = this.state.answers[q];
         }
-        if (this.state.answers.status === 'A' || this.state.answers.status === 'B') {
-            answerKey.status = 'A|B';
-        } else {
-            answerKey.status = this.state.answers.status;
-        }
-        if (this.state.answers.length === 'B' || this.state.answers.hoursperyear === 'B') {
-            answerKey.durationok = 'Y';
-        } else {
-            answerKey.durationok = 'N';
+        for (const k of Object.keys(this.benefits.spec[benefit].conditions.complex)) {
+            let m = this.benefits.spec[benefit].conditions.complex[k];
+            answerKey[k] = this.customAnswers[m](this.state.answers);
         }
         return answerKey;
     }
 
-    getFinalAnswer() {
-        let template = this.defaultResponseText;
-
-        // Build the answer key
-        let answerKey = this.buildAnswerKey();
-
-        // Check it against each response to find the correct one
-        for (const r of this.responses) {
-            let match = true;
-            for (const c of Object.keys(r.conditions)) {
-                if (answerKey[c] !== r.conditions[c]) {
-                    match = false;
-                }
-            }
-            if (match) {
-                template = r.text;
-                break;
-            }
-        }
-
-        // Add the off-the-books tag if necessary
-        if (this.state.answers.books === 'B') {
-            for (const t of this.booksResponseText) {
-                template.push(t);
-            }
-        }
-
-        // Sub in the employee type
+    replaceEmployeeType(template) {
         let employeeType = 'employee';
         if (this.state.answers.type === 'A') {
             employeeType = 'nanny';
         } else if (this.state.answers.type === 'B') {
             employeeType = 'house cleaner';
         } else if (this.state.answers.type === 'C') {
-            employeeType = 'home care worker';
+            employeeType = 'home attendant';
+        } else if (this.state.answers.type === 'D') {
+            employeeType = 'home health care worker';
         }
         return template.map((item) => {
             return item.replace(/\{\{employee_type\}\}/g, employeeType);
         });
+    }
+
+    getFinalAnswer() {
+        let sections = [];
+        let resources = [];
+
+        // For each benefit, see if we have any text to add
+        for (const b of this.benefits.order) {
+            let template = [];
+
+            // Build the answer key
+            let answerKey = this.buildAnswerKey(b);
+
+            // Loop through and check for a matching response
+            for (const r of this.responses[b]) {
+                let match = true;
+                for (const c of Object.keys(r.conditions)) {
+                    if (answerKey[c] !== r.conditions[c]) {
+                        match = false;
+                    }
+                }
+                if (match) {
+                    template = r.text;
+                    break;
+                }
+            }
+
+            // If we have something to send back, replace the employee type and add a section
+            if (template.length > 0) {
+                sections.push({
+                    header: this.benefits.spec[b].long,
+                    text: this.replaceEmployeeType(template)
+                });
+                resources.push({
+                    text: this.benefits.spec[b].short,
+                    title: this.benefits.spec[b].long,
+                    href: this.benefits.spec[b].link
+                });
+            }
+        }
+
+        // Set the default text if we don't have anything to show
+        if (sections.length < 1) {
+            sections.push({
+                header: '',
+                text: this.replaceEmployeeType(this.defaultResponseText)
+            });
+        }
+
+        // Add the retaliation tag
+        sections.push({
+            header: 'Warning',
+            text: this.replaceEmployeeType(this.retaliationResponseText)
+        });
+
+        return {
+            sections: sections,
+            resources: resources
+        };
     }
 
     render() {
@@ -295,7 +473,8 @@ class Quiz extends Component {
         if (this.state.completed) {
             const finalAnswer = this.getFinalAnswer();
             body = <Response
-                answerParas={finalAnswer}
+                answerSections={finalAnswer.sections}
+                resources={finalAnswer.resources}
                 backClicked={this.goBack}
                 restartClicked={this.startQuiz} />;
 
