@@ -18,7 +18,7 @@ if (!$benefit) {
 }
 my $source_file = dirname(__FILE__) . '/data/' . $benefit . '.csv';
 my $tmp_file = dirname(__FILE__) . '/data/' . $benefit . '.json';
-my $dest_file = dirname(__FILE__) . '/../data/' . $benefit . '.json';
+my $dest_file = dirname(__FILE__) . '/../src/data/benefits/' . $benefit . '.json';
 
 # Open the csv file
 open(my $source_fh, '<:encoding(utf8)', $source_file)
