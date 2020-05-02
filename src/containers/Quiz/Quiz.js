@@ -4,6 +4,10 @@ import Intro from '../../components/Intro/Intro';
 import Question from '../../components/Question/Question';
 import Response from '../../components/Response/Response';
 
+import QuestionsData from '../../data/questions.json';
+import BenefitsData from '../../data/benefits.json';
+import ResponsesData from '../../data/responses.json';
+
 import './Quiz.css';
 
 class Quiz extends Component {
@@ -15,177 +19,12 @@ class Quiz extends Component {
         step: null
     };
 
-    questions = {
-        order: [ 'type', 'agency', 'books', 'hours per week', 'length of employment', 'hours per year', 'self-quarantine', 'family quarantine', 'stay at home', 'school closed' ],
-        spec: {
-            'type': {
-                q: 'I employ a...',
-                t: 'Employee Type',
-                a: {
-                    A: 'Nanny',
-                    B: 'House Cleaner',
-                    C: 'Home Attendant',
-                    D: 'Home Health Care Worker'
-                },
-                layout: 'vert',
-                help: 'If your home attendant provides any health care services, choose "HOME HEALTH CARE WORKER". If they do not provide any health care services, choose "HOME ATTENDANT".'
-            },
-            'agency': {
-                q: 'Is your employee paid through an agency?',
-                t: 'Agency',
-                a: {
-                    A: 'Yes',
-                    B: 'No',
-                },
-                layout: 'horiz'
-            },
-            'books': {
-                q: 'Are you paying your employee on the books?',
-                t: 'On The Books',
-                a: {
-                    A: 'Yes, in compliance',
-                    B: 'Yes, partially',
-                    C: 'No'
-                },
-                layout: 'horiz',
-                help: 'To be in compliance, you would need to have unemployment, disability, worker\'s compensation, and Paid Family Leave insurance in place, and pay taxes. If your employee does not qualify for disability, workers compensation or PFL, choose "YES, PARTIALLY".'
-            },
-            'hours per week': {
-                q: 'How many hours per week did your employee work before the stay-at-home order?',
-                t: 'Hours Per Week',
-                a: {
-                    A: 'Under 20',
-                    B: '20-29',
-                    C: '30-39',
-                    D: 'Over 40'
-                },
-                layout: 'vert'
-            },
-            'length of employment': {
-                q: 'How long has your employee worked for you?',
-                t: 'Length of Employment',
-                a: {
-                    A: 'Less than six months',
-                    B: 'Less than one year',
-                    C: 'One year or more'
-                },
-                layout: 'horiz'
-            },
-            'hours per year': {
-                q: 'In that time, how many hours did they work (per year, if more than one)?',
-                t: 'Hours Per Year',
-                a: {
-                    A: 'Under 80',
-                    B: '80 or more'
-                },
-                layout: 'horiz'
-            },
-            'self-quarantine': {
-                q: 'Are they in quarantine because of known or suspected COVID-19?',
-                t: 'Illness (Self)',
-                a: {
-                    A: 'Yes',
-                    B: 'No'
-                },
-                layout: 'horiz'
-            },
-            'family quarantine': {
-                q: 'Are they caring for a family member because of known or suspected COVID-19?',
-                t: 'Illness (Family)',
-                a: {
-                    A: 'Yes',
-                    B: 'No'
-                },
-                layout: 'horiz',
-                help: 'Under NYC law, a family member is anyone you consider family.  Under NY state, a family member includes: "...".  Under federal law, family is not clearly defined. Answer YES if any of these apply.'
-            },
-            'stay at home': {
-                q: 'Do you have work for your employee but can’t have them come in because of the stay-at-home order?',
-                t: 'Stay-At-Home Order',
-                a: {
-                    A: 'Yes',
-                    B: 'No'
-                },
-                layout: 'horiz'
-            },
-            'school closed': {
-                q: 'Do they have children whose school or childcare has closed due to COVID-19?',
-                t: 'School Closed',
-                a: {
-                    A: 'Yes',
-                    B: 'No'
-                },
-                layout: 'horiz'
-            }
-        }
-    };
-
-    benefits = {
-        order: ['ffcra', 'nys', 'dwbor', 'cares'],
-        spec: {
-            ffcra: {
-                long: 'Families First Coronavirus Response Act',
-                short: 'FFCRA',
-                link: 'http://www.example.com',
-                conditions: {
-                    simple: [ 'agency', 'books' ],
-                    complex: {
-                        'type': 'splitTypeByEssential',
-                        'reason': 'findReasonForFFCRA'
-                    }
-                }
-            },
-            nys: {
-                long: 'New York State Sick Days, Paid Family Leave and Disability',
-                short: 'NYS Sick Days, PFL and DB',
-                link: 'http://www.example.com',
-                conditions: {
-                    simple: [ 'agency', 'books', 'hours per week',
-                        'hours per year', 'self-quarantine',
-                        'family quarantine', 'school closed' ],
-                    complex: {
-                        'type': 'splitTypeByEssential',
-                        'length of employment': 'splitLengthByYear'
-                    }
-                }
-            },
-            dwbor: {
-                long: 'New York City Paid Safe and Sick Leave / New York State Domestic Worker Bill of Rights',
-                short: 'NYC PSSL / NYS DWBoR',
-                link: 'http://www.example.com',
-                conditions: {
-                    simple: [ 'hours per week', 'hours per year' ],
-                    complex: {
-                        'type' : 'splitTypeByEssential',
-                        'length of employment' : 'splitLengthByYear'
-                    }
-                }
-            },
-            cares: {
-                long: 'Coronavirus Aid, Relief, and Economic Security Act Unemployment Benefits',
-                short: 'CARES UI Benefits',
-                link: 'http://www.example.com',
-                conditions: {
-                    simple: [ 'books' ],
-                    complex: {
-                        'type': 'splitTypeByEssential',
-                        'length of employment': 'splitLengthByMonths'
-                    }
-                }
-            }
-        }
-    };
+    questions = QuestionsData;
+    benefits = BenefitsData;
+    responses = ResponsesData;
 
     // This will be loaded when it's needed
-    responses = null;
-
-    defaultResponseText = [
-        'Here is the response that we show when we don\'t have something already written up!'
-    ];
-
-    retaliationResponseText = [
-        'It is illegal to retaliate in any way if your {{employee_type}} tries to claim the benefits they’re entitled to.  We know that if you\'re using this tool, you want to do the right thing, but not every employer is like you!  It\'s important to be sure that when you discuss these benefits with your {{employee_type}}, you choose your words carefully so that they know you\'ll support them either way.'
-    ];
+    benefitResponses = null;
 
     customAnswers = {
         splitTypeByEssential: (answers) => {
@@ -316,12 +155,12 @@ class Quiz extends Component {
         return steps;
     }
 
-    loadResponses() {
+    loadBenefitResponses() {
         let responses = {};
         for (const benefit of this.benefits.order) {
             let r = null;
             try {
-                r = require('../../../data/' + benefit + '.json');
+                r = require('../../data/benefits/' + benefit + '.json');
             } catch {
                 r = null;
             }
@@ -331,7 +170,7 @@ class Quiz extends Component {
                 responses[benefit] = [];
             }
         }
-        this.responses = responses;
+        this.benefitResponses = responses;
     }
 
     buildAnswerKey(benefit) {
@@ -366,9 +205,9 @@ class Quiz extends Component {
         let sections = [];
         let resources = [];
 
-        // Load the responses
-        if (this.responses === null) {
-            this.loadResponses();
+        // Load the benefit responses
+        if (this.benefitResponses === null) {
+            this.loadBenefitResponses();
         }
 
         // For each benefit, see if we have any text to add
@@ -379,7 +218,7 @@ class Quiz extends Component {
             let answerKey = this.buildAnswerKey(b);
 
             // Loop through and check for a matching response
-            for (const r of this.responses[b]) {
+            for (const r of this.benefitResponses[b]) {
                 let match = true;
                 for (const c of Object.keys(r.conditions)) {
                     if (answerKey[c] !== r.conditions[c]) {
@@ -406,18 +245,24 @@ class Quiz extends Component {
             }
         }
 
-        // Set the default text if we don't have anything to show
         if (sections.length < 1) {
+            // Set the default text if we don't have anything to show
             sections.push({
                 header: '',
-                text: this.replaceEmployeeType(this.defaultResponseText)
+                text: this.replaceEmployeeType(this.responses.defaultNoBenefits)
+            });
+        } else {
+            // Or add the intro text if we do
+            sections.unshift({
+                header: '',
+                text: this.replaceEmployeeType(this.responses.introWithBenefits)
             });
         }
 
         // Add the retaliation tag
         sections.push({
             header: 'Warning',
-            text: this.replaceEmployeeType(this.retaliationResponseText)
+            text: this.replaceEmployeeType(this.responses.retaliationWarning)
         });
 
         return {
@@ -435,6 +280,7 @@ class Quiz extends Component {
         if (this.state.completed) {
             const finalAnswer = this.getFinalAnswer();
             body = <Response
+                header={this.replaceEmployeeType(this.responses.standardHeader)}
                 answerSections={finalAnswer.sections}
                 resources={finalAnswer.resources}
                 backClicked={this.goBack}

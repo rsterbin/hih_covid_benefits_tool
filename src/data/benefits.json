@@ -1,0 +1,55 @@
+{
+    "order": ["ffcra", "nys", "dwbor", "cares"],
+    "spec": {
+        "ffcra": {
+            "long": "Families First Coronavirus Response Act",
+            "short": "FFCRA",
+            "link": "http://www.example.com",
+            "conditions": {
+                "simple": [ "agency", "books" ],
+                "complex": {
+                    "type": "splitTypeByEssential",
+                    "reason": "findReasonForFFCRA"
+                }
+            }
+        },
+        "nys": {
+            "long": "New York State Sick Days, Paid Family Leave and Disability",
+            "short": "NYS Sick Days, PFL and DB",
+            "link": "http://www.example.com",
+            "conditions": {
+                "simple": [ "agency", "books", "hours per week",
+                    "hours per year", "self-quarantine",
+                    "family quarantine", "school closed" ],
+                "complex": {
+                    "type": "splitTypeByEssential",
+                    "length of employment": "splitLengthByYear"
+                }
+            }
+        },
+        "dwbor": {
+            "long": "New York City Paid Safe and Sick Leave / New York State Domestic Worker Bill of Rights",
+            "short": "NYC PSSL / NYS DWBoR",
+            "link": "http://www.example.com",
+            "conditions": {
+                "simple": [ "hours per week", "hours per year" ],
+                "complex": {
+                    "type" : "splitTypeByEssential",
+                    "length of employment" : "splitLengthByYear"
+                }
+            }
+        },
+        "cares": {
+            "long": "Coronavirus Aid, Relief, and Economic Security Act Unemployment Benefits",
+            "short": "CARES UI Benefits",
+            "link": "http://www.example.com",
+            "conditions": {
+                "simple": [ "books" ],
+                "complex": {
+                    "type": "splitTypeByEssential",
+                    "length of employment": "splitLengthByMonths"
+                }
+            }
+        }
+    }
+}

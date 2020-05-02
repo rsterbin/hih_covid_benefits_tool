@@ -34,7 +34,7 @@ const response = (props) => {
     }
     return (
         <div>
-            <h2>Thanks for doing the right thing!</h2>
+            <h2>{props.header}</h2>
 
             {answer}
 
