@@ -1,5 +1,5 @@
 {
-  "name": "Hand in Hand NYC COVID-19 Benefits Tool",
+  "name": "hih-nyc-covid-19-benefits-tool",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
