@@ -35,6 +35,30 @@ class Quiz extends Component {
             }
         },
 
+        splitTypeByHomeCare: (answers) => {
+            if (answers.type === 'C' || answers.type === 'D') {
+                return 'H';
+            } else {
+                return 'N';
+            }
+        },
+
+        splitBooksByTaxes: (answers) => {
+            if (answers.books === 'A' || answers.books === 'B') {
+                return 'Y';
+            } else {
+                return 'N';
+            }
+        },
+
+        splitBooksByCompliance: (answers) => {
+            if (answers.books === 'A') {
+                return 'C';
+            } else {
+                return 'N';
+            }
+        },
+
         splitLengthByYear: (answers) => {
             if (answers['length of employment'] === 'C') {
                 return 'O';
@@ -86,7 +110,32 @@ class Quiz extends Component {
                 return 'N';
             }
             return 'U';
-        }
+        },
+
+        // For NYS, reasons break down as--
+        // * self-quarantine or family quarantine + any [Q]
+        // * school closed (but not either quarantine) + any [Q]
+        // * none [N]
+        // * unhandled case [U] (shouldn't happen)
+        findReasonForNYS: (answers) => {
+            if (
+                answers['self-quarantine'] === 'A' ||
+                answers['family quarantine'] === 'A'
+            ) {
+                return 'Q';
+            }
+            if (answers['school closed'] === 'A') {
+                return 'S';
+            }
+            if (
+                answers['self-quarantine'] === 'B' &&
+                answers['family quarantine'] === 'B' &&
+                answers['school closed'] === 'B'
+            ) {
+                return 'N';
+            }
+            return 'U';
+        },
 
     };
 

@@ -31,18 +31,16 @@
                 "C": "No"
             },
             "layout": "horiz",
-            "help": "To be in compliance, you would need to have unemployment, disability, worker's compensation, and Paid Family Leave insurance in place, and pay taxes. If your employee does not qualify for disability, workers compensation or PFL, choose \"YES, PARTIALLY\"."
+            "help": "To be in compliance, you would need to have unemployment, disability, worker's compensation, PFL insurance in place and paying taxes. If you're paying taxes, but your employee does not qualify for disability, workers compensation or PFL, or you don't carry them, choose \"YES, PARTIALLY\"."
         },
         "hours per week": {
             "q": "How many hours per week did your employee work before the stay-at-home order?",
             "t": "Hours Per Week",
             "a": {
-                "A": "Under 20",
-                "B": "20-29",
-                "C": "30-39",
-                "D": "Over 40"
+                "A": "Under 40",
+                "B": "40 or more"
             },
-            "layout": "vert"
+            "layout": "horiz"
         },
         "length of employment": {
             "q": "How long has your employee worked for you?",

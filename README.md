@@ -17,14 +17,17 @@ The response data needs to be set by our local policy expert, who prefers to wor
 Unfortunately, Sheets doesn't play nice with newlines, so each benefit scenario spreadsheet needs to be adjusted on import:
 
 1. Create the import csv from `matrix.pl`
-2. In cell C1, enter: `:=SUBSTITUTE(B1, "XXX", char(10))`
-3. Copy column C and paste it **values only** into column D
-4. Delete columns B and C
-5. Adjust column widths so that A shows all the scenarios and there's enough room to write comfortably in B
-6. Insert a line at the top and label the columns "Scenario" (A) and "Response" (B)
-7. Insert a line at the top and label it with the name of the benefit
-8. Change the font size of the title to 14 and bold both that and the headers
-9. Turn on text wrapping and set vertical alignment to top
+2. Import it into the Sheets doc as a new sheet
+3. Change the tab to the name of the benefit
+4. In the formula box for cell C1, enter: `=SUBSTITUTE(A1, "XXX", char(10))`
+5. Copy column C and paste it **values only** into column D
+6. Delete columns A and C
+7. Insert a line at the top and label the columns "Code" (A) "Scenario" (B) and "Response" (C)
+8. Insert a line at the top and label it with the name of the benefit
+9. Change the font size of the title to 14 and bold both that and the headers
+10. Adjust column widths so that A is mostly hidden, B shows all the scenarios and there's enough room to write comfortably in C
+11. Set vertical alignment to top for the whole sheet
+12. Turn on text wrapping for column C
 
 Since we only want to share one worksheet, create a new tab for each benefit.
 

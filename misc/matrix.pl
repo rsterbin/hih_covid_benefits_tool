@@ -11,6 +11,8 @@ if ($list eq 'ffcra') {
     $options = get_ffcra_options();
 } elsif ($list eq 'nys') {
     $options = get_nys_options();
+} elsif ($list eq 'pssl') {
+    $options = get_pssl_options();
 } elsif ($list eq 'dwbor') {
     $options = get_dwbor_options();
 } elsif ($list eq 'cares') {
@@ -66,7 +68,6 @@ if ($view eq 'options') {
     exit;
 }
 
-
 =pod all_combinations()
 
 Finds all combinations of answers for a given set of questions
@@ -121,7 +122,6 @@ sub all_combinations {
 
 # FFCRA
 sub get_ffcra_options {
-    # Questions 1, 2, 3, 7, 8, 9, and 10 would apply
     return [
         {
             q => 'type',
@@ -140,9 +140,8 @@ sub get_ffcra_options {
         {
             q => 'books',
             a => [
-                { t => 'YES, IN COMPLIANCE', c => 'A' },
-                { t => 'YES, PARTIALLY', c => 'B' },
-                { t => 'NO', c => 'C' },
+                { t => 'YES (EITHER)', c => 'Y' },
+                { t => 'NO', c => 'N' },
             ],
         },
         {
@@ -160,15 +159,7 @@ sub get_ffcra_options {
 
 # NYS Sick Days / PFL and DB
 sub get_nys_options {
-    # Questions 1,2,3,4,5,6,7,8, and 10 would apply
     return [
-        {
-            q => 'type',
-            a => [
-                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
-                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
-            ],
-        },
         {
             q => 'agency',
             a => [
@@ -179,101 +170,43 @@ sub get_nys_options {
         {
             q => 'books',
             a => [
-                { t => 'YES, IN COMPLIANCE', c => 'A' },
-                { t => 'YES, PARTIALLY', c => 'B' },
-                { t => 'NO', c => 'C' },
+                { t => 'YES, IN COMPLIANCE', c => 'C' },
+                { t => 'PARTIALLY OR NO', c => 'N' },
             ],
         },
         {
             q => 'hours per week',
             a => [
-                { t => 'UNDER 20', c => 'A' },
-                { t => '20-29', c => 'B' },
-                { t => '30-39', c => 'C' },
-                { t => 'OVER 40', c => 'D' },
+                { t => 'UNDER 40', c => 'A' },
+                { t => '40 OR MORE', c => 'B' },
             ],
         },
         {
-            q => 'length of employment',
+            q => 'reason',
             a => [
-                { t => 'LESS THAN ONE YEAR', c => 'A|B' },
-                { t => 'ONE YEAR OR MORE', c => 'C' },
-            ],
-        },
-        {
-            q => 'hours per year',
-            a => [
-                { t => 'UNDER 80', c => 'A' },
-                { t => '80 OR MORE', c => 'B' },
-            ],
-        },
-        {
-            q => 'self-quarantine',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'family quarantine',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
-            ],
-        },
-        {
-            q => 'stay at home',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'school closed',
-            a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'SELF-QUARANTINE OR FAMILY QUARANTINE', c => 'Q' },
+                { t => 'SCHOOL CLOSED', c => 'S' },
+                { t => 'NONE', c => 'N' },
             ],
         },
     ];
 }
 
-# NYC PSSL / NYS DWBoR
-sub get_dwbor_options {
-    # Questions 1, 4, 5, and 6
+# NYC PSSL
+sub get_pssl_options {
     return [
         {
             q => 'type',
             a => [
-                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
-                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
-            ],
-        },
-        {
-            q => 'agency',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'books',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'hours per week',
-            a => [
-                { t => 'UNDER 20', c => 'A' },
-                { t => '20-29', c => 'B' },
-                { t => '30-39', c => 'C' },
-                { t => 'OVER 40', c => 'D' },
+                { t => 'NANNY or HOUSE CLEANER', c => 'N' },
+                { t => 'HOME ATTENDANT or HOME HEALTH CARE WORKER', c => 'H' },
             ],
         },
         {
             q => 'length of employment',
             a => [
-                { t => 'LESS THAN ONE YEAR', c => 'A' },
-                { t => 'ONE YEAR OR MORE', c => 'B' },
+                { t => 'LESS THAN ONE YEAR', c => 'U' },
+                { t => 'ONE YEAR OR MORE', c => 'O' },
             ],
         },
         {
@@ -283,28 +216,17 @@ sub get_dwbor_options {
                 { t => '80 OR MORE', c => 'B' },
             ],
         },
+    ];
+}
+
+# NYS DWBoR
+sub get_dwbor_options {
+    return [
         {
-            q => 'self-quarantine',
+            q => 'length of employment',
             a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'family quarantine',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'stay at home',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'school closed',
-            a => [
-                { t => 'ANY', c => '*' },
+                { t => 'LESS THAN ONE YEAR', c => 'U' },
+                { t => 'ONE YEAR OR MORE', c => 'O' },
             ],
         },
     ];
@@ -312,70 +234,19 @@ sub get_dwbor_options {
 
 # CARES UI Benefits
 sub get_cares_options {
-    # Questions 1, 3, and 5
     return [
-        {
-            q => 'type',
-            a => [
-                { t => 'NANNY, HOUSE CLEANER, or HOME ATTENDANT', c => 'A|B|C' },
-                { t => 'HOME HEALTH CARE WORKER', c => 'D' },
-            ],
-        },
-        {
-            q => 'agency',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
         {
             q => 'books',
             a => [
-                { t => 'YES, IN COMPLIANCE', c => 'A' },
-                { t => 'YES, PARTIALLY', c => 'B' },
-                { t => 'NO', c => 'C' },
-            ],
-        },
-        {
-            q => 'hours per week',
-            a => [
-                { t => 'ANY', c => '*' },
+                { t => 'YES, IN COMPLIANCE', c => 'C' },
+                { t => 'PARTIALLY or NO', c => 'N' },
             ],
         },
         {
             q => 'length of employment',
             a => [
-                { t => 'LESS THAN 30 DAYS', c => 'A' },
-                { t => '30 DAYS OR MORE', c => 'B|C' },
-            ],
-        },
-        {
-            q => 'hours per year',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'self-quarantine',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'family quarantine',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'stay at home',
-            a => [
-                { t => 'ANY', c => '*' },
-            ],
-        },
-        {
-            q => 'school closed',
-            a => [
-                { t => 'ANY', c => '*' },
+                { t => 'LESS THAN SIX MONTHS', c => 'A' },
+                { t => 'SIX MONTHS OR MORE', c => 'B|C' },
             ],
         },
     ];
@@ -384,8 +255,8 @@ sub get_cares_options {
 sub usage {
     print "matrix.pl <list> <view>\n";
     print "\n";
-    print "  <list> can be one of: 'ffcra', 'nys', 'dwbor', or 'cares'\n";
-    print "  <view> can be one of: 'options', 'codes', or 'combos'\n";
+    print "  <list> can be one of: 'ffcra', 'nys', 'pssl', 'dwbor', or 'cares'\n";
+    print "  <view> can be one of: 'options', 'codes', 'combos', or 'csv'\n";
 }
 
 =pod ALL POSSIBLE ANSWERS
@@ -406,13 +277,11 @@ YES, PARTIALLY
 NO
 
 4. [hours per week]
-UNDER 20
-20-29
-30-39
-OVER 40
+UNDER 40
+40 OR MORE
 
 5. [length of employment]
-LESS THAN 30 DAYS
+LESS THAN SIX MONTHS
 LESS THAN ONE YEAR
 ONE YEAR OR MORE
 
