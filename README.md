@@ -10,6 +10,8 @@ This tool makes it easier for employers to discover what benefits their employee
 
 The response data needs to be set by our local policy expert, who prefers to work in Google Docs. The perl scripts in `misc` are used to generate scenarios for her to fill in, and to bring her text into the tool.
 
+Primary document, from which the relevant spreadsheets are linked: https://docs.google.com/document/d/1e16JsNy9JtfwBhOvyvz56yKmx5zMxedTLytsECd7Rjk/edit?usp=sharing
+
 ### Generating scenarios
 
 `matrix.pl` can be used to tinker with which questions matter for which benefits, count how many scenarios will be created, and, once the questions are set, write out a CSV that can be brought into Google Sheets.
