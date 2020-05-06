@@ -15,8 +15,8 @@
             }
         },
         "nys": {
-            "long": "New York State Sick Days, Paid Family Leave, and Disability Benefits",
-            "short": "NYS Sick Days, PFL and DB",
+            "long": "New York State Sick Leave, Paid Family Leave, and Disability Benefits",
+            "short": "NYS Sick, PFL, and DB",
             "link": "http://www.example.com",
             "conditions": {
                 "simple": [ "agency", "hours per week" ],
@@ -50,7 +50,7 @@
             }
         },
         "cares": {
-            "long": "Coronavirus Aid, Relief, and Economic Security Act Unemployment Benefits",
+            "long": "Coronavirus Aid, Relief, and Economic Security Act: Unemployment Insurance Benefits",
             "short": "CARES Act: UI Benefits",
             "link": "http://www.example.com",
             "conditions": {
