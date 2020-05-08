@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Intro from '../../components/Intro/Intro';
 import Question from '../../components/Question/Question';
+import Confirmation from '../../components/Confirmation/Confirmation';
 import Response from '../../components/Response/Response';
 
 import QuestionsData from '../../data/questions.json';
@@ -15,6 +16,7 @@ class Quiz extends Component {
     state = {
         started: false,
         completed: false,
+        confirmed: false, 
         answers: {},
         step: null
     };
@@ -140,7 +142,7 @@ class Quiz extends Component {
     };
 
     startQuiz = () => {
-        this.setState({ started: true, step: 0, completed: false, answers: {} });
+        this.setState({ started: true, step: 0, completed: false, confirmed: false, answers: {} });
     };
 
     clickAnswer = (aKey) => {
@@ -155,6 +157,10 @@ class Quiz extends Component {
     };
 
     goBack = () => {
+        if (this.state.confirmed) {
+            // Nope! We already sent over your info
+            return;
+        }
         if (this.state.completed) {
             this.setState({ step: this.questions.order.length - 1, completed: false });
         } else if (this.state.started) {
@@ -171,6 +177,10 @@ class Quiz extends Component {
         if (stepNum < 0 || stepNum >= this.questions.order.length) {
             return;
         }
+        if (this.state.confirmed) {
+            // Nope! We already sent over your info
+            return;
+        }
         if (this.state.completed) {
             this.setState({ step: stepNum, completed: false });
         } else if (!this.state.started) {
@@ -178,6 +188,18 @@ class Quiz extends Component {
         } else {
             this.setState({ step: stepNum });
         }
+    };
+
+    confirmAnswers = () => {
+        if (this.state.confirmed) {
+            // Nope! Already done
+            return;
+        }
+        if (!this.state.completed || !this.state.started) {
+            // That's weird, try again
+            return;
+        }
+        this.setState({ confirmed: true });
     };
 
     getSteps() {
@@ -326,14 +348,21 @@ class Quiz extends Component {
         let body = <Intro clicked={this.startQuiz} />;
 
         // If we're done, find the response
-        if (this.state.completed) {
+        if (this.state.confirmed) {
             const finalAnswer = this.getFinalAnswer();
             body = <Response
                 header={this.replaceEmployeeType(this.responses.standardHeader)}
                 answerSections={finalAnswer.sections}
                 resources={finalAnswer.resources}
-                backClicked={this.goBack}
                 restartClicked={this.startQuiz} />;
+
+        // If we're done answering questions, show a confirm
+        } else if (this.state.completed) {
+            body = <Confirmation
+                questions={this.questions}
+                answers={this.state.answers}
+                backClicked={this.goBack}
+                forwardClicked={this.confirmAnswers} />;
 
         // Otherwise, show a question
         } else if (this.state.started) {

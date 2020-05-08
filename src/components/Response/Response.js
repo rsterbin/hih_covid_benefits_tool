@@ -46,7 +46,6 @@ const response = (props) => {
                 <button className="Button CTAButton">CTA Button #3</button>
             </div>
 
-            <div className="BackLink" onClick={props.backClicked}>go back</div>
             <div className="RestartLink" onClick={props.restartClicked}>restart quiz</div>
 
         </div>

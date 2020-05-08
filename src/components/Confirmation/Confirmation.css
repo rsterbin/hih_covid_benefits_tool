@@ -1,0 +1,32 @@
+.ConfirmButton {
+    background-color: #01bf90;
+}
+
+.Confirmation .Answers ul {
+    list-style: none;
+}
+
+.Confirmation .Answers li {
+    margin-bottom: 1em;
+}
+
+.QuestionConfirm {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.EditButton {
+    font-size: 1em;
+    border: none;
+    background: transparent;
+    color: #01bf90;
+}
+
+.EditButton span {
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    width: 1px;
+}
+
