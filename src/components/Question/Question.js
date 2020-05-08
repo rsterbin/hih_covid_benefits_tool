@@ -53,6 +53,7 @@ const question = (props) => {
             </div>
 
             <div className="BackLink" onClick={props.backClicked}>go back</div>
+            <div className="RestartLink" onClick={props.restartClicked}>restart quiz</div>
 
         </div>
     );

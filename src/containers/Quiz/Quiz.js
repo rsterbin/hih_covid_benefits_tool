@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 import Intro from '../../components/Intro/Intro';
 import Question from '../../components/Question/Question';
@@ -9,11 +11,17 @@ import QuestionsData from '../../data/questions.json';
 import BenefitsData from '../../data/benefits.json';
 import ResponsesData from '../../data/responses.json';
 
+import Config from '../../utils/Config';
+import Storage from '../../utils/Storage';
+
 import './Quiz.css';
+
+// TODO: Cookie notice
 
 class Quiz extends Component {
 
     state = {
+        visitor_id: null,
         started: false,
         completed: false,
         confirmed: false, 
@@ -27,6 +35,9 @@ class Quiz extends Component {
 
     // This will be loaded when it's needed
     benefitResponses = null;
+
+    // This will be created when it's needed
+    axiosInstance = null;
 
     customAnswers = {
         splitTypeByEssential: (answers) => {
@@ -141,19 +152,51 @@ class Quiz extends Component {
 
     };
 
+    componentDidMount() {
+        let allowed = {};
+        for (const question of this.questions.order) {
+            allowed[question] = Object.keys(this.questions.spec[question].a);
+        }
+        console.log(allowed);
+        let newstate = Storage.loadState(allowed);
+        if (newstate === null) {
+            let visitor_id = uuidv4();
+            newstate = { visitor_id: visitor_id };
+        }
+        this.setState(newstate);
+    }
+
+    getAxios = () => {
+        if (this.axiosInstance === null) {
+            this.axiosInstance = axios.create({
+                baseURL: Config.get('storage_base_url')
+            });
+        }
+        return this.axiosInstance;
+    };
+
     startQuiz = () => {
-        this.setState({ started: true, step: 0, completed: false, confirmed: false, answers: {} });
+        this.setState({ 
+            started: true,
+            step: 0,
+            completed: false,
+            confirmed: false,
+            answers: {}
+        }, () => { Storage.saveState(this.state); });
     };
 
     clickAnswer = (aKey) => {
         let newAnswers = { ...this.state.answers };
         newAnswers[this.questions.order[this.state.step]] = aKey;
         let newStep = this.state.step + 1;
+        let newstate = { answers: newAnswers };
         if (newStep < this.questions.order.length) {
-            this.setState({ answers: newAnswers, step: newStep });
+            newstate.step = newStep;
         } else {
-            this.setState({ answers: newAnswers, step: null, completed: true });
+            newstate.step = null;
+            newstate.completed = true;
         }
+        this.setState(newstate, () => { Storage.saveState(this.state); });
     };
 
     goBack = () => {
@@ -161,16 +204,24 @@ class Quiz extends Component {
             // Nope! We already sent over your info
             return;
         }
+        let newstate = null;
         if (this.state.completed) {
-            this.setState({ step: this.questions.order.length - 1, completed: false });
+            newstate = {
+                step: this.questions.order.length - 1,
+                completed: false
+            };
         } else if (this.state.started) {
             let newStep = this.state.step - 1;
             if (newStep < 0) {
-                this.setState({ step: null, started: false });
+                newstate = { step: null, started: false };
             } else {
-                this.setState({ step: newStep });
+                newstate = { step: newStep };
             }
         }
+        if (newstate === null) {
+            return;
+        }
+        this.setState(newstate, () => { Storage.saveState(this.state); });
     };
 
     goToStep = (stepNum) => {
@@ -181,13 +232,13 @@ class Quiz extends Component {
             // Nope! We already sent over your info
             return;
         }
+        let newstate = { step: stepNum };
         if (this.state.completed) {
-            this.setState({ step: stepNum, completed: false });
+            newstate.completed = false;
         } else if (!this.state.started) {
-            this.setState({ step: stepNum, started: true });
-        } else {
-            this.setState({ step: stepNum });
+            newstate.started = true;
         }
+        this.setState(newstate, () => { Storage.saveState(this.state); });
     };
 
     confirmAnswers = () => {
@@ -199,7 +250,19 @@ class Quiz extends Component {
             // That's weird, try again
             return;
         }
-        this.setState({ confirmed: true });
+        const axios = this.getAxios();
+        console.log(axios);
+        this.setState({ confirmed: true }, () => { Storage.saveState(this.state); });
+    };
+
+    restartQuiz = () => {
+        this.setState({ 
+            started: false,
+            step: null,
+            completed: false,
+            confirmed: false,
+            answers: {}
+        }, () => { Storage.saveState(this.state); });
     };
 
     getSteps() {
@@ -354,7 +417,7 @@ class Quiz extends Component {
                 header={this.replaceEmployeeType(this.responses.standardHeader)}
                 answerSections={finalAnswer.sections}
                 resources={finalAnswer.resources}
-                restartClicked={this.startQuiz} />;
+                restartClicked={this.restartQuiz} />;
 
         // If we're done answering questions, show a confirm
         } else if (this.state.completed) {
@@ -362,7 +425,8 @@ class Quiz extends Component {
                 questions={this.questions}
                 answers={this.state.answers}
                 backClicked={this.goBack}
-                forwardClicked={this.confirmAnswers} />;
+                forwardClicked={this.confirmAnswers}
+                restartClicked={this.restartQuiz} />;
 
         // Otherwise, show a question
         } else if (this.state.started) {
@@ -392,7 +456,8 @@ class Quiz extends Component {
                         answerLayout={qspec.layout}
                         answers={aspec}
                         steps={steps}
-                        backClicked={this.goBack} />
+                        backClicked={this.goBack}
+                        restartClicked={this.restartQuiz} />
                 );
             }
         }
