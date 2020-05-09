@@ -18,9 +18,9 @@ const login = (props) => {
                 : null}
                 <form method="post" onSubmit={props.submitted}>
                     <label>Username</label>
-                    <input type="text" name="username" value={props.username} onChange={props.usernameChanged} />
+                    <input type="text" name="username" value={props.username} onChange={props.usernameChanged} autoComplete="username" />
                     <label>Password</label>
-                    <input type="password" name="password" value={props.password} onChange={props.passwordChanged} />
+                    <input type="password" name="password" value={props.password} onChange={props.passwordChanged} autoComplete="current-password" />
                     <div className="ButtonContainer">
                         {button}
                     </div>

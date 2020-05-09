@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 const VISITOR_COOKIE = 'hnct-visitor';
-const BASE_URL = 'http://localhost2:3001/api/v1.0';
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/v1.0' : 'http://localhost2:3001/api/v1.0';
 
 class Storage {
 
