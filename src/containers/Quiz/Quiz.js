@@ -247,6 +247,10 @@ class Quiz extends Component {
         }
         console.log(data);
         this.setState({ loading: true });
+        // TODO: Handle loading
+        // TODO: Consider splitting up containers because only the confirm step needs a loading state
+        // TODO: Add email and zip intake
+        // TODO: Add response editing
         Storage.recordResponse(data)
             .then(response => {
                 this.setState({
