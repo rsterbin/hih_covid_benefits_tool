@@ -12,8 +12,8 @@ const confirmation = (props) => {
             const atext = props.questions.spec[question].a[props.answers[question]];
             return (
                 <li key={question}>
-                    <div class="QuestionConfirm">{qtext}</div>
-                    <div class="AnswerConfirm">{atext}</div>
+                    <div className="QuestionConfirm">{qtext}</div>
+                    <div className="AnswerConfirm">{atext}</div>
                 </li>
             );
         });
@@ -27,7 +27,7 @@ const confirmation = (props) => {
                 </ul>
             </div>
             <div className="ButtonContainer">
-                <button class="Button ConfirmButton" onClick={props.forwardClicked}>Confirm</button>
+                <button className="Button ConfirmButton" onClick={props.forwardClicked}>Confirm</button>
             </div>
             <div className="BackLink" onClick={props.backClicked}>go back</div>
             <div className="RestartLink" onClick={props.restartClicked}>restart quiz</div>

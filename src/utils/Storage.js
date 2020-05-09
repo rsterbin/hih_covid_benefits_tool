@@ -1,11 +1,16 @@
+import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 const VISITOR_COOKIE = 'hnct-visitor';
+const BASE_URL = 'https://hih-covid-benefits-back.herokuapp.com/v1.0';
 
 class Storage {
 
     // This will be created when it's needed
     cookies = null;
+
+    // This will be created when it's needed
+    axiosInstance = null;
 
     loadState(allowedAnswers) {
 
@@ -72,6 +77,14 @@ class Storage {
         });
     }
 
+    recordResponse(data) {
+        if (this.axiosInstance === null) {
+            this.axiosInstance = axios.create({
+                baseURL: BASE_URL,
+            });
+        }
+        return this.axiosInstance.post('', data);
+    }
 }
 
 export default new Storage();

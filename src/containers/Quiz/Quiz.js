@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 import Intro from '../../components/Intro/Intro';
@@ -11,7 +10,6 @@ import QuestionsData from '../../data/questions.json';
 import BenefitsData from '../../data/benefits.json';
 import ResponsesData from '../../data/responses.json';
 
-import Config from '../../utils/Config';
 import Storage from '../../utils/Storage';
 
 import './Quiz.css';
@@ -26,6 +24,7 @@ class Quiz extends Component {
         completed: false,
         confirmed: false, 
         answers: {},
+        loading: false,
         step: null
     };
 
@@ -35,9 +34,6 @@ class Quiz extends Component {
 
     // This will be loaded when it's needed
     benefitResponses = null;
-
-    // This will be created when it's needed
-    axiosInstance = null;
 
     customAnswers = {
         splitTypeByEssential: (answers) => {
@@ -157,7 +153,6 @@ class Quiz extends Component {
         for (const question of this.questions.order) {
             allowed[question] = Object.keys(this.questions.spec[question].a);
         }
-        console.log(allowed);
         let newstate = Storage.loadState(allowed);
         if (newstate === null) {
             let visitor_id = uuidv4();
@@ -165,15 +160,6 @@ class Quiz extends Component {
         }
         this.setState(newstate);
     }
-
-    getAxios = () => {
-        if (this.axiosInstance === null) {
-            this.axiosInstance = axios.create({
-                baseURL: Config.get('storage_base_url')
-            });
-        }
-        return this.axiosInstance;
-    };
 
     startQuiz = () => {
         this.setState({ 
@@ -250,9 +236,30 @@ class Quiz extends Component {
             // That's weird, try again
             return;
         }
-        const axios = this.getAxios();
-        console.log(axios);
-        this.setState({ confirmed: true }, () => { Storage.saveState(this.state); });
+        const data = {
+            visitor_id: this.state.visitor_id,
+            answers: {}
+        };
+        for (const question of this.questions.order) {
+            const letter = this.state.answers[question];
+            const answer = this.questions.spec[question].a[letter];
+            data.answers[question] = answer.toUpperCase();
+        }
+        console.log(data);
+        this.setState({ loading: true });
+        Storage.recordResponse(data)
+            .then(response => {
+                this.setState({
+                    loading: false,
+                    confirmed: true
+                }, () => { Storage.saveState(this.state); });
+                console.log(response);
+            })
+            .catch(error => {
+                // We probably just want to continue if this is a disaster?
+                this.setState({ loading: false });
+                console.log(error);
+            });
     };
 
     restartQuiz = () => {
