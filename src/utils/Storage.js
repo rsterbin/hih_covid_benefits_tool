@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 const VISITOR_COOKIE = 'hnct-visitor';
-const BASE_URL = 'https://hih-covid-benefits-back.herokuapp.com/v1.0';
+const BASE_URL = 'http://localhost2:3001/api/v1.0';
 
 class Storage {
 
@@ -77,13 +77,21 @@ class Storage {
         });
     }
 
-    recordResponse(data) {
+    getAxios() {
         if (this.axiosInstance === null) {
             this.axiosInstance = axios.create({
                 baseURL: BASE_URL,
             });
         }
-        return this.axiosInstance.post('', data);
+        return this.axiosInstance;
+    }
+
+    recordResponse(data) {
+        return this.getAxios().post('/record', data);
+    }
+
+    checkLogin(data) {
+        return this.getAxios().post('/login', data);
     }
 }
 

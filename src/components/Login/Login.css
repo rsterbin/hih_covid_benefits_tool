@@ -1,0 +1,61 @@
+.LoginFrame {
+    background-color: #01BF90;
+    margin: 2em;
+    padding: 2em;
+    min-height: 200px;
+}
+
+.ButtonContainer {
+    text-align: center;
+}
+
+.Error {
+    color: darkred;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.LoginBox label {
+    display: block;
+    color: white;
+    font-weight: bold;
+}
+
+.LoginBox input {
+    display: block;
+    margin-bottom: 1.5em;
+    width: 98%;
+}
+
+.LoginBox button {
+    background-color: white;
+    border: none;
+    color: #01BF90;
+    outline: 0.25em black;
+    cursor: pointer;
+    font: inherit;
+    padding: 0.5em;
+    font-weight: bold;
+}
+
+.LoginBox button.Loading {
+    background-color: #eee;
+    color: #666;
+}
+
+@media (min-width: 600px) {
+    .LoginFrame {
+        width: 300px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0;
+        margin: 0;
+    }
+
+    .LoginBox {
+        padding: 2em;
+    }
+}
+
