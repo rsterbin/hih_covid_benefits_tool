@@ -30,7 +30,7 @@
     background-color: #01bf90;
 }
 
-.ControlButton.AnswerButton.SelectedAnswerButton {
+.ControlButton.AnswerButton.Selected {
     background-color: #ffcd03;
 }
 
