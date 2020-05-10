@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Controls from '../UI/Controls/Controls';
+import Controls from '../../UI/Controls/Controls';
 
 const intro = (props) => {
 

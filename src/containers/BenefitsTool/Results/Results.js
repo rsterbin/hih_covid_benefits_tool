@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Response from '../../../components/Response/Response';
+import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
 
 import BENEFITS from '../../../data/benefits.json';

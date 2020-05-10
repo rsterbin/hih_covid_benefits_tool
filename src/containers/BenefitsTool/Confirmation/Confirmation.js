@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import AnswerList from '../../../components/Confirmation/AnswerList/AnswerList';
+import AnswerList from '../../../components/BenefitsTool/AnswerList/AnswerList';
 import Controls from '../../../components/UI/Controls/Controls';
 import Api from '../../../utils/Api';
 

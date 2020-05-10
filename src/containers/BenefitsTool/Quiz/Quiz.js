@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import StepCounter from '../../../components/Quiz/StepCounter/StepCounter';
-import Question from '../../../components/Quiz/Question/Question';
+import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
+import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
 import SessionCookies from '../../../utils/SessionCookies';
 

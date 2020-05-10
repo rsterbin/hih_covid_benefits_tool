@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
-import Intro from '../../components/Intro/Intro';
+import Intro from '../../components/BenefitsTool/Intro/Intro';
 import SessionCookies from '../../utils/SessionCookies';
 import VisitorCookie from '../../utils/VisitorCookie';
 
