@@ -17,7 +17,7 @@ class Confirmation extends Component {
         emailError: false,
         zipError: false,
         saveError: false,
-        contactValidOrEmpty: false
+        contactValidOrEmpty: true
     };
 
     regexValidZip = /^[0-9]{5}(?:-[0-9]{4})?$/;
@@ -26,24 +26,39 @@ class Confirmation extends Component {
 
     changeEmail = (e) => {
         let val = e.target.value;
-        let newstate = { email: val };
-        if (val !== '' && !EmailValidator.validate(val)) {
-            newstate.emailError = true;
-        } else {
-            newstate.emailError = false;
-        }
-        this.setState(newstate, () => this.okToSubmitContact());
+        this.setState(() => {
+            let newstate = { email: val };
+            if (val !== '' && !EmailValidator.validate(val)) {
+                newstate.emailError = true;
+            } else {
+                newstate.emailError = false;
+            }
+            if (val !== '') {
+                if (this.state.zip === '') {
+                    newstate.zipError = true;
+                }
+            } else {
+                if (this.state.zip === '') {
+                    newstate.zipError = false;
+                }
+            }
+            return newstate;
+        }, () => this.okToSubmitContact());
     };
 
     changeZip = (e) => {
         let val = e.target.value;
-        let newstate = { zip: val };
-        if (val !== '' && !this.regexValidZip.test(val)) {
-            newstate.zipError = true;
-        } else {
-            newstate.zipError = false;
-        }
-        this.setState(newstate, () => this.okToSubmitContact());
+        this.setState(() => {
+            let newstate = { zip: val };
+            if (val === '' && this.state.email !== '') {
+                newstate.zipError = true;
+            } else if (val !== '' && !this.regexValidZip.test(val)) {
+                newstate.zipError = true;
+            } else {
+                newstate.zipError = false;
+            }
+            return newstate;
+        }, () => this.okToSubmitContact());
     };
 
     confirmAnswers = () => {
@@ -65,8 +80,7 @@ class Confirmation extends Component {
             }
         }
         this.setState({ loading: true });
-        // TODO: Add email and zip intake
-        // TODO: Add response editing
+        // TODO: handle error case
         Api.recordResponse(data)
             .then(response => {
                 console.log(response);
@@ -104,7 +118,7 @@ class Confirmation extends Component {
                 text: 'Confirm'
             }
         ];
-        if (this.state.loading) {
+        if (this.state.loading || !this.state.contactValidOrEmpty) {
             buttons[0].disabled = true;
         }
         const links = [
