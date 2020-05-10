@@ -1,12 +1,8 @@
-.ConfirmButton {
-    background-color: #01bf90;
-}
-
-.Confirmation .Answers ul {
+.Answers ul {
     list-style: none;
 }
 
-.Confirmation .Answers li {
+.Answers li {
     margin-bottom: 1em;
 }
 

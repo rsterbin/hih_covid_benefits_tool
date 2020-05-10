@@ -33,27 +33,3 @@
     cursor: pointer;
 }
 
-.Question {
-    margin: 0 0 1em 0;
-}
-
-.Help {
-    color: #333;
-    padding-bottom: 1em;
-}
-
-.AnswerButton {
-    background-color: #01bf90;
-}
-
-.AnswerButton.SelectedAnswerButton {
-    background-color: #ffcd03;
-}
-
-.BackLink {
-    cursor: pointer;
-    color: #01bf90;
-    text-decoration: underline;
-    text-align: center;
-}
-

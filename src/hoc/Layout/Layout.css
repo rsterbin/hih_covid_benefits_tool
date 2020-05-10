@@ -27,3 +27,9 @@
     color: #fff;
     text-decoration: none;
 }
+
+.MainContent {
+    width: 80%;
+    margin: 10px auto;
+}
+

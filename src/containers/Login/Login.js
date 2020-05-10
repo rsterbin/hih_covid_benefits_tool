@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 import LoginBox from '../../components/LoginBox/LoginBox';
-
-import Storage from '../../utils/Storage';
+import Api from '../../utils/Api';
 
 class Login extends Component {
 
@@ -27,7 +26,7 @@ class Login extends Component {
             loading: true,
             loginError: false
         });
-        Storage.checkLogin({
+        Api.checkLogin({
             username: this.state.username,
             password: this.state.password
         })

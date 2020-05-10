@@ -1,8 +1,17 @@
 import React from 'react';
 
-import './Intro.css';
+import Controls from '../UI/Controls/Controls';
 
 const intro = (props) => {
+
+    const buttons = [
+        {
+            classNames: [ 'StartButton' ],
+            clicked: props.clicked,
+            text: 'Start'
+        }
+    ];
+
     return (
         <div>
             <h2>Welcome to the COVID-19 Employer Benefits Tool</h2>
@@ -13,10 +22,7 @@ const intro = (props) => {
 
             <p><strong>NB:</strong> This tool is currently a DRAFT.</p>
 
-            <div className="ButtonContainer">
-                <button className="Button StartButton" onClick={props.clicked}>Start</button>
-            </div>
-
+            <Controls buttons={buttons} />
         </div>
     );
 };

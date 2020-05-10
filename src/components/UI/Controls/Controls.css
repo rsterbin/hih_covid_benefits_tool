@@ -1,0 +1,53 @@
+.ButtonContainer, .VertButtonContainer {
+    text-align: center;
+}
+
+.ControlButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.ControlButton.StartButton {
+    background-color: #01BF90;
+}
+
+.ControlButton.ConfirmButton {
+    background-color: #01bf90;
+}
+
+.ControlButton.CTAButton {
+    background-color: #f85846;
+}
+
+.ControlButton.AnswerButton {
+    background-color: #01bf90;
+}
+
+.ControlButton.AnswerButton.SelectedAnswerButton {
+    background-color: #ffcd03;
+}
+
+.VertButtonContainer .ControlButton {
+    display: block;
+    margin: 1em auto;
+    width: 50%;
+}
+
+.LinkContainer {
+    text-align: center;
+}
+
+.ControlLink {
+    cursor: pointer;
+    color: #01bf90;
+    text-decoration: underline;
+    display: block;
+}
+

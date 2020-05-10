@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './Confirmation.css';
+import './AnswerList.css';
 
-const confirmation = (props) => {
+const answerList = (props) => {
 
     // TODO: Add edit functionality
     // <button class="EditButton" title="Edit answer"><i class="fas fa-pencil-alt" aria-hidden="true"></i><span>edit</span></button>
@@ -19,21 +19,14 @@ const confirmation = (props) => {
         });
 
     return (
-        <div className="Confirmation">
-            <h2 className="ConfirmHeader">Confirm your answers</h2>
-            <div className="Answers">
-                <ul>
-                    {answerList}
-                </ul>
-            </div>
-            <div className="ButtonContainer">
-                <button className="Button ConfirmButton" onClick={props.forwardClicked}>Confirm</button>
-            </div>
-            <div className="BackLink" onClick={props.backClicked}>go back</div>
-            <div className="RestartLink" onClick={props.restartClicked}>restart quiz</div>
+        <div className="Answers">
+            <h3 className="AnswersHeader">Please confirm your answers</h3>
+            <ul>
+                {answerList}
+            </ul>
         </div>
     );
 
 };
 
-export default confirmation;
+export default answerList;

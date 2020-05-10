@@ -1,0 +1,51 @@
+import React from 'react';
+
+import './Controls.css';
+
+const controls = (props) => {
+
+    let buttons = {};
+    if (typeof props.buttons !== 'undefined') {
+        buttons = props.buttons
+            .map((button) => {
+                let cname = 'ControlButton';
+                if (button.classNames) {
+                    cname += ' ' + button.classNames.join(' ');
+                }
+                return <button
+                    key={button.key ? button.key : button.text}
+                    className={cname}
+                    onClick={button.clicked}>{button.text}</button>;
+            });
+    }
+
+    let links = {};
+    if (typeof props.links !== 'undefined') {
+        links = props.links
+            .map((link) => {
+                let cname = 'ControlLink';
+                if (link.classNames) {
+                    cname += ' ' + link.classNames.join(' ');
+                }
+                return <div key={link.key ? link.key : link.text} className={cname} onClick={link.clicked}>{link.text}</div>;
+            });
+    }
+
+    return (
+        <div className="Controls">
+        {buttons.length > 0 ?
+            <div className={props.buttonLayout === 'vert' ? 'VertButtonContainer' : 'ButtonContainer'}>
+                {buttons}
+            </div>
+        : null}
+        {links.length > 0 ?
+            <div className="LinkContainer">
+                {links}
+            </div>
+        : null}
+        </div>
+    );
+
+};
+
+export default controls;
