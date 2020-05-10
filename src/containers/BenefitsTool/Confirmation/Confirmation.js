@@ -30,7 +30,6 @@ class Confirmation extends Component {
             data.answers[question] = answer.toUpperCase();
         }
         this.setState({ loading: true });
-        // TODO: Handle loading
         // TODO: Add email and zip intake
         // TODO: Add response editing
         Api.recordResponse(data)
@@ -54,6 +53,9 @@ class Confirmation extends Component {
                 text: 'Confirm'
             }
         ];
+        if (this.state.loading) {
+            buttons[0].disabled = true;
+        }
         const links = [
             {
                 classNames: [ 'RestartLink' ],

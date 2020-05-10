@@ -34,6 +34,11 @@
     background-color: #ffcd03;
 }
 
+.ControlButton.DisabledButton {
+    background-color: #eee;
+    color: #666;
+}
+
 .VertButtonContainer .ControlButton {
     display: block;
     margin: 1em auto;

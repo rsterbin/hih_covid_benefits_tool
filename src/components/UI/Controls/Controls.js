@@ -8,14 +8,22 @@ const controls = (props) => {
     if (typeof props.buttons !== 'undefined') {
         buttons = props.buttons
             .map((button) => {
+                let attributes = {
+                    key: button.key ? button.key : button.text,
+                };
                 let cname = 'ControlButton';
                 if (button.classNames) {
                     cname += ' ' + button.classNames.join(' ');
                 }
-                return <button
-                    key={button.key ? button.key : button.text}
-                    className={cname}
-                    onClick={button.clicked}>{button.text}</button>;
+                if (button.disabled) {
+                    attributes.disabled = true;
+                    cname += ' DisabledButton';
+                }
+                if (typeof button.clicked === 'function') {
+                    attributes.onClick = button.clicked;
+                }
+                attributes.className = cname;
+                return <button {...attributes}>{button.text}</button>;
             });
     }
 
