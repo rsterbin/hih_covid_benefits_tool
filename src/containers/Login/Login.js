@@ -34,7 +34,7 @@ class Login extends Component {
             this.setState({
                 loading: false,
             });
-            this.props.updateLoginState(true);
+            this.props.updateLoginState(response.data.token);
             console.log(response);
         })
         .catch(error => {
@@ -43,7 +43,6 @@ class Login extends Component {
                 loading: false,
                 loginError: true
             });
-            this.props.updateLoginState(false);
         });
     }
 

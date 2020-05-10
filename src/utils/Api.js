@@ -23,6 +23,10 @@ class Api {
     checkLogin(data) {
         return this.getAxios().post('/login', data);
     }
+
+    checkToken(data) {
+        return this.getAxios().post('/session', data);
+    }
 }
 
 export default new Api();
