@@ -11,7 +11,7 @@ class SessionCookies {
     get(key) {
         if (key === 'answers') {
             const cookiestring = CookieManager.get(ANSWERS_COOKIE);
-            if (cookiestring === null) {
+            if (typeof cookiestring === 'undefined') {
                 return {};
             }
             const cookieobj = this.expandData(cookiestring);
@@ -27,7 +27,7 @@ class SessionCookies {
 
         } else if (key === 'flags') {
             const cookiestring = CookieManager.get(FLAGS_COOKIE);
-            if (cookiestring === null) {
+            if (typeof cookiestring === 'undefined') {
                 return {};
             }
             const cookieobj = this.expandData(cookiestring);
