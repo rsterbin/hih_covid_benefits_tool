@@ -103,7 +103,7 @@ class Quiz extends Component {
         const qspec = this.questions.spec[question];
 
         // Answers
-        const answerButtons = Object.keys(qspec.a)
+        const answerButtons = Object.keys(qspec.a).sort()
             .map((aKey) => {
                 let classNames = [ 'AnswerButton' ];
                 if (typeof this.props.answers[question] != 'undefined') {

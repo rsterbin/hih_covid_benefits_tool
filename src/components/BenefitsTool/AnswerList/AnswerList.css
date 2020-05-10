@@ -11,18 +11,22 @@
     margin-bottom: 0.5em;
 }
 
-.EditButton {
+.EditButton, .CancelButton {
     font-size: 1em;
     border: none;
     background: transparent;
     color: #01bf90;
 }
 
-.EditButton span {
+.EditButton span, .CancelButton span {
     clip: rect(0 0 0 0);
     overflow: hidden;
     position: absolute;
     height: 1px;
     width: 1px;
+}
+
+.CancelButton {
+    float: right;
 }
 

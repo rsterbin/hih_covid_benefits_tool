@@ -1,3 +1,7 @@
+.Controls {
+    clear: both;
+}
+
 .ButtonContainer, .VertButtonContainer {
     text-align: center;
 }

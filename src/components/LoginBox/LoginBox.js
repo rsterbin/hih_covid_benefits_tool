@@ -13,7 +13,7 @@ const loginBox = (props) => {
     return (
         <div className="LoginBox">
             {props.loginError ?
-                <div class="Error">You could not be logged in.</div>
+                <div className="Error">You could not be logged in.</div>
             : null}
             <form method="post" onSubmit={props.submitted}>
                 <label>Username</label>
