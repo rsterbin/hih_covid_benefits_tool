@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as EmailValidator from 'email-validator';
 
-import AnswerList from '../../../components/BenefitsTool/AnswerList/AnswerList';
+import EditAnswers from './EditAnswers/EditAnswers';
 import ContactInfo from '../../../components/BenefitsTool/ContactInfo/ContactInfo';
 import Controls from '../../../components/UI/Controls/Controls';
 import Api from '../../../utils/Api';
@@ -116,8 +116,7 @@ class Confirmation extends Component {
         ];
         return (
             <div className="Confirmation">
-                <AnswerList
-                    questions={this.questions}
+                <EditAnswers
                     answers={this.props.answers}
                     edited={(q, a) => this.props.editAnswer(q, a)} />
                 <ContactInfo
