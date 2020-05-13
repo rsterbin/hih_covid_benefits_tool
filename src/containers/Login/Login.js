@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import LoginBox from '../../components/LoginBox/LoginBox';
-import Api from '../../utils/Api';
+import Api from '../../storage/Api';
 
 class Login extends Component {
 

@@ -4,9 +4,9 @@ import Layout from '../../hoc/Layout/Layout';
 import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
 import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
 import Login from '../../containers/Login/Login';
-import LoginCookie from '../../utils/LoginCookie';
+import LoginCookie from '../../storage/cookies/LoginCookie';
 import CookieNotice from '../CookieNotice/CookieNotice';
-import Api from '../../utils/Api';
+import Api from '../../storage/Api';
 
 class PreLaunch extends Component {
 

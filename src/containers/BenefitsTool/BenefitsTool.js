@@ -5,8 +5,9 @@ import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
 import Intro from '../../components/BenefitsTool/Intro/Intro';
-import SessionCookies from '../../utils/SessionCookies';
-import VisitorCookie from '../../utils/VisitorCookie';
+import AnswersCookie from '../../storage/cookies/FlagsCookie';
+import FlagsCookie from '../../storage/cookies/FlagsCookie';
+import VisitorCookie from '../../storage/cookies/VisitorCookie';
 
 import QuestionsData from '../../data/questions.json';
 
@@ -38,7 +39,7 @@ class BenefitsTool extends Component {
         newstate.visitor_id = visitor_id;
 
         newstate.answers = {};
-        let sess_answers = SessionCookies.get('answers');
+        let sess_answers = AnswersCookie.get();
         if (sess_answers) {
             for (const sess_question in sess_answers) {
                 if (sess_question in this.questions.spec) {
@@ -50,7 +51,7 @@ class BenefitsTool extends Component {
             }
         }
 
-        let flags = SessionCookies.get('flags');
+        let flags = FlagsCookie.get();
         if (flags) {
             for (const flag of this.flags) {
                 if (flags[flag]) {
@@ -64,21 +65,19 @@ class BenefitsTool extends Component {
 
     updateSession(newstate) {
         this.setState(newstate);
-        let todo = {};
         if ('answers' in newstate) {
-            todo.answers = newstate.answers;
+            AnswersCookie.set(newstate.answers);
         }
-        let todo_flags = {};
-        for (const flag of this.flags) {
-            if (flag in newstate) {
-                todo_flags[flag] = newstate[flag];
+        let flags = {};
+        for (const k of this.flags) {
+            if (k in newstate) {
+                flags[k] = newstate[k];
+            } else {
+                flags[k] = this.state[k];
             }
         }
-        if (Object.keys(todo_flags).length > 0) {
-            todo.flags = todo_flags;
-        }
-        for (const key in todo) {
-            SessionCookies.set(key, todo[key]);
+        if (Object.keys(flags).length > 0) {
+            FlagsCookie.set(flags);
         }
     }
 

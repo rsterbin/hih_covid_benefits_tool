@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
 import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
-import SessionCookies from '../../../utils/SessionCookies';
+import StepCookie from '../../../storage/cookies/StepCookie';
 
 import QuestionsData from '../../../data/questions.json';
 
@@ -18,7 +18,7 @@ class Quiz extends Component {
     questions = QuestionsData;
 
     componentDidMount() {
-        let newStep = SessionCookies.get('current_step');
+        let newStep = StepCookie.get();
         if (isNaN(parseInt(newStep))) {
             newStep = 0;
         }
@@ -31,7 +31,7 @@ class Quiz extends Component {
 
     changeStep(newStep) {
         this.setState({ step: newStep });
-        SessionCookies.set('current_step', newStep);
+        StepCookie.set(newStep);
     }
 
     startQuiz = () => {
@@ -51,7 +51,7 @@ class Quiz extends Component {
                 aKey,
                 completed
             );
-            SessionCookies.set('current_step', newStep);
+            StepCookie.set(newStep);
             return { step: newStep };
         });
     };
@@ -62,7 +62,7 @@ class Quiz extends Component {
             if (newStep < 0) {
                 return {};
             } else {
-                SessionCookies.set('current_step', newStep);
+                StepCookie.set(newStep);
                 return { step: newStep };
             }
         });

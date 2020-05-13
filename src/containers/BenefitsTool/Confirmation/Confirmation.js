@@ -4,7 +4,7 @@ import * as EmailValidator from 'email-validator';
 import EditAnswers from './EditAnswers/EditAnswers';
 import ContactInfo from '../../../components/BenefitsTool/ContactInfo/ContactInfo';
 import Controls from '../../../components/UI/Controls/Controls';
-import Api from '../../../utils/Api';
+import Api from '../../../storage/Api';
 
 import QuestionsData from '../../../data/questions.json';
 

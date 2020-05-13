@@ -4,6 +4,8 @@ import PreLaunch from './containers/PreLaunch/PreLaunch';
 
 import './App.css';
 
+// TODO: Session handling -- faster options, functionality post-launch to secure API requests
+
 class App extends Component {
 
     render() {

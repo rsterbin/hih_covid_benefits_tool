@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Notice from '../../components/UI/Notice/Notice';
-import CookieNoticeCookie from '../../utils/CookieNoticeCookie';
+import CookieNoticeCookie from '../../storage/cookies/CookieNoticeCookie';
 
 class CookieNotice extends Component {
 
