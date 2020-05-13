@@ -31,12 +31,11 @@ class BenefitsTool extends Component {
     componentDidMount() {
         let newstate = {};
         let visitor_id = VisitorCookie.get();
-        if (visitor_id) {
-            newstate.visitor_id = visitor_id;
-        } else {
-            let visitor_id = uuidv4();
+        if (!visitor_id) {
+            visitor_id = uuidv4();
             VisitorCookie.set(visitor_id);
         }
+        newstate.visitor_id = visitor_id;
 
         newstate.answers = {};
         let sess_answers = SessionCookies.get('answers');
