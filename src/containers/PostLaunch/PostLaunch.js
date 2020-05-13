@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import Layout from '../../hoc/Layout/Layout';
-import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
+import BenefitsTool from '../BenefitsTool/BenefitsTool';
+import CookieNotice from '../CookieNotice/CookieNotice';
 
 class PostLaunch extends Component {
 
@@ -9,6 +10,7 @@ class PostLaunch extends Component {
         return (
             <Layout>
                 <BenefitsTool />
+                <CookieNotice />
             </Layout>
         );
     }

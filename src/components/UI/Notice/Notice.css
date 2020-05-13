@@ -1,0 +1,63 @@
+.Notice {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: #01BF90;
+    border: none;
+    border-top: 0.025em solid #212529;
+    padding: 1em 1em 2em 1em;
+    color: #212529;
+}
+
+.CloseNotice {
+    float: right;
+}
+
+button.CloseNotice {
+    font-size: 1em;
+    border: none;
+    background: transparent;
+    color: white;
+}
+
+.CloseNotice span {
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    width: 1px;
+}
+
+.NoticeContent {
+    overflow: hidden;
+    margin-top: 0.25em;
+}
+
+.NoticeMessage {
+    display: block;
+}
+
+.NoticeMessage h6 {
+    margin: 0 0 0.5em 0;
+    font-weight: bold;
+    color: white;
+    font-size: 1em;
+}
+
+.AcceptButton {
+    border: 0.025em solid #212529;
+    outline: none;
+    cursor: pointer;
+    font: inherit;
+    padding: 0.5em;
+    margin: 1em 0 0 1.5em;
+    background-color: #F85846;
+    font-weight: bold;
+    color: white;
+    display: block;
+    float: right;
+    box-shadow: 1px 1px 1px 0px rgba(33,37,41,0.5);
+}
+

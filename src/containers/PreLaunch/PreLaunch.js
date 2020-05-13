@@ -5,6 +5,7 @@ import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
 import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
 import Login from '../../containers/Login/Login';
 import LoginCookie from '../../utils/LoginCookie';
+import CookieNotice from '../CookieNotice/CookieNotice';
 import Api from '../../utils/Api';
 
 class PreLaunch extends Component {
@@ -36,6 +37,7 @@ class PreLaunch extends Component {
             return (
                 <Layout>
                     <BenefitsTool />
+                    <CookieNotice />
                 </Layout>
             );
         } else {

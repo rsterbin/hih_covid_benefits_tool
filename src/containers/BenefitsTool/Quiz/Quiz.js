@@ -7,6 +7,8 @@ import SessionCookies from '../../../utils/SessionCookies';
 
 import QuestionsData from '../../../data/questions.json';
 
+// TODO: Switch to routing for question steps
+
 class Quiz extends Component {
 
     state = {

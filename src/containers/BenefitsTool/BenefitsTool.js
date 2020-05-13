@@ -10,8 +10,9 @@ import VisitorCookie from '../../utils/VisitorCookie';
 
 import QuestionsData from '../../data/questions.json';
 
-// TODO: Cookie notice
+// TODO: Add routing for tool flow
 // TODO: Social icons in the footer
+// TODO: Add catch for {{link text|link url}} to the text processing
 
 class BenefitsTool extends Component {
 
