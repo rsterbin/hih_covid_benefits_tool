@@ -11,6 +11,7 @@ import VisitorCookie from '../../utils/VisitorCookie';
 import QuestionsData from '../../data/questions.json';
 
 // TODO: Cookie notice
+// TODO: Social icons in the footer
 
 class BenefitsTool extends Component {
 
