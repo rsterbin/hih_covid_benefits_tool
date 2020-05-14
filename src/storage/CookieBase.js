@@ -2,20 +2,45 @@ import CookieManager from '../utils/CookieManager';
 
 class CookieBase {
 
-    manager = null;
-    cookieName = null;
-    specs = null;
+    manager = CookieManager;
+    name = null;
+    specs = {};
+    compressed = false;
+    filter = null;
 
-    constructor() {
-        this.manager = CookieManager;
+    constructor(name, specs, compressed, filter) {
+        this.name = name;
+        this.specs = typeof(specs) === 'object' ? specs : {};
+        this.compressed = compressed ? true : false;
+        this.filter = typeof(filter) === 'function' ? filter : null;
     }
 
     get() {
-        return this.manager.get(this.cookieName);
+        let val = this.manager.get(this.name);
+        if (this.compressed) {
+            let cookieobj = this.expandData(val);
+            if (cookieobj === null) {
+                return {};
+            }
+            val = cookieobj;
+        }
+        if (this.filter) {
+            return this.filter(val);
+        }
+        return val;
     }
 
     set(val) {
-        return this.manager.set(this.cookieName, val, this.specs);
+        if (this.filter) {
+            val = this.filter(val);
+        }
+        if (this.compressed) {
+            let cookiestring = this.contractData(val);
+            if (cookiestring) {
+                val = cookiestring;
+            }
+        }
+        return this.manager.set(this.name, val, this.specs);
     }
 
     expandData(cookiestring) {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
 import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
-import StepCookie from '../../../storage/cookies/StepCookie';
 
 import QuestionsData from '../../../data/questions.json';
 
@@ -11,98 +11,88 @@ import QuestionsData from '../../../data/questions.json';
 
 class Quiz extends Component {
 
-    state = {
-        step: 0
-    };
-
-    questions = QuestionsData;
-
-    componentDidMount() {
-        let newStep = StepCookie.get();
-        if (isNaN(parseInt(newStep))) {
-            newStep = 0;
-        }
-        newStep = parseInt(newStep);
-        if (newStep < 0 || newStep >= this.questions.order.length) {
-            newStep = 0;
-        }
-        this.setState({ step: newStep });
-    }
-
-    changeStep(newStep) {
-        this.setState({ step: newStep });
-        StepCookie.set(newStep);
-    }
-
-    startQuiz = () => {
-        this.changeStep(0);
-    };
-
-    clickAnswer = (aKey) => {
-        this.setState((prevState) => {
-            let newStep = prevState.step + 1;
-            let completed = false;
-            if (newStep === this.questions.order.length) {
-                newStep = 0;
-                completed = true;
+    clickAnswer = (letter) => {
+        const qcode = QuestionsData.order[this.currentStep()];
+        const ok = this.props.saveAnswer(qcode, letter);
+        if (ok) {
+            if (this.currentStep() + 1 >= QuestionsData.order.length) {
+                this.props.history.push('/confirm');
+            } else {
+                const newStep = this.currentUrlStep() + 1;
+                this.props.history.push('/quiz/' + newStep);
             }
-            this.props.editAnswer(
-                this.questions.order[prevState.step],
-                aKey,
-                completed
-            );
-            StepCookie.set(newStep);
-            return { step: newStep };
-        });
+        } else {
+            // TODO: error
+            console.log('Could not save question ' + qcode + ' with answer ' + letter);
+        }
     };
 
     goBack = () => {
-        this.setState((prevState) => {
-            let newStep = prevState.step - 1;
-            if (newStep < 0) {
-                return {};
-            } else {
-                StepCookie.set(newStep);
-                return { step: newStep };
-            }
-        });
+        // NB: the urls are 1-indexed, so the current step in 0-index form is
+        // actually back by one
+        let newStep = this.currentUrlStep() - 1;
+        if (newStep < 1) {
+            newStep = 0;
+            // TODO: error
+            console.log('Request to go back before step 1');
+        }
+        this.props.history.push('/quiz/' + newStep);
     };
 
     goToStep = (stepNum) => {
-        if (stepNum < 0 || stepNum >= this.questions.order.length) {
+        if (stepNum < 1 || stepNum > QuestionsData.order.length) {
             return;
         }
-        this.changeStep(stepNum);
+        this.props.history.push('/quiz/' + stepNum);
     };
 
     cancelQuiz = () => {
-        this.changeStep(0);
-        this.props.restartQuiz();
+        this.props.clearAnswers();
+        this.props.history.push('/');
     };
+
+    restartQuiz = () => {
+        this.props.history.push('/quiz/1');
+    };
+
+    currentStep() {
+        let current = 0;
+        if (this.props.match.params.step) {
+            let test = parseInt(this.props.match.params.step);
+            if (!isNaN(test) && test > 0 && test <= QuestionsData.order.length) {
+                current = test - 1;
+            }
+        }
+        return current;
+    }
+
+    currentUrlStep() {
+        return this.currentStep() + 1;
+    }
 
     render() {
 
         // Steps
         let steps = [];
-        const stepCount = this.questions.order.length;
+        const stepCount = QuestionsData.order.length;
         for (let i = 0; i < stepCount; ++i) {
-            const qstep = this.questions.order[i];
+            const qstep = QuestionsData.order[i];
             let step = {
-                title: this.questions.spec[qstep].t,
+                title: QuestionsData.spec[qstep].t,
                 target: i,
             };
             if (typeof(this.props.answers[qstep]) !== 'undefined') {
-                step.clicked = () => { this.goToStep(i); };
+                step.clicked = () => { this.goToStep(i + 1); };
             }
             steps.push(step);
         }
 
         // Question
-        let question = this.questions.order[this.state.step];
+        let question = QuestionsData.order[this.currentStep()];
         if (typeof question !== 'string') {
-            question = this.questions.order[0];
+            question = QuestionsData.order[0];
         }
-        const qspec = this.questions.spec[question];
+        const qspec = QuestionsData.spec[question];
 
         // Answers
         const answerButtons = Object.keys(qspec.a).sort()
@@ -139,7 +129,7 @@ class Quiz extends Component {
             <div className="Quiz">
                 <StepCounter
                     steps={steps}
-                    currentStep={this.state.step} />
+                    currentStep={this.currentStep()} />
                 <Question
                     questionText={qspec.q}
                     helpText={qspec.help} />
@@ -153,4 +143,4 @@ class Quiz extends Component {
 
 }
 
-export default Quiz;
+export default withRouter(Quiz);

@@ -1,25 +1,12 @@
 import CookieBase from '../CookieBase';
 
-class FlagsCookie extends CookieBase {
-    cookieName = 'hnct-flags';
-    spec = {
+const flagsCookie = new CookieBase(
+    'hnct-flags', // name
+    {
         path: '/',
-        sameSite: 'strict'
-    };
+        sameSite: 'Strict'
+    }, // spec
+    true // compressed
+);
 
-    get() {
-        let cookiestring = super.get();
-        if (typeof cookiestring === 'undefined') {
-            return {};
-        }
-        const cookieobj = this.expandData(cookiestring);
-        return cookieobj === null ? {} : cookieobj;
-    }
-
-    set(val) {
-        let cookiestring = super.contractData(val);
-        super.set(cookiestring);
-    }
-}
-
-export default new FlagsCookie();
+export default flagsCookie;

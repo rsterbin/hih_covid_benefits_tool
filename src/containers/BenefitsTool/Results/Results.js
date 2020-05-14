@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
 
-import BENEFITS from '../../../data/benefits.json';
+import BenefitsData from '../../../data/benefits.json';
 import ResponsesData from '../../../data/responses.json';
 
 // TODO: rename responses data to something like language
@@ -131,7 +132,7 @@ class Results extends Component {
 
     loadBenefitResponses() {
         let responses = {};
-        for (const benefit of BENEFITS.order) {
+        for (const benefit of BenefitsData.order) {
             let r = null;
             try {
                 r = require('../../../data/benefits/' + benefit + '.json');
@@ -149,11 +150,11 @@ class Results extends Component {
 
     buildAnswerKey(benefit) {
         let answerKey = {};
-        for (const q of BENEFITS.spec[benefit].conditions.simple) {
+        for (const q of BenefitsData.spec[benefit].conditions.simple) {
             answerKey[q] = this.props.answers[q];
         }
-        for (const k of Object.keys(BENEFITS.spec[benefit].conditions.complex)) {
-            let m = BENEFITS.spec[benefit].conditions.complex[k];
+        for (const k of Object.keys(BenefitsData.spec[benefit].conditions.complex)) {
+            let m = BenefitsData.spec[benefit].conditions.complex[k];
             answerKey[k] = this.customAnswers[m](this.props.answers);
         }
         return answerKey;
@@ -183,7 +184,7 @@ class Results extends Component {
         if (this.benefitResponses === null) {
             this.loadBenefitResponses();
         }
-        for (const b of BENEFITS.order) {
+        for (const b of BenefitsData.order) {
             let template = [];
 
             // Build the answer key
@@ -206,13 +207,13 @@ class Results extends Component {
             // If we have something to send back, replace the employee type and add a section
             if (template.length > 0) {
                 sections.push({
-                    header: BENEFITS.spec[b].long,
+                    header: BenefitsData.spec[b].long,
                     text: this.replaceEmployeeType(template)
                 });
                 resources.push({
-                    text: BENEFITS.spec[b].short,
-                    title: BENEFITS.spec[b].long,
-                    href: BENEFITS.spec[b].link
+                    text: BenefitsData.spec[b].short,
+                    title: BenefitsData.spec[b].long,
+                    href: BenefitsData.spec[b].link
                 });
             }
         }
@@ -264,7 +265,7 @@ class Results extends Component {
         const links = [
             {
                 classNames: [ 'RestartLink' ],
-                clicked: this.props.restartQuiz,
+                clicked: () => { this.props.history.push('/') },
                 text: 'restart quiz'
             }
         ];
@@ -283,4 +284,4 @@ class Results extends Component {
 
 }
 
-export default Results;
+export default withRouter(Results);

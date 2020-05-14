@@ -1,11 +1,11 @@
 import CookieBase from '../CookieBase';
 
-class StepCookie extends CookieBase {
-    cookieName = 'hnct-step';
-    spec = {
+const stepCookie = new CookieBase(
+    'hnct-step', // name
+    {
         path: '/',
-        sameSite: 'strict'
-    };
-}
+        sameSite: 'Strict'
+    } // spec
+);
 
-export default new StepCookie();
+export default stepCookie;

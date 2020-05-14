@@ -1,12 +1,12 @@
 import CookieBase from '../CookieBase';
 
-class VisitorCookie extends CookieBase {
-    cookieName = 'hnct-visitor';
-    spec = {
+const visitorCookie = new CookieBase(
+    'hnct-visitor', // name
+    {
         path: '/',
         maxAge: 60 * 60 * 24 * 365,
-        sameSite: 'strict'
-    };
-}
+        sameSite: 'Strict'
+    } // spec
+);
 
-export default new VisitorCookie();
+export default visitorCookie;

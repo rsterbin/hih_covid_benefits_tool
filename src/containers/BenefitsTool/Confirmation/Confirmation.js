@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
 import * as EmailValidator from 'email-validator';
 
 import EditAnswers from './EditAnswers/EditAnswers';
@@ -21,8 +22,6 @@ class Confirmation extends Component {
     };
 
     regexValidZip = /^[0-9]{5}(?:-[0-9]{4})?$/;
-
-    questions = QuestionsData;
 
     changeEmail = (e) => {
         let val = e.target.value;
@@ -66,9 +65,9 @@ class Confirmation extends Component {
             visitor_id: this.props.visitor_id,
             answers: {}
         };
-        for (const question of this.questions.order) {
+        for (const question of QuestionsData.order) {
             const letter = this.props.answers[question];
-            const answer = this.questions.spec[question].a[letter];
+            const answer = QuestionsData.spec[question].a[letter];
             data.answers[question] = answer.toUpperCase();
         }
         if (this.state.email.trim() !== '') {
@@ -85,7 +84,7 @@ class Confirmation extends Component {
             .then(response => {
                 console.log(response);
                 this.setState({ loading: false });
-                this.props.confirmAnswers();
+                this.props.history.push('/results');
             })
             .catch(error => {
                 // We probably just want to continue if this is a disaster?
@@ -110,7 +109,43 @@ class Confirmation extends Component {
         this.setState({ contactValidOrEmpty: validOrEmpty });
     }
 
+    needsRedirect() {
+        let ready = true;
+        let started = false;
+        let step = 0;
+        for (const qcode of QuestionsData.order) {
+            if (typeof this.props.answers[qcode] === 'undefined') {
+                console.log('undefined question code ' + qcode);
+                ready = false;
+                break;
+            } else {
+                started = true;
+            }
+            const letter = this.props.answers[qcode];
+            if (typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
+                console.log('undefined answer letter ' + letter);
+                ready = false;
+                break;
+            }
+            ++step;
+        }
+        if (!ready) {
+            if (started) {
+                return '/quiz/' + step;
+            } else {
+                return '/';
+            }
+        }
+        return false;
+    }
+
     render() {
+
+        const goto = this.needsRedirect();
+        if (goto) {
+            return <Redirect to={goto} />;
+        }
+
         const buttons = [
             {
                 classNames: [ 'ConfirmButton' ],
@@ -124,7 +159,7 @@ class Confirmation extends Component {
         const links = [
             {
                 classNames: [ 'RestartLink' ],
-                clicked: this.props.restartQuiz,
+                clicked: () => { this.props.history.push('/') },
                 text: 'restart quiz'
             }
         ];
@@ -132,7 +167,7 @@ class Confirmation extends Component {
             <div className="Confirmation">
                 <EditAnswers
                     answers={this.props.answers}
-                    edited={(q, a) => this.props.editAnswer(q, a)} />
+                    edited={(q, a) => this.props.saveAnswer(q, a)} />
                 <ContactInfo
                     emailError={this.state.emailError}
                     zipError={this.state.zipError}
@@ -150,4 +185,4 @@ class Confirmation extends Component {
 
 }
 
-export default Confirmation;
+export default withRouter(Confirmation);

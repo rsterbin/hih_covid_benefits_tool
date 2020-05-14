@@ -1,12 +1,12 @@
 import CookieBase from '../CookieBase';
 
-class LoginCookie extends CookieBase {
-    cookieName = 'hnct-prelaunch';
-    spec = {
+const loginCookie = new CookieBase(
+    'hnct-prelaunch', // name
+    {
         path: '/',
         maxAge: 60 * 60,
-        sameSite: 'strict'
-    };
-}
+        sameSite: 'Strict'
+    } // spec
+);
 
-export default new LoginCookie();
+export default loginCookie;

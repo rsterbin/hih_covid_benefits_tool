@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Spinner from '../../components/UI/Spinner/Spinner';
 import Layout from '../../hoc/Layout/Layout';
 import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
 import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
@@ -12,10 +13,11 @@ class PreLaunch extends Component {
 
     state = {
         loggedIn: false,
+        loaded: false
     };
 
     updateLogin = (token) => {
-        this.setState({ loggedIn: true });
+        this.setState({ loggedIn: true, loaded: true });
         LoginCookie.set(token);
     };
 
@@ -24,15 +26,20 @@ class PreLaunch extends Component {
         if (token) {
             Api.checkToken({ token: token })
                 .then(response => {
-                    this.setState({ loggedIn: true });
+                    this.setState({ loggedIn: true, loaded: true });
                 })
                 .catch(error => {
                     console.log(error);
+                    this.setState({ loaded: true });
                 });
         }
     }
 
     render() {
+        if (!this.state.loaded) {
+            return <Spinner />;
+        }
+
         if (this.state.loggedIn) {
             return (
                 <Layout>
