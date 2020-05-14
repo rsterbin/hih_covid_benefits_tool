@@ -2,6 +2,14 @@
     clear: both;
 }
 
+.ControlsError {
+    background-color: salmon;
+    color: darkred;
+    border: 0.025em solid darkred;
+    margin: 2em;
+    padding: 1em;
+}
+
 .ButtonContainer, .VertButtonContainer {
     text-align: center;
 }

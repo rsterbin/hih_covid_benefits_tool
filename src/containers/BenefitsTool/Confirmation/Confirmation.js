@@ -6,6 +6,7 @@ import EditAnswers from './EditAnswers/EditAnswers';
 import ContactInfo from '../../../components/BenefitsTool/ContactInfo/ContactInfo';
 import Controls from '../../../components/UI/Controls/Controls';
 import Api from '../../../storage/Api';
+import Logger from '../../../utils/Logger';
 
 import QuestionsData from '../../../data/questions.json';
 
@@ -18,7 +19,8 @@ class Confirmation extends Component {
         emailError: false,
         zipError: false,
         saveError: false,
-        contactValidOrEmpty: true
+        contactValidOrEmpty: true,
+        hasRecordingError: false
     };
 
     regexValidZip = /^[0-9]{5}(?:-[0-9]{4})?$/;
@@ -79,7 +81,6 @@ class Confirmation extends Component {
             }
         }
         this.setState({ loading: true });
-        // TODO: handle error case
         Api.recordResponse(data)
             .then(response => {
                 console.log(response);
@@ -87,9 +88,17 @@ class Confirmation extends Component {
                 this.props.history.push('/results');
             })
             .catch(error => {
-                // We probably just want to continue if this is a disaster?
-                this.setState({ loading: false });
-                console.log(error);
+                // This is an alert-level error for me the programmer, but not
+                // for the user -- if the API is malfunctioning, let's give it
+                // one chance to get over a hiccup, then send them on to the
+                // results page without recording anything
+                Logger.alert('Could not record response', { data: data, api_error: error });
+                if (this.state.hasRecordingError) {
+                    this.setState({ loading: false });
+                    this.props.history.push('/results');
+                } else {
+                    this.setState({ loading: false, hasRecordingError: true });
+                }
             });
     };
 
@@ -147,6 +156,7 @@ class Confirmation extends Component {
                     zipChanged={this.changeZip}
                     />
                 <Controls
+                    errorMessage={this.state.hasRecordingError ? 'Oops! Please try again' : null}
                     buttons={buttons}
                     links={links} />
             </div>

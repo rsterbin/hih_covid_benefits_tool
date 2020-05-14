@@ -41,6 +41,11 @@ const controls = (props) => {
 
     return (
         <div className="Controls">
+        {props.errorMessage ?
+            <div className="ControlsError">
+                <p>{props.errorMessage}</p>
+            </div>
+        : null}
         {buttons.length > 0 ?
             <div className={props.buttonLayout === 'vert' ? 'VertButtonContainer' : 'ButtonContainer'}>
                 {buttons}

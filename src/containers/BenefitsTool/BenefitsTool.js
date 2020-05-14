@@ -9,6 +9,7 @@ import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
 import AnswersCookie from '../../storage/cookies/AnswersCookie';
 import VisitorCookie from '../../storage/cookies/VisitorCookie';
+import Logger from '../../utils/Logger';
 
 import QuestionsData from '../../data/questions.json';
 
@@ -26,7 +27,6 @@ class BenefitsTool extends Component {
 
     componentDidMount() {
         let newstate = {};
-
         // Fetch visitor ID from the cookie
         let visitor_id = VisitorCookie.get();
         if (!visitor_id) {
@@ -34,21 +34,9 @@ class BenefitsTool extends Component {
             VisitorCookie.set(visitor_id);
         }
         newstate.visitor_id = visitor_id;
-
         // Fetch answers from the cookie
-        newstate.answers = {};
-        let sess_answers = AnswersCookie.get();
-        if (sess_answers) {
-            for (const sess_question in sess_answers) {
-                if (sess_question in QuestionsData.spec) {
-                    const sess_answer = sess_answers[sess_question];
-                    if (sess_answer in QuestionsData.spec[sess_question].a) {
-                        newstate.answers[sess_question] = sess_answer;
-                    }
-                }
-            }
-        }
-
+        newstate.answers = AnswersCookie.get() || {};
+        // Mark this component loaded
         newstate.loaded = true;
         this.setState(newstate);
     }
@@ -62,6 +50,7 @@ class BenefitsTool extends Component {
         let newAnswers = { ...this.state.answers };
         if (typeof QuestionsData.spec[qcode] === 'undefined' ||
             typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
+            Logger.warn('Request to save unknown question/answer pair ' + qcode + '/' + letter);
             return false;
         }
         newAnswers[qcode] = letter;
@@ -76,7 +65,7 @@ class BenefitsTool extends Component {
         let step = 0;
         for (const qcode of QuestionsData.order) {
             if (typeof this.state.answers[qcode] === 'undefined') {
-                console.log('undefined question code ' + qcode);
+                Logger.debug('Needs redirect because of undefined question code ' + qcode, { answers: this.state.answers });
                 ready = false;
                 break;
             } else {
@@ -84,7 +73,7 @@ class BenefitsTool extends Component {
             }
             const letter = this.state.answers[qcode];
             if (typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
-                console.log('undefined answer letter ' + letter);
+                Logger.warn('Needs redirect because of undefined answer letter ' + letter, { q_code: qcode, answers: this.state.answers });
                 ready = false;
                 break;
             }
