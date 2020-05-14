@@ -32,6 +32,8 @@ class PreLaunch extends Component {
                     console.log(error);
                     this.setState({ loaded: true });
                 });
+        } else {
+            this.setState({ loaded: true });
         }
     }
 
