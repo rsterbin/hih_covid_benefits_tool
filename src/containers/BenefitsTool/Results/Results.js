@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
@@ -245,6 +245,11 @@ class Results extends Component {
     }
 
     render() {
+        const goto = this.props.needsRedirect();
+        if (goto) {
+            return <Redirect to={goto} />;
+        }
+
         const header = this.replaceEmployeeType(this.responses.standardHeader);
         const finalAnswer = this.getFinalAnswer();
         const buttons = [
@@ -269,6 +274,7 @@ class Results extends Component {
                 text: 'restart quiz'
             }
         ];
+
         return (
             <div className="Results">
                 <Response

@@ -109,39 +109,9 @@ class Confirmation extends Component {
         this.setState({ contactValidOrEmpty: validOrEmpty });
     }
 
-    needsRedirect() {
-        let ready = true;
-        let started = false;
-        let step = 0;
-        for (const qcode of QuestionsData.order) {
-            if (typeof this.props.answers[qcode] === 'undefined') {
-                console.log('undefined question code ' + qcode);
-                ready = false;
-                break;
-            } else {
-                started = true;
-            }
-            const letter = this.props.answers[qcode];
-            if (typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
-                console.log('undefined answer letter ' + letter);
-                ready = false;
-                break;
-            }
-            ++step;
-        }
-        if (!ready) {
-            if (started) {
-                return '/quiz/' + step;
-            } else {
-                return '/';
-            }
-        }
-        return false;
-    }
-
     render() {
 
-        const goto = this.needsRedirect();
+        const goto = this.props.needsRedirect();
         if (goto) {
             return <Redirect to={goto} />;
         }

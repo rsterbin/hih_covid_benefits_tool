@@ -47,7 +47,6 @@ class Quiz extends Component {
     };
 
     cancelQuiz = () => {
-        this.props.clearAnswers();
         this.props.history.push('/');
     };
 

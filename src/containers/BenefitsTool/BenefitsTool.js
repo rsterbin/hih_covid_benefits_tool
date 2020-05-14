@@ -70,18 +70,35 @@ class BenefitsTool extends Component {
         return true;
     };
 
-    answersComplete() {
-        for (const qcode of Object.keys(QuestionsData.order)) {
+    needsRedirect = () => {
+        let ready = true;
+        let started = false;
+        let step = 0;
+        for (const qcode of QuestionsData.order) {
             if (typeof this.state.answers[qcode] === 'undefined') {
-                return false;
+                console.log('undefined question code ' + qcode);
+                ready = false;
+                break;
+            } else {
+                started = true;
             }
             const letter = this.state.answers[qcode];
             if (typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
-                return false;
+                console.log('undefined answer letter ' + letter);
+                ready = false;
+                break;
+            }
+            ++step;
+        }
+        if (!ready) {
+            if (started) {
+                return '/quiz/' + step;
+            } else {
+                return '/';
             }
         }
-        return true;
-    }
+        return false;
+    };
 
     render() {
 
@@ -96,10 +113,12 @@ class BenefitsTool extends Component {
         const doConfirmation = () => <Confirmation
             visitor_id={this.state.visitor_id}
             answers={this.state.answers}
+            needsRedirect={this.needsRedirect}
             saveAnswer={this.saveAnswer} />;
 
         const doResults = () => <Results
-            answers={this.state.answers} />;
+            answers={this.state.answers}
+            needsRedirect={this.needsRedirect} />;
 
         const doLanding = () => <Landing
             clearAnswers={this.clearAnswers} />;
