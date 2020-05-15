@@ -4,12 +4,20 @@ import { withRouter } from 'react-router-dom';
 import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
 import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
+import Logger from '../../../utils/Logger';
+import Language from '../../../utils/Language';
 
 import QuestionsData from '../../../data/questions.json';
 
-// TODO: Switch to routing for question steps
+// TODO: Add links in the controls to Language
+// TODO: Replace console logging with use of the logger
 
 class Quiz extends Component {
+
+    state = {
+        loaded_lang: false,
+        hasError: false
+    };
 
     clickAnswer = (letter) => {
         const qcode = QuestionsData.order[this.currentStep()];
@@ -23,7 +31,8 @@ class Quiz extends Component {
             }
         } else {
             // TODO: error
-            console.log('Could not save question ' + qcode + ' with answer ' + letter);
+            Logger.alert('Could not save answer', { qcode: qcode, letter: letter });
+            this.setState({ hasError: true });
         }
     };
 
@@ -53,6 +62,13 @@ class Quiz extends Component {
     restartQuiz = () => {
         this.props.history.push('/quiz/1');
     };
+
+    componentDidMount() {
+        this.lang = {
+            error_message: Language.get('quiz_save_failed_error'),
+        };
+        this.setState({ loaded_lang: true });
+    }
 
     currentStep() {
         let current = 0;
@@ -133,6 +149,7 @@ class Quiz extends Component {
                     questionText={qspec.q}
                     helpText={qspec.help} />
                 <Controls
+                    errorMessage={this.lang.error_message}
                     buttonLayout={qspec.layout}
                     buttons={answerButtons}
                     links={links} />

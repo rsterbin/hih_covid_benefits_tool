@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 
 import Notice from '../../components/UI/Notice/Notice';
 import CookieNoticeCookie from '../../storage/cookies/CookieNoticeCookie';
+import Language from '../../utils/Language';
 
 class CookieNotice extends Component {
 
     state = {
         showNotice: true,
         noticeAccepted: true,
+        loaded_lang: false
     };
+
+    lang = null;
 
     hideNotice = () => {
         this.setState({ showNotice: false });
@@ -20,20 +24,31 @@ class CookieNotice extends Component {
     };
 
     componentDidMount() {
+        this.lang = {
+            close_alt: Language.get('util_cancel_alt_text'),
+            title: Language.get('cookie_notice_title'),
+            message: Language.get('cookie_notice_message'),
+            accept_button_text: Language.get('cookie_notice_accept_button_text'),
+        };
+        let newstate = { loaded_lang: true };
         let date = CookieNoticeCookie.get();
         if (date) {
-            this.setState({ noticeAccepted: true, showNotice: false });
+            newstate.noticeAccepted = true;
+            newstate.showNotice = false;
         }
+        this.setState(newstate);
     }
 
     render() {
+        if (!this.state.loaded_lang) {
+            return null;
+        }
         return (
             <Notice
-                title="Cookies on this site"
-                message="We use cookies to keep your place in the flow of the benefit tool, and to collect answers as we go.  We store this data for research purposes, but it is fully anonymized. If you choose to give us your contact information, that is always stored separately from your answers and cannot be linked to them. This site does not use any third-party tracking tools."
                 show={this.state.showNotice}
                 closed={this.hideNotice}
-                accepted={this.acceptNotice} />
+                accepted={this.acceptNotice}
+                lang={this.lang} />
         );
     }
 }

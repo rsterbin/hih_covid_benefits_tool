@@ -54,16 +54,6 @@
         "help": "Error message that appears above the ZIP code entry box in the contact section if already entered an email address but not a valid US ZIP code (appears as you type)",
         "markdown_allowed": false
     },
-    "util_cancel_alt_text": {
-        "section": "utilities",
-        "help": "Alt text for the little x icon used as a cancel button",
-        "markdown_allowed": false
-    },
-    "util_edit_alt_text": {
-        "section": "utilities",
-        "help": "Alt text for the little pencil icon used as an edit button",
-        "markdown_allowed": false
-    },
     "landing_header": {
         "section": "landing",
         "help": "Header for the landing page",
@@ -97,6 +87,46 @@
     "prelaunch_login_username_label": {
         "section": "prelaunch_login",
         "help": "The label for the username entry box",
+        "markdown_allowed": false
+    },
+    "cookie_notice_accept_button_text": {
+        "section": "cookie_notice",
+        "help": "Text for the button to accept cookies",
+        "markdown_allowed": false
+    },
+    "cookie_notice_title": {
+        "section": "cookie_notice",
+        "help": "Header for the notice popup",
+        "markdown_allowed": false
+    },
+    "cookie_notice_message": {
+        "section": "cookie_notice",
+        "help": "Main text for the notice popup",
+        "markdown_allowed": true
+    },
+    "util_cancel_alt_text": {
+        "section": "utilities",
+        "help": "Alt text for the little x icon used as a cancel button",
+        "markdown_allowed": false
+    },
+    "util_edit_alt_text": {
+        "section": "utilities",
+        "help": "Alt text for the little pencil icon used as an edit button",
+        "markdown_allowed": false
+    },
+    "confirm_button_text": {
+        "section": "confirm",
+        "help": "Text for the button you use to confirm answers and get results",
+        "markdown_allowed": false
+    },
+    "confirm_restart_link_text": {
+        "section": "confirm",
+        "help": "Text for the link to clear your answers and start the quiz over",
+        "markdown_allowed": false
+    },
+    "quiz_save_failed_error": {
+        "section": "quiz",
+        "help": "Message that appears if there's an error saving the answer",
         "markdown_allowed": false
     }
 }

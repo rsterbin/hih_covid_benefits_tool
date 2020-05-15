@@ -17,5 +17,11 @@
     "prelaunch_login_button_text": "Submit",
     "prelaunch_login_error": "You could not be logged in.",
     "prelaunch_login_username_label": "Username",
-    "prelaunch_login_password_label": "Password"
+    "prelaunch_login_password_label": "Password",
+    "cookie_notice_accept_button_text": "Accept and Close",
+    "cookie_notice_title": "Cookies on this site",
+    "cookie_notice_message": "We use cookies to keep your place in the flow of the benefit tool, and to collect answers as we go.  We store this data for research purposes, but it is fully anonymized. If you choose to give us your contact information, that is always stored separately from your answers and cannot be linked to them. This site does not use any third-party tracking tools.",
+    "confirm_button_text": "Confirm",
+    "confirm_restart_link_text": "restart quiz",
+    "quiz_save_failed_error": "Your answer could not be saved; please try again"
 }

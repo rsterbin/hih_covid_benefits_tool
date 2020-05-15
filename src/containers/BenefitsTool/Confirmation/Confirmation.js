@@ -123,6 +123,10 @@ class Confirmation extends Component {
                 email_error: Language.get('confirm_contact_email_error'),
                 zip_label: Language.get('confirm_contact_zip_label'),
                 zip_error: Language.get('confirm_contact_zip_error')
+            },
+            controls: {
+                confirm_button: Language.get('confirm_button_text'),
+                restart_link: Language.get('confirm_restart_link_text')
             }
         };
         this.setState({ loaded_lang: true });
@@ -159,7 +163,7 @@ class Confirmation extends Component {
             {
                 classNames: [ 'ConfirmButton' ],
                 clicked: this.confirmAnswers,
-                text: 'Confirm'
+                text: this.lang.controls.confirm_button
             }
         ];
         if (this.state.loading || !this.state.contactValidOrEmpty) {
@@ -169,7 +173,7 @@ class Confirmation extends Component {
             {
                 classNames: [ 'RestartLink' ],
                 clicked: () => { this.props.history.push('/') },
-                text: 'restart quiz'
+                text: this.lang.controls.restart_link
             }
         ];
 

@@ -8,13 +8,13 @@ const notice = (props) => {
     }
     return (
         <div className="Notice">
-            <button className="CloseNotice" onClick={props.closed}><i className="fas fa-times" aria-hidden="true"></i><span>close</span></button>
+            <button className="CloseNotice" onClick={props.closed}><i className="fas fa-times" aria-hidden="true"></i><span>{props.lang.close_alt}</span></button>
             <div className="NoticeContent">
                 <div className="NoticeMessage">
-                    <h6>{props.title}</h6>
-                    {props.message}
+                    <h6>{props.lang.title}</h6>
+                    <div dangerouslySetInnerHTML={{__html: props.lang.message}}></div>
                 </div>
-                <button className="AcceptButton" onClick={props.accepted}>Accept and Close</button>
+                <button className="AcceptButton" onClick={props.accepted}>{props.lang.accept_button_text}</button>
             </div>
         </div>
     );
