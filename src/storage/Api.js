@@ -17,15 +17,15 @@ class Api {
     }
 
     recordResponse(data) {
-        return this.getAxios().post('/record', data);
+        return this.getAxios().post('/response/record', data);
     }
 
     checkLogin(data) {
-        return this.getAxios().post('/login', data);
+        return this.getAxios().post('/prelaunch/login', data);
     }
 
     checkToken(data) {
-        return this.getAxios().post('/session', data);
+        return this.getAxios().post('/prelaunch/check', data);
     }
 }
 
