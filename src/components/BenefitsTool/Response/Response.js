@@ -23,7 +23,7 @@ const response = (props) => {
         });
         resourceBlock = (
             <div className="Resources">
-                <h4>Resources</h4>
+                <h4>{props.lang.resources_header}</h4>
                 <ul>
                     {linkList}
                 </ul>

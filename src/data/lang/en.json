@@ -6,9 +6,16 @@
     "util_cancel_alt_text": "cancel",
     "confirm_answerlist_edit_link_title": "Edit answer",
     "confirm_contact_header": "Join Hand in Hand",
-    "confirm_contact_invitation": "Hand in Hand provides resources and support for employers of domestic workers. If you’d like to learn more, enter your info here. **HELLO!**",
+    "confirm_contact_invitation": "Hand in Hand provides resources and support for employers of domestic workers. If you’d like to learn more, enter your info here.",
     "confirm_contact_email_label": "Email",
     "confirm_contact_email_error": "We won't be able to contact you without a valid email address.",
     "confirm_contact_zip_label": "ZIP Code",
-    "confirm_contact_zip_error": "Please enter a valid US ZIP code (55555 or 55555-4444)."
+    "confirm_contact_zip_error": "Please enter a valid US ZIP code (55555 or 55555-4444).",
+    "landing_header": "Welcome to the COVID-19 Employer Benefits Tool",
+    "landing_message": "Domestic workers do the work that makes all other work possible. It's crucial to recognize the work of nannies, house cleaners and home attendants who are on the frontlines of our response to COVID-19.\n\nThis tool makes it easier for employers to discover what benefits their employees are entitled to, and provides links to find out more or apply.\n\n**NB:** This tool is currently a DRAFT.",
+    "results_resources_header": "Resources",
+    "prelaunch_login_button_text": "Submit",
+    "prelaunch_login_error": "You could not be logged in.",
+    "prelaunch_login_username_label": "Username",
+    "prelaunch_login_password_label": "Password"
 }

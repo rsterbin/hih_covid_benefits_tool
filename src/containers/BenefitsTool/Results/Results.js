@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
+import Language from '../../../utils/Language';
 
 import BenefitsData from '../../../data/benefits.json';
 import ResponsesData from '../../../data/responses.json';
@@ -11,6 +13,12 @@ import ResponsesData from '../../../data/responses.json';
 // TODO: add all other text
 
 class Results extends Component {
+
+    state = {
+        loaded_lang: false
+    };
+
+    lang = null;
 
     responses = ResponsesData;
 
@@ -130,6 +138,13 @@ class Results extends Component {
 
     };
 
+    componentDidMount() {
+        this.lang = {
+            resources_header: Language.get('results_resources_header'),
+        };
+        this.setState({ loaded_lang: true });
+    }
+
     loadBenefitResponses() {
         let responses = {};
         for (const benefit of BenefitsData.order) {
@@ -238,6 +253,13 @@ class Results extends Component {
             text: this.replaceEmployeeType(this.responses.retaliationWarning)
         });
 
+        // Add the extra resources
+        resources.push({
+            text: 'Extra resource #1',
+            title: 'Resource we always want to add (the first one)',
+            href: 'http://www.example.com/'
+        });
+
         return {
             sections: sections,
             resources: resources
@@ -245,6 +267,11 @@ class Results extends Component {
     }
 
     render() {
+
+        if (!this.state.loaded_lang) {
+            return <Spinner />;
+        }
+
         const goto = this.props.needsRedirect();
         if (goto) {
             return <Redirect to={goto} />;
@@ -280,7 +307,8 @@ class Results extends Component {
                 <Response
                     header={header}
                     answerSections={finalAnswer.sections}
-                    resources={finalAnswer.resources} />
+                    resources={finalAnswer.resources}
+                    lang={this.lang} />
                 <Controls
                     buttons={buttons}
                     links={links} />

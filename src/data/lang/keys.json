@@ -63,5 +63,40 @@
         "section": "utilities",
         "help": "Alt text for the little pencil icon used as an edit button",
         "markdown_allowed": false
+    },
+    "landing_header": {
+        "section": "landing",
+        "help": "Header for the landing page",
+        "markdown_allowed": false
+    },
+    "landing_message": {
+        "section": "landing",
+        "help": "Complete message for the landing page",
+        "markdown_allowed": true
+    },
+    "results_resources_header": {
+        "section": "Results",
+        "help": "Header for the resources list",
+        "markdown_allowed": false
+    },
+    "prelaunch_login_password_label": {
+        "section": "prelaunch_login",
+        "help": "The label for the password entry box",
+        "markdown_allowed": false
+    },
+    "prelaunch_login_button_text": {
+        "section": "prelaunch_login",
+        "help": "The text for the submit button",
+        "markdown_allowed": false
+    },
+    "prelaunch_login_error": {
+        "section": "prelaunch_login",
+        "help": "The error message that shows if you enter the wrong username/password in the prelaunch login screen",
+        "markdown_allowed": false
+    },
+    "prelaunch_login_username_label": {
+        "section": "prelaunch_login",
+        "help": "The label for the username entry box",
+        "markdown_allowed": false
     }
 }
