@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import AnswerList from '../../../../components/BenefitsTool/AnswerList/AnswerList';
+
 import QuestionsData from '../../../../data/questions.json';
 
 class EditAnswers extends Component {
@@ -51,7 +52,7 @@ class EditAnswers extends Component {
                 clickedEdit: () => this.startEdit(code),
             });
         }
-        return <AnswerList questions={questions} />;
+        return <AnswerList questions={questions} lang={this.props.lang} />;
     };
 }
 

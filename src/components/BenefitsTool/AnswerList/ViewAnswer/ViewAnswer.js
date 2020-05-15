@@ -6,10 +6,10 @@ const viewAnswer = (props) => {
             <span className="SelectedAnswer">{props.selectedAnswer.text}</span>
             <button
                 className="EditButton"
-                title="Edit answer"
+                title={props.lang.edit_title}
                 onClick={props.clickedEdit}>
                 <i className="fas fa-pencil-alt" aria-hidden="true"></i>
-                <span>edit</span>
+                <span>{props.lang.edit_alt}</span>
             </button>
         </div>
     );

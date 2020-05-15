@@ -12,12 +12,14 @@ const answerList = (props) => {
             let answerBlock = null;
             if (question.isEditing) {
                 answerBlock = <EditAnswer
+                    lang={props.lang}
                     answers={question.answers}
                     selectedAnswer={question.selected}
                     clickedCancel={question.clickedCancel}
                     layout={question.layout} />;
             } else {
                 answerBlock = <ViewAnswer
+                    lang={props.lang}
                     selectedAnswer={question.selected}
                     clickedEdit={question.clickedEdit} />
             }
@@ -31,7 +33,7 @@ const answerList = (props) => {
 
     return (
         <div className="Answers">
-            <h3 className="AnswersHeader">Please confirm your answers</h3>
+            <h3 className="AnswersHeader">{props.lang.header}</h3>
             <ul>
                 {answerList}
             </ul>

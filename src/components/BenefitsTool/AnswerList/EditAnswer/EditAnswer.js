@@ -20,10 +20,10 @@ const editAnswer = (props) => {
     return (
         <div className="AnswerEdit">
             <button className="CancelButton"
-                title="Stop editing answer"
+                title={props.lang.cancel_title}
                 onClick={props.clickedCancel}>
                 <i className="fas fa-times" aria-hidden="true"></i>
-                <span>cancel</span>
+                <span>{props.lang.cancel_alt}</span>
             </button>
             <Controls
                 buttons={abuttons}

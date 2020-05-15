@@ -8,6 +8,7 @@ import Login from '../../containers/Login/Login';
 import LoginCookie from '../../storage/cookies/LoginCookie';
 import CookieNotice from '../CookieNotice/CookieNotice';
 import Api from '../../storage/Api';
+import Language from '../../utils/Language';
 
 class PreLaunch extends Component {
 
@@ -22,6 +23,12 @@ class PreLaunch extends Component {
     };
 
     componentDidMount() {
+        this.lang = {
+            layout: {
+                logo_alt_text: Language.get('layout_logo_alt_text'),
+                header_title: Language.get('layout_header_title')
+            }
+        };
         let token = LoginCookie.get();
         if (token) {
             Api.checkToken({ token: token })
@@ -44,7 +51,7 @@ class PreLaunch extends Component {
 
         if (this.state.loggedIn) {
             return (
-                <Layout>
+                <Layout lang={this.lang.layout}>
                     <BenefitsTool />
                     <CookieNotice />
                 </Layout>

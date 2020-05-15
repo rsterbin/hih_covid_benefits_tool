@@ -1,0 +1,14 @@
+{
+    "layout_header_title": "NYC COVID-19 Benefits Tool",
+    "layout_logo_alt_text": "Hand-In-Hand: The Domestic Employers Network",
+    "confirm_answerlist_header": "Please confirm your answers",
+    "confirm_answerlist_cancel_edit_link_title": "Stop editing answer",
+    "util_cancel_alt_text": "cancel",
+    "confirm_answerlist_edit_link_title": "Edit answer",
+    "confirm_contact_header": "Join Hand in Hand",
+    "confirm_contact_invitation": "Hand in Hand provides resources and support for employers of domestic workers. If you’d like to learn more, enter your info here. **HELLO!**",
+    "confirm_contact_email_label": "Email",
+    "confirm_contact_email_error": "We won't be able to contact you without a valid email address.",
+    "confirm_contact_zip_label": "ZIP Code",
+    "confirm_contact_zip_error": "Please enter a valid US ZIP code (55555 or 55555-4444)."
+}

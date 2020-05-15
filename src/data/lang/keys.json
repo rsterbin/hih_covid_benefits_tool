@@ -1,0 +1,67 @@
+{
+    "layout_header_title": {
+        "section": "layout",
+        "help": "Title of the app used in the main header",
+        "markdown_allowed": false
+    },
+    "layout_logo_alt_text": {
+        "section": "layout",
+        "help": "Alt text for the logo in the main header",
+        "markdown_allowed": false
+    },
+    "confirm_answerlist_header": {
+        "section": "confirm",
+        "help": "Header for the list of answers",
+        "markdown_allowed": false
+    },
+    "confirm_answerlist_cancel_edit_link_title": {
+        "section": "confirm",
+        "help": "Title text for the cancel button when editing an answer",
+        "markdown_allowed": false
+    },
+    "confirm_answerlist_edit_link_title": {
+        "section": "confirm",
+        "help": "Title text for the button used to start editing an answer",
+        "markdown_allowed": false
+    },
+    "confirm_contact_header": {
+        "section": "confirm",
+        "help": "Header for the contact section",
+        "markdown_allowed": false
+    },
+    "confirm_contact_invitation": {
+        "section": "confirm",
+        "help": "Intro text for the contact section (inviting users to join HIH)",
+        "markdown_allowed": true
+    },
+    "confirm_contact_email_label": {
+        "section": "confirm",
+        "help": "Label for the email entry box in the contact section",
+        "markdown_allowed": false
+    },
+    "confirm_contact_email_error": {
+        "section": "confirm",
+        "help": "Error message that appears above the email entry box in the contact section if what you've entered isn't a valid email address (appears as you type)",
+        "markdown_allowed": false
+    },
+    "confirm_contact_zip_label": {
+        "section": "confirm",
+        "help": "Label for the ZIP code entry box in the contact section",
+        "markdown_allowed": false
+    },
+    "confirm_contact_zip_error": {
+        "section": "confirm",
+        "help": "Error message that appears above the ZIP code entry box in the contact section if already entered an email address but not a valid US ZIP code (appears as you type)",
+        "markdown_allowed": false
+    },
+    "util_cancel_alt_text": {
+        "section": "utilities",
+        "help": "Alt text for the little x icon used as a cancel button",
+        "markdown_allowed": false
+    },
+    "util_edit_alt_text": {
+        "section": "utilities",
+        "help": "Alt text for the little pencil icon used as an edit button",
+        "markdown_allowed": false
+    }
+}

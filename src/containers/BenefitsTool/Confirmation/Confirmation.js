@@ -5,14 +5,17 @@ import * as EmailValidator from 'email-validator';
 import EditAnswers from './EditAnswers/EditAnswers';
 import ContactInfo from '../../../components/BenefitsTool/ContactInfo/ContactInfo';
 import Controls from '../../../components/UI/Controls/Controls';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
+import Language from '../../../utils/Language';
 
 import QuestionsData from '../../../data/questions.json';
 
 class Confirmation extends Component {
 
     state = {
+        loaded_lang: false,
         loading: false,
         email: '',
         zip: '',
@@ -22,6 +25,8 @@ class Confirmation extends Component {
         contactValidOrEmpty: true,
         hasRecordingError: false
     };
+
+    lang = null;
 
     regexValidZip = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
@@ -102,6 +107,27 @@ class Confirmation extends Component {
             });
     };
 
+    componentDidMount() {
+        this.lang = {
+            edit_answers: {
+                header: Language.get('confirm_answerlist_header'),
+                cancel_title: Language.get('confirm_answerlist_cancel_edit_link_title'),
+                cancel_alt: Language.get('util_cancel_alt_text'),
+                edit_title: Language.get('confirm_answerlist_edit_link_title'),
+                edit_alt: Language.get('confirm_answerlist_edit_link_title'),
+            },
+            contact: {
+                header: Language.get('confirm_contact_header'),
+                invitation: Language.get('confirm_contact_invitation'),
+                email_label: Language.get('confirm_contact_email_label'),
+                email_error: Language.get('confirm_contact_email_error'),
+                zip_label: Language.get('confirm_contact_zip_label'),
+                zip_error: Language.get('confirm_contact_zip_error')
+            }
+        };
+        this.setState({ loaded_lang: true });
+    }
+
     okToSubmitContact() {
         let validOrEmpty = null;
         if (this.state.email === '' && this.state.zip === '') {
@@ -119,6 +145,10 @@ class Confirmation extends Component {
     }
 
     render() {
+
+        if (!this.state.loaded_lang) {
+            return <Spinner />;
+        }
 
         const goto = this.props.needsRedirect();
         if (goto) {
@@ -142,11 +172,13 @@ class Confirmation extends Component {
                 text: 'restart quiz'
             }
         ];
+
         return (
             <div className="Confirmation">
                 <EditAnswers
                     answers={this.props.answers}
-                    edited={(q, a) => this.props.saveAnswer(q, a)} />
+                    edited={(q, a) => this.props.saveAnswer(q, a)}
+                    lang={this.lang.edit_answers} />
                 <ContactInfo
                     emailError={this.state.emailError}
                     zipError={this.state.zipError}
@@ -154,7 +186,7 @@ class Confirmation extends Component {
                     zip={this.state.zip}
                     emailChanged={this.changeEmail}
                     zipChanged={this.changeZip}
-                    />
+                    lang={this.lang.contact} />
                 <Controls
                     errorMessage={this.state.hasRecordingError ? 'Oops! Please try again' : null}
                     buttons={buttons}
