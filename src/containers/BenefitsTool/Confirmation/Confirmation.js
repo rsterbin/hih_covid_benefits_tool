@@ -88,7 +88,6 @@ class Confirmation extends Component {
         this.setState({ loading: true });
         Api.recordResponse(data)
             .then(response => {
-                console.log(response);
                 this.setState({ loading: false });
                 this.props.history.push('/results');
             })
@@ -97,9 +96,9 @@ class Confirmation extends Component {
                 // for the user -- if the API is malfunctioning, let's give it
                 // one chance to get over a hiccup, then send them on to the
                 // results page without recording anything
-                Logger.alert('Could not record response', { data: data, api_error: error });
+                Logger.alert('Could not record response', { api_error: Api.parseAxiosError(error) });
                 if (this.state.hasRecordingError) {
-                    this.setState({ loading: false });
+                    this.setState({ loading: false, hasRecordingError: false });
                     this.props.history.push('/results');
                 } else {
                     this.setState({ loading: false, hasRecordingError: true });

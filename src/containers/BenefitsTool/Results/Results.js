@@ -9,8 +9,9 @@ import Language from '../../../utils/Language';
 import BenefitsData from '../../../data/benefits.json';
 import ResponsesData from '../../../data/responses.json';
 
-// TODO: rename responses data to something like language
-// TODO: add all other text
+// TODO: Move ResponsesData into Language
+// TODO: Parse BenefitsData for markdown
+// TODO: Run some Language keys through the employee type replacement
 
 class Results extends Component {
 

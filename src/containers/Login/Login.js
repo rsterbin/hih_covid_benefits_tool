@@ -4,6 +4,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import LoginBox from '../../components/LoginBox/LoginBox';
 import Api from '../../storage/Api';
 import Language from '../../utils/Language';
+import Logger from '../../utils/Logger';
 
 class Login extends Component {
 
@@ -36,15 +37,27 @@ class Login extends Component {
             password: this.state.password
         })
         .then(response => {
-            this.setState({
-                loading: false,
-            });
-            this.props.updateLoginState(response.data.token);
-            console.log(response);
+            if (response.data.token) {
+                this.setState({
+                    loading: false,
+                });
+                this.props.updateLoginState(response.data.token);
+            } else {
+                Logger.alert('Prelaunch log in succeeded without returning a token', { returned: response.data });
+                this.setState({
+                    loading: false,
+                    loginError: true
+                });
+            }
         })
         .catch(error => {
-            console.log(error);
-            this.setState({ 
+            const parsed = Api.parseAxiosError(error);
+            if (parsed.code !== 'LOGIN_INCORRECT' &&
+                parsed.code !== 'USERNAME_REQUIRED' &&
+                parsed.code !== 'PASSWORD_REQUIRED') {
+                Logger.alert('Prelaunch log in failed', { api_error: parsed });
+            }
+            this.setState({
                 loading: false,
                 loginError: true
             });

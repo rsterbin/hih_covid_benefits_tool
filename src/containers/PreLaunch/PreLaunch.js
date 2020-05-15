@@ -9,6 +9,7 @@ import LoginCookie from '../../storage/cookies/LoginCookie';
 import CookieNotice from '../CookieNotice/CookieNotice';
 import Api from '../../storage/Api';
 import Language from '../../utils/Language';
+import Logger from '../../utils/Logger';
 
 class PreLaunch extends Component {
 
@@ -36,7 +37,10 @@ class PreLaunch extends Component {
                     this.setState({ loggedIn: true, loaded: true });
                 })
                 .catch(error => {
-                    console.log(error);
+                    const parsed = Api.parseAxiosError(error);
+                    if (parsed.code !== 'TOKEN_INVALID') {
+                        Logger.alert('Prelaunch session check failed', { api_error: parsed });
+                    }
                     this.setState({ loaded: true });
                 });
         } else {
