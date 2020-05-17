@@ -7,7 +7,7 @@ const question = (props) => {
         <div className="Question">
             <h2 className="QuestionHeader">{props.questionText}</h2>
 
-            {props.helpText ? <p className="Help">{props.helpText}</p> : null}
+            {props.helpText ? <p className="Help" dangerouslySetInnerHTML={{__html: props.helpText}}></p> : null}
         </div>
     );
 };

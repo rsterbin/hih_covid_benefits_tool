@@ -128,5 +128,256 @@
         "section": "quiz",
         "help": "Message that appears if there's an error saving the answer",
         "markdown_allowed": false
+    },
+    "quiz_back_link_text": {
+        "section": "quiz",
+        "help": "Text used for links that step backwards in the quiz sequence",
+        "markdown_allowed": false
+    },
+    "util_restart_link_text": {
+        "section": "util",
+        "help": "Text used for links that send the user back to the start of the quiz",
+        "markdown_allowed": false
+    },
+    "quiz_cancel_link_text": {
+        "section": "quiz",
+        "help": "Text used for links that take the user back to the landing page and clear any selected answers from memory",
+        "markdown_allowed": false
+    },
+    "quiz_type_question": {
+        "section": "quiz",
+        "help": "Question text for the Type question",
+        "markdown_allowed": false
+    },
+    "quiz_type_short": {
+        "section": "quiz",
+        "help": "Short name for the Type question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_type_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (nanny) for the Type question",
+        "markdown_allowed": false
+    },
+    "quiz_type_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (house cleaner) for the Type question",
+        "markdown_allowed": false
+    },
+    "quiz_type_answer_c": {
+        "section": "quiz",
+        "help": "Answer C (home attendant) for the Type question",
+        "markdown_allowed": false
+    },
+    "quiz_type_answer_d": {
+        "section": "quiz",
+        "help": "Answer D (home health care worker) for the Type question",
+        "markdown_allowed": false
+    },
+    "quiz_type_help": {
+        "section": "quiz",
+        "help": "Help text for the Type question",
+        "markdown_allowed": true
+    },
+    "quiz_agency_question": {
+        "section": "quiz",
+        "help": "Question text for the Agency question",
+        "markdown_allowed": false
+    },
+    "quiz_agency_short": {
+        "section": "quiz",
+        "help": "Short name for the Agency question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_agency_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (yes) for the Agency question",
+        "markdown_allowed": false
+    },
+    "quiz_agency_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (no) for the Agency question",
+        "markdown_allowed": false
+    },
+    "quiz_books_question": {
+        "section": "quiz",
+        "help": "Question text for the Books question",
+        "markdown_allowed": false
+    },
+    "quiz_books_short": {
+        "section": "quiz",
+        "help": "Short name for the Books question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_books_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (yes, in compliance) for the Books question",
+        "markdown_allowed": false
+    },
+    "quiz_books_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (yes, partially) for the Books question",
+        "markdown_allowed": false
+    },
+    "quiz_books_answer_c": {
+        "section": "quiz",
+        "help": "Answer C (no) for the Books question",
+        "markdown_allowed": false
+    },
+    "quiz_books_help": {
+        "section": "quiz",
+        "help": "Help text for the Books question",
+        "markdown_allowed": true
+    },
+    "quiz_hours_per_week_question": {
+        "section": "quiz",
+        "help": "Question text for the Hours Per Week question",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_week_short": {
+        "section": "quiz",
+        "help": "Short name for the Hours Per Week question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_week_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (<40) for the Hours Per Week question",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_week_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (>=40) for the Hours Per Week question",
+        "markdown_allowed": false
+    },
+    "quiz_length_of_employment_question": {
+        "section": "quiz",
+        "help": "Question text for the Length of Employment question",
+        "markdown_allowed": false
+    },
+    "quiz_length_of_employment_short": {
+        "section": "quiz",
+        "help": "Short name for the Length of Employment question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_length_of_employment_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (<6mo) for the Length of Employment question",
+        "markdown_allowed": false
+    },
+    "quiz_length_of_employment_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (<1yr) for the Length of Employment question",
+        "markdown_allowed": false
+    },
+    "quiz_length_of_employment_answer_c": {
+        "section": "quiz",
+        "help": "Answer C (>=1yr) for the Length of Employment question",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_year_question": {
+        "section": "quiz",
+        "help": "Question text for the Hours Per Year question",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_year_short": {
+        "section": "quiz",
+        "help": "Short name for the Hours Per Year question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_year_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (<80) for the Hours Per Year question",
+        "markdown_allowed": false
+    },
+    "quiz_hours_per_year_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (>=80) for the Hours Per Year question",
+        "markdown_allowed": false
+    },
+    "quiz_self_quarantine_question": {
+        "section": "quiz",
+        "help": "Question text for the Illness (Self) question",
+        "markdown_allowed": false
+    },
+    "quiz_self_quarantine_short": {
+        "section": "quiz",
+        "help": "Short name for the Illness (Self) question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_self_quarantine_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (yes) for the Illness (Self) question",
+        "markdown_allowed": false
+    },
+    "quiz_self_quarantine_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (no) for the Illness (Self) question",
+        "markdown_allowed": false
+    },
+    "quiz_family_quarantine_question": {
+        "section": "quiz",
+        "help": "Question text for the Illness (Family) question",
+        "markdown_allowed": false
+    },
+    "quiz_family_quarantine_short": {
+        "section": "quiz",
+        "help": "Short name for the Illness (Family) question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_family_quarantine_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (yes) for the Illness (Family) question",
+        "markdown_allowed": false
+    },
+    "quiz_family_quarantine_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (no) for the Illness (Family) question",
+        "markdown_allowed": false
+    },
+    "quiz_family_quarantine_help": {
+        "section": "quiz",
+        "help": "Help text for the Illness (Family) question",
+        "markdown_allowed": true
+    },
+    "quiz_stay_at_home_question": {
+        "section": "quiz",
+        "help": "Question text for the Stay-At-Home Order question",
+        "markdown_allowed": false
+    },
+    "quiz_stay_at_home_short": {
+        "section": "quiz",
+        "help": "Short name for the Stay-At-Home Order question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_stay_at_home_answer_a": {
+        "section": "quiz",
+        "help": "Answer A (yes) for the Stay-At-Home Order question",
+        "markdown_allowed": false
+    },
+    "quiz_stay_at_home_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (no) for the Stay-At-Home Order question",
+        "markdown_allowed": false
+    },
+    "quiz_school_closed_question": {
+        "section": "quiz",
+        "help": "Question text for the School Closed question",
+        "markdown_allowed": false
+    },
+    "quiz_school_closed_short": {
+        "section": "quiz",
+        "help": "Short name for the School Closed question, used for tooltips on the step counter",
+        "markdown_allowed": false
+    },
+    "quiz_school_closed_answer_a": {
+        "section": "quiz",
+        "help": "XXX for the YYY question",
+        "help": "Answer A (yes) for the School Closed question",
+        "markdown_allowed": false
+    },
+    "quiz_school_closed_answer_b": {
+        "section": "quiz",
+        "help": "Answer B (no) for the School Closed question",
+        "markdown_allowed": false
     }
 }

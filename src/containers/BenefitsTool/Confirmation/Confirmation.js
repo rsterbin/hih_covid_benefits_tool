@@ -10,7 +10,7 @@ import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
 
-import QuestionsData from '../../../data/questions.json';
+import Questions from '../../../logic/Questions';
 
 class Confirmation extends Component {
 
@@ -70,13 +70,8 @@ class Confirmation extends Component {
     confirmAnswers = () => {
         const data = {
             visitor_id: this.props.visitor_id,
-            answers: {}
+            answers: Questions.getEnglishAnswers(this.props.answers)
         };
-        for (const question of QuestionsData.order) {
-            const letter = this.props.answers[question];
-            const answer = QuestionsData.spec[question].a[letter];
-            data.answers[question] = answer.toUpperCase();
-        }
         if (this.state.email.trim() !== '') {
             data.contact = {
                 email: this.state.email.trim()

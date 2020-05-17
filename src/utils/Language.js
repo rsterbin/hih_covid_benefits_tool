@@ -65,4 +65,5 @@ class Language {
 
 }
 
+export { Language };
 export default new Language('en');

@@ -4,10 +4,11 @@ import { withRouter } from 'react-router-dom';
 import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
 import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
 
-import QuestionsData from '../../../data/questions.json';
+import Questions from '../../../logic/Questions';
 
 // TODO: Add links in the controls to Language
 // TODO: Replace console logging with use of the logger
@@ -20,17 +21,16 @@ class Quiz extends Component {
     };
 
     clickAnswer = (letter) => {
-        const qcode = QuestionsData.order[this.currentStep()];
+        const qcode = Questions.getCodeByStep(this.currentStep());
         const ok = this.props.saveAnswer(qcode, letter);
         if (ok) {
-            if (this.currentStep() + 1 >= QuestionsData.order.length) {
+            if (this.currentStep() + 1 >= Questions.count()) {
                 this.props.history.push('/confirm');
             } else {
                 const newStep = this.currentUrlStep() + 1;
                 this.props.history.push('/quiz/' + newStep);
             }
         } else {
-            // TODO: error
             Logger.alert('Could not save answer', { qcode: qcode, letter: letter });
             this.setState({ hasError: true });
         }
@@ -42,14 +42,14 @@ class Quiz extends Component {
         let newStep = this.currentUrlStep() - 1;
         if (newStep < 1) {
             newStep = 0;
-            // TODO: error
-            console.log('Request to go back before step 1');
+            Logger.err('Request to go back before step 1');
         }
         this.props.history.push('/quiz/' + newStep);
     };
 
     goToStep = (stepNum) => {
-        if (stepNum < 1 || stepNum > QuestionsData.order.length) {
+        if (stepNum < 1 || stepNum > Questions.count()) {
+            Logger.warn('Event request to go to an out-of-bounds step', { step: stepNum });
             return;
         }
         this.props.history.push('/quiz/' + stepNum);
@@ -66,6 +66,9 @@ class Quiz extends Component {
     componentDidMount() {
         this.lang = {
             error_message: Language.get('quiz_save_failed_error'),
+            back_link_text: Language.get('quiz_back_link_text'),
+            restart_link_text: Language.get('util_restart_link_text'),
+            cancel_link_text: Language.get('quiz_cancel_link_text'),
         };
         this.setState({ loaded_lang: true });
     }
@@ -74,8 +77,10 @@ class Quiz extends Component {
         let current = 0;
         if (this.props.match.params.step) {
             let test = parseInt(this.props.match.params.step);
-            if (!isNaN(test) && test > 0 && test <= QuestionsData.order.length) {
+            if (!isNaN(test) && test > 0 && test <= Questions.count()) {
                 current = test - 1;
+            } else {
+                Logger.warn('URL request to go to an out-of-bounds step', { step: this.props.match.params.step });
             }
         }
         return current;
@@ -87,34 +92,39 @@ class Quiz extends Component {
 
     render() {
 
+        if (!this.state.loaded_lang) {
+            return <Spinner />;
+        }
+
         // Steps
         let steps = [];
-        const stepCount = QuestionsData.order.length;
+        const stepCount = Questions.count();
         for (let i = 0; i < stepCount; ++i) {
-            const qstep = QuestionsData.order[i];
+            const qcode = Questions.getCodeByStep(i);
+            const qspec = Questions.getLocalSpec(qcode);
             let step = {
-                title: QuestionsData.spec[qstep].t,
+                title: qspec.title,
                 target: i,
             };
-            if (typeof(this.props.answers[qstep]) !== 'undefined') {
+            if (typeof(this.props.answers[qcode]) !== 'undefined') {
                 step.clicked = () => { this.goToStep(i + 1); };
             }
             steps.push(step);
         }
 
         // Question
-        let question = QuestionsData.order[this.currentStep()];
-        if (typeof question !== 'string') {
-            question = QuestionsData.order[0];
+        let qcode = Questions.getCodeByStep(this.currentStep());
+        if (typeof qcode !== 'string') {
+            qcode = Questions.getCodeByStep(0);
         }
-        const qspec = QuestionsData.spec[question];
+        const qspec = Questions.getLocalSpec(qcode);
 
         // Answers
-        const answerButtons = Object.keys(qspec.a).sort()
+        const answerButtons = Object.keys(qspec.answers).sort()
             .map((aKey) => {
                 let classNames = [ 'AnswerButton' ];
-                if (typeof this.props.answers[question] != 'undefined') {
-                    if (this.props.answers[question] === aKey) {
+                if (typeof this.props.answers[qcode] != 'undefined') {
+                    if (this.props.answers[qcode] === aKey) {
                         classNames.push('Selected');
                     }
                 }
@@ -122,23 +132,35 @@ class Quiz extends Component {
                     key: aKey,
                     classNames: classNames,
                     clicked: () => { this.clickAnswer(aKey); },
-                    text: qspec.a[aKey]
+                    text: qspec.answers[aKey]
                 };
             });
 
         // Links
-        const links = [
-            {
+        let links = [];
+        if (this.currentStep() > 0) {
+            links.push({
                 classNames: [ 'BackLink' ],
                 clicked: this.goBack,
-                text: 'go back'
-            },
-            {
+                text: this.lang.back_link_text
+            });
+            links.push({
                 classNames: [ 'RestartLink' ],
+                clicked: this.restartQuiz,
+                text: this.lang.restart_link_text
+            });
+        } else {
+            links.push({
+                classNames: [ 'CancelLink' ],
                 clicked: this.cancelQuiz,
-                text: 'restart quiz'
-            }
-        ];
+                text: this.lang.cancel_link_text
+            });
+        }
+
+        let message = null;
+        if (this.state.hasError) {
+            message = this.lang.error_message;
+        }
 
         return (
             <div className="Quiz">
@@ -146,10 +168,10 @@ class Quiz extends Component {
                     steps={steps}
                     currentStep={this.currentStep()} />
                 <Question
-                    questionText={qspec.q}
+                    questionText={qspec.question}
                     helpText={qspec.help} />
                 <Controls
-                    errorMessage={this.lang.error_message}
+                    errorMessage={message}
                     buttonLayout={qspec.layout}
                     buttons={answerButtons}
                     links={links} />

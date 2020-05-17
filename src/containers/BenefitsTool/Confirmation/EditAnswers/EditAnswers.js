@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 
 import AnswerList from '../../../../components/BenefitsTool/AnswerList/AnswerList';
 
-import QuestionsData from '../../../../data/questions.json';
+import Questions from '../../../../logic/Questions';
 
 class EditAnswers extends Component {
 
     state = {
         editingAnswer: null
     };
-
-    questionSpec = QuestionsData;
 
     startEdit(question) {
         this.setState({ editingAnswer: question });
@@ -26,32 +24,20 @@ class EditAnswers extends Component {
     }
 
     render() {
-        let questions = [];
-        for (const code of this.questionSpec.order) {
-            const qspec = this.questionSpec.spec[code];
-            const aspec = this.questionSpec.spec[code].a;
-            let answers = [];
-            for (const letter of Object.keys(aspec).sort()) {
-                answers.push({
-                    letter: letter,
-                    text: aspec[letter],
-                    clicked: () => this.saveEdit(code, letter)
+        let questions = Questions.getLocalConfirmation(this.props.answers)
+            .map(question => {
+                let answers = question.answers.map(answer => {
+                    return { ...answer, 
+                        clicked: () => this.saveEdit(question.code, answer.letter)
+                    };
                 });
-            }
-            questions.push({
-                code: code,
-                text: qspec.q,
-                answers: answers,
-                selected: {
-                    letter: this.props.answers[code],
-                    text: aspec[this.props.answers[code]]
-                },
-                layout: qspec.layout,
-                isEditing: this.state.editingAnswer === code,
-                clickedCancel: () => this.cancelEdit(code),
-                clickedEdit: () => this.startEdit(code),
+                return { ...question,
+                    answers: answers,
+                    isEditing: this.state.editingAnswer === question.code,
+                    clickedCancel: () => this.cancelEdit(question.code),
+                    clickedEdit: () => this.startEdit(question.code),
+                };
             });
-        }
         return <AnswerList questions={questions} lang={this.props.lang} />;
     };
 }

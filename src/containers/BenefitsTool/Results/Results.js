@@ -142,6 +142,7 @@ class Results extends Component {
     componentDidMount() {
         this.lang = {
             resources_header: Language.get('results_resources_header'),
+            restart_link_text: Language.get('util_restart_link_text')
         };
         this.setState({ loaded_lang: true });
     }
@@ -299,7 +300,7 @@ class Results extends Component {
             {
                 classNames: [ 'RestartLink' ],
                 clicked: () => { this.props.history.push('/') },
-                text: 'restart quiz'
+                text: this.lang.restart_link_text
             }
         ];
 

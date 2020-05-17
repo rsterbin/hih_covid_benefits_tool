@@ -37,6 +37,9 @@ class PreLaunch extends Component {
                     this.setState({ loggedIn: true, loaded: true });
                 })
                 .catch(error => {
+                    if (!error.isAxiosError) {
+                        throw error;
+                    }
                     const parsed = Api.parseAxiosError(error);
                     if (parsed.code !== 'TOKEN_INVALID') {
                         Logger.alert('Prelaunch session check failed', { api_error: parsed });

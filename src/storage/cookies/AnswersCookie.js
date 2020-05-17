@@ -1,17 +1,9 @@
 import CookieBase from '../CookieBase';
 
-import QUESTIONS from '../../data/questions.json';
+import Questions from '../../logic/Questions';
 
 let answersCookieFilter = (cookieobj) => {
-    let answers = {};
-    if (cookieobj !== null) {
-        for (const key of Object.keys(QUESTIONS.spec)) {
-            if (cookieobj[key] in QUESTIONS.spec[key].a) {
-                answers[key] = cookieobj[key];
-            }
-        }
-    }
-    return answers;
+    return Questions.filterAnswers(cookieobj);
 };
 
 const answersCookie = new CookieBase(

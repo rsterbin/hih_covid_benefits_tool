@@ -10,8 +10,7 @@ import Results from './Results/Results';
 import AnswersCookie from '../../storage/cookies/AnswersCookie';
 import VisitorCookie from '../../storage/cookies/VisitorCookie';
 import Logger from '../../utils/Logger';
-
-import QuestionsData from '../../data/questions.json';
+import Questions from '../../logic/Questions';
 
 // TODO: Language pull
 // TODO: Social icons in the footer
@@ -47,12 +46,11 @@ class BenefitsTool extends Component {
     }
 
     saveAnswer = (qcode, letter, completed) => {
-        let newAnswers = { ...this.state.answers };
-        if (typeof QuestionsData.spec[qcode] === 'undefined' ||
-            typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
+        if (!Questions.validAnswer(qcode, letter)) {
             Logger.warn('Request to save unknown question/answer pair ' + qcode + '/' + letter);
             return false;
         }
+        let newAnswers = { ...this.state.answers };
         newAnswers[qcode] = letter;
         AnswersCookie.set(newAnswers);
         this.setState({ answers: newAnswers });
@@ -63,7 +61,7 @@ class BenefitsTool extends Component {
         let ready = true;
         let started = false;
         let step = 0;
-        for (const qcode of QuestionsData.order) {
+        for (const qcode of Questions.question_order) {
             if (typeof this.state.answers[qcode] === 'undefined') {
                 Logger.debug('Needs redirect because of undefined question code ' + qcode, { answers: this.state.answers });
                 ready = false;
@@ -72,7 +70,7 @@ class BenefitsTool extends Component {
                 started = true;
             }
             const letter = this.state.answers[qcode];
-            if (typeof QuestionsData.spec[qcode].a[letter] === 'undefined') {
+            if (!Questions.validAnswer(qcode, letter)) {
                 Logger.warn('Needs redirect because of undefined answer letter ' + letter, { q_code: qcode, answers: this.state.answers });
                 ready = false;
                 break;
