@@ -5,7 +5,7 @@ import PreLaunch from './containers/PreLaunch/PreLaunch';
 
 import './App.css';
 
-// TODO: Session handling -- faster options, functionality post-launch to secure API requests
+// TODO: Admin tool for language
 // TODO: Tests
 
 class App extends Component {
