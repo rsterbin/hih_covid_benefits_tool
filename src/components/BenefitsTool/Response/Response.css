@@ -1,0 +1,5 @@
+.Response a, .Response a:visited, .Response a:active, .Response a:hover {
+    color: #01bf90;
+    text-decoration: underline;
+}
+

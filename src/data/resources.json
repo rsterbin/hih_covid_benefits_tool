@@ -1,0 +1,140 @@
+{
+    "benefits": {
+        "ffcra": [
+            {
+                "id": "33c7d4e0",
+                "text": "results_resources_ffcra_33c7d4e0",
+                "link": {
+                    "en": "https://www.dol.gov/agencies/whd/pandemic"
+                }
+            },
+            {
+                "id": "6d593dce",
+                "text": "results_resources_ffcra_6d593dce",
+                "link": {
+                    "en": "https://www.dol.gov/sites/dolgov/files/WHD/posters/FFCRA_Poster_WH1422_Non-Federal.pdf"
+                }
+            }
+        ],
+        "nys": [
+            {
+                "id": "8589ffd0",
+                "text": "results_resources_nys_8589ffd0",
+                "link": {
+                    "en": "https://paidfamilyleave.ny.gov/COVID19"
+                }
+            },
+            {
+                "id": "c6582622",
+                "text": "results_resources_nys_c6582622",
+                "link": {
+                    "en": "https://paidfamilyleave.ny.gov/system/files/documents/2020/03/covid-19-sick-leave-employees.pdf"
+                }
+            },
+            {
+                "id": "2c42086d",
+                "text": "results_resources_nys_2c42086d",
+                "link": {
+                    "en": "https://labor.ny.gov/formsdocs/factsheets/pdfs/P713.pdf"
+                }
+            },
+            {
+                "id": "e5642f77",
+                "text": "results_resources_nys_e5642f77",
+                "link": {
+                    "en": "https://www1.nyc.gov/site/dca/about/paid-sick-leave-domestic-workers.page"
+                }
+            }
+        ],
+        "dwbor": [
+            {
+                "id": "d6cba143",
+                "text": "results_resources_dwbor_d6cba143",
+                "link": {
+                    "en": "https://labor.ny.gov/legal/domestic-workers-bill-of-rights.shtm"
+                }
+            },
+            {
+                "id": "2d6711ea",
+                "text": "results_resources_dwbor_2d6711ea",
+                "link": {
+                    "en": "https://www1.nyc.gov/site/dca/about/paid-sick-leave-domestic-workers.page"
+                }
+            }
+        ],
+        "cares": [
+            {
+                "id": "82238d0e",
+                "text": "results_resources_cares_82238d0e",
+                "link": {
+                    "en": "https://dol.ny.gov/unemployment/employer-unemployment-insurance-information"
+                }
+            },
+            {
+                "id": "ae4c789b",
+                "text": "results_resources_cares_ae4c789b",
+                "link": {
+                    "en": "https://labor.ny.gov/formsdocs/ui/IA318D.pdf"
+                }
+            },
+            {
+                "id": "adce9590",
+                "text": "results_resources_cares_adce9590",
+                "link": {
+                    "en": "https://labor.ny.gov/ui/cares-act.shtm"
+                }
+            },
+            {
+                "id": "d1bab6c5",
+                "text": "results_resources_cares_d1bab6c5",
+                "link": {
+                    "en": "https://dol.ny.gov/coronavirus-aid-relief-and-economic-security-cares-act"
+                }
+            },
+            {
+                "id": "548bc0fd",
+                "text": "results_resources_cares_548bc0fd",
+                "link": {
+                    "en": "https://labor.ny.gov/legal/laws/pdf/domestic-workers/facts-for-employers.pdf"
+                }
+            },
+            {
+                "id": "364bfe25",
+                "text": "results_resources_cares_364bfe25",
+                "link": {
+                    "en": "https://www.labor.ny.gov/ui/pdfs/pandemic-unemployment-assistance.pdf"
+                }
+            }
+        ]
+    },
+    "other": [
+        {
+            "id": "ab4aa0fc",
+            "text": "results_resources_other_ab4aa0fc",
+            "link": {
+                "en": "https://domesticemployers.org/covid-19-benefits-eligibility-faqs-new-york-city/"
+            }
+        },
+        {
+            "id": "9d2c27c1",
+            "text": "results_resources_other_9d2c27c1",
+            "link": {
+                "en": "https://www1.nyc.gov/assets/dca/downloads/pdf/businesses/Domestic-Household-Employee-Rights.pdf"
+            }
+        },
+        {
+            "id": "70f6c69a",
+            "text": "results_resources_other_70f6c69a",
+            "link": {
+                "en": "https://www.irs.gov/coronavirus/economic-impact-payments"
+            }
+        },
+        {
+            "id": "d34a64e3",
+            "text": "results_resources_other_d34a64e3",
+            "link": {
+                "en": "https://www1.nyc.gov/assets/dca/downloads/pdf/about/Paid-Care-Brochure.pdf"
+            }
+        }
+    ]
+}

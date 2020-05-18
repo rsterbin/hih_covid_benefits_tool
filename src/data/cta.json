@@ -1,0 +1,17 @@
+[
+    {
+        "text": "results_cta_pledge_button_text",
+        "title": "results_cta_pledge_button_help",
+        "link": "https://domesticemployers.org/take-the-pledge/"
+    },
+    {
+        "text": "results_cta_join_button_text",
+        "title": "results_cta_join_button_help",
+        "link": "https://domesticemployers.org/our-work/"
+    },
+    {
+        "text": "results_cta_donate_button_text",
+        "title": "results_cta_join_button_help",
+        "link": "https://domesticworkers.org/coronavirus-care-fund"
+    }
+]

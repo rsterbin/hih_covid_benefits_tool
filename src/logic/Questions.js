@@ -1,19 +1,7 @@
 
 import Local, { Language } from '../utils/Language';
 
-// NB: this class will build the questions data object in the
-// current language -- if we do end up translating the tool, we'll
-// need a different method to pull English for reporting
-
-/* USES
-
-src/containers/BenefitsTool/BenefitsTool.js
-src/containers/BenefitsTool/Confirmation/Confirmation.js
-src/containers/BenefitsTool/Confirmation/EditAnswers/EditAnswers.js
-src/containers/BenefitsTool/Quiz/Quiz.js
-src/storage/cookies/AnswersCookie.js
-
-*/
+const ASCII_CODE_FOR_CAPITAL_A = 65;
 
 class Questions {
     question_order = [
@@ -84,15 +72,26 @@ class Questions {
         }
         if (qcode in this.question_spec) {
             const ascii = letter.charCodeAt(0);
-            if (ascii < 65) {
+            if (ascii < ASCII_CODE_FOR_CAPITAL_A) {
                 return false;
             }
-            if (ascii > 65 + this.question_spec[qcode].answer_count - 1) {
+            if (ascii > ASCII_CODE_FOR_CAPITAL_A + this.question_spec[qcode].answer_count - 1) {
                 return false;
             }
             return true;
         }
         return false;
+    }
+
+    getAnswerLetters(qcode) {
+        if (qcode in this.question_spec) {
+            let letters = [];
+            for (let i = 0; i < this.question_spec[qcode].answer_count; ++i) {
+                letters.push(String.fromCharCode(ASCII_CODE_FOR_CAPITAL_A + i));
+            }
+            return letters;
+        }
+        return [];
     }
 
     filterAnswers(answerKey) {
@@ -186,8 +185,15 @@ class Questions {
     }
 
     loadEnglishData() {
-        const English = new Language('en');
-        this.english_data = this.getData(English);
+        if (Local.language_code === 'en') {
+            if (this.localized_data === null) {
+                this.loadLocalizedData();
+            }
+            this.english_data = this.localized_data;
+        } else {
+            const English = new Language('en');
+            this.english_data = this.getData(English);
+        }
     }
 
     getData(LangObj) {

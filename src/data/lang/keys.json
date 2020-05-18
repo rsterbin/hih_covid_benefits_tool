@@ -69,6 +69,11 @@
         "help": "Header for the resources list",
         "markdown_allowed": false
     },
+    "results_resources_intro": {
+        "section": "Results",
+        "help": "Intro text for the resources list",
+        "markdown_allowed": true
+    },
     "prelaunch_login_password_label": {
         "section": "prelaunch_login",
         "help": "The label for the password entry box",
@@ -378,6 +383,456 @@
     "quiz_school_closed_answer_b": {
         "section": "quiz",
         "help": "Answer B (no) for the School Closed question",
+        "markdown_allowed": false
+    },
+    "results_employee_type_unknown": {
+        "section": "results",
+        "help": "If the employee type is unknown while we're generating a response (unlikely), use this to replace the token \"{{employee_type}}\" wherever it appears in the response text",
+        "markdown_allowed": false
+    },
+    "results_employee_type_a": {
+        "section": "results",
+        "help": "If the employee type selected is A (nanny), use this to replace the token \"{{employee_type}}\" wherever it appears in the response text",
+        "markdown_allowed": false
+    },
+    "results_employee_type_b": {
+        "section": "results",
+        "help": "If the employee type selected is B (house cleaner), use this to replace the token \"{{employee_type}}\" wherever it appears in the response text",
+        "markdown_allowed": false
+    },
+    "results_employee_type_c": {
+        "section": "results",
+        "help": "If the employee type selected is C (home attendant), use this to replace the token \"{{employee_type}}\" wherever it appears in the response text",
+        "markdown_allowed": false
+    },
+    "results_employee_type_d": {
+        "section": "results",
+        "help": "If the employee type selected is D (home health care worker), use this to replace the token \"{{employee_type}}\" wherever it appears in the response text",
+        "markdown_allowed": false
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_y_reason_b": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] YES (EITHER)\n* [reason] SELF-QUARANTINE AND SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_y_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] YES (EITHER)\n* [reason] SELF-QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_y_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] YES (EITHER)\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_y_reason_f": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] YES (EITHER)\n* [reason] FAMILY QUARANTINE OR STAY AT HOME\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_n_reason_b": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] NO\n* [reason] SELF-QUARANTINE AND SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_n_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] NO\n* [reason] SELF-QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_n_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] NO\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_a_books_n_reason_f": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] YES\n* [books] NO\n* [reason] FAMILY QUARANTINE OR STAY AT HOME\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_y_reason_b": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] YES (EITHER)\n* [reason] SELF-QUARANTINE AND SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_y_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] YES (EITHER)\n* [reason] SELF-QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_y_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] YES (EITHER)\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_y_reason_f": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] YES (EITHER)\n* [reason] FAMILY QUARANTINE OR STAY AT HOME\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_n_reason_b": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] NO\n* [reason] SELF-QUARANTINE AND SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_n_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] NO\n* [reason] SELF-QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_n_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] NO\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_ffcra_type_n_agency_b_books_n_reason_f": {
+        "section": "results processing",
+        "help": "This answer appears under FFCRA for the following scenario:\n\n* [type] NANNY, HOUSE CLEANER, or HOME ATTENDANT\n* [agency] NO\n* [books] NO\n* [reason] FAMILY QUARANTINE OR STAY AT HOME\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_c_hours_per_week_a_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] YES, IN COMPLIANCE\n* [hours per week] UNDER 40\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_c_hours_per_week_b_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n* [agency] YES\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_c_hours_per_week_b_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_c_hours_per_week_b_reason_n": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] NONE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_n_hours_per_week_a_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] PARTIALLY OR NO\n* [hours per week] UNDER 40\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_n_hours_per_week_b_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_n_hours_per_week_b_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_a_books_n_hours_per_week_b_reason_n": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] YES\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] NONE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_c_hours_per_week_a_reason_c": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] YES, IN COMPLIANCE\n* [hours per week] UNDER 40\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_c_hours_per_week_b_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_c_hours_per_week_b_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_c_hours_per_week_b_reason_n": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] YES, IN COMPLIANCE\n* [hours per week] 40 OR MORE\n* [reason] NONE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_c_hours_per_week_a_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] PARTIALLY OR NO\n* [hours per week] UNDER 40\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_n_hours_per_week_b_reason_q": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] SELF-QUARANTINE OR FAMILY QUARANTINE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_n_hours_per_week_b_reason_s": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] SCHOOL CLOSED\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_nys_agency_b_books_n_hours_per_week_b_reason_n": {
+        "section": "results processing",
+        "help": "This answer appears under NYS Sick, PFL, and DB for the following scenario:\n\n* [agency] NO\n* [books] PARTIALLY OR NO\n* [hours per week] 40 OR MORE\n* [reason] NONE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_pssl_type_n_length_of_employment_o_hours_per_year_b": {
+        "section": "results processing",
+        "help": "This answer appears under NYC PSSL for the following scenario:\n\n* [type] NANNY or HOUSE CLEANER\n * [length of employment] ONE YEAR OR MORE\n * [hours per year] 80 OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_pssl_type_h_length_of_employment_u_hours_per_year_a": {
+        "section": "results processing",
+        "help": "This answer appears under NYC PSSL for the following scenario:\n\n* [type] HOME ATTENDANT or HOME HEALTH CARE WORKER\n* [length of employment] LESS THAN ONE YEAR\n* [hours per year] UNDER 80\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_pssl_type_h_length_of_employment_u_hours_per_year_b": {
+        "section": "results processing",
+        "help": "This answer appears under NYC PSSL for the following scenario:\n\n* [type] HOME ATTENDANT or HOME HEALTH CARE WORKER\n* [length of employment] LESS THAN ONE YEAR\n* [hours per year] 80 OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_pssl_type_h_length_of_employment_o_hours_per_year_a": {
+        "section": "results processing",
+        "help": "This answer appears under NYC PSSL for the following scenario:\n\n* [type] HOME ATTENDANT or HOME HEALTH CARE WORKER\n* [length of employment] ONE YEAR OR MORE\n* [hours per year] UNDER 80\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_pssl_type_h_length_of_employment_o_hours_per_year_b": {
+        "section": "results processing",
+        "help": "This answer appears under NYC PSSL for the following scenario:\n\n* [type] HOME ATTENDANT or HOME HEALTH CARE WORKER\n* [length of employment] ONE YEAR OR MORE\n* [hours per year] 80 OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_dwbor_length_of_employment_o": {
+        "section": "results processing",
+        "help": "This answer appears under NYS DWBoR for the following scenario:\n\n* [length of employment] ONE YEAR OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_cares_books_c_length_of_employment_u": {
+        "section": "results processing",
+        "help": "This answer appears under CARES Act: UI Benefits for the following scenario:\n\n* [books] YES, IN COMPLIANCE\n* [length of employment] LESS THAN SIX MONTHS\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_cares_books_c_length_of_employment_o": {
+        "section": "results processing",
+        "help": "This answer appears under CARES Act: UI Benefits for the following scenario:\n\n* [books] YES, IN COMPLIANCE\n* [length of employment] SIX MONTHS OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_cares_books_n_length_of_employment_u": {
+        "section": "results processing",
+        "help": "This answer appears under CARES Act: UI Benefits for the following scenario:\n\n* [books] PARTIALLY or NO\n* [length of employment] LESS THAN SIX MONTHS\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_benefit_cares_books_n_length_of_employment_o": {
+        "section": "results processing",
+        "help": "This answer appears under CARES Act: UI Benefits for the following scenario:\n\n* [books] PARTIALLY or NO\n* [length of employment] SIX MONTHS OR MORE\n\nIf `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_section_header_ffcra": {
+        "section": "results processing",
+        "help": "The section header that appears if we're going to show a response for FFCRA",
+        "markdown_allowed": false
+    },
+    "results_section_header_nys": {
+        "section": "results",
+        "help": "The section header that appears if we're going to show a response for NYS Sick, PFL, and DB",
+        "markdown_allowed": false
+    },
+    "results_section_header_pssl": {
+        "section": "results",
+        "help": "The section header that appears if we're going to show a response for NYC PSSL",
+        "markdown_allowed": false
+    },
+    "results_section_header_dwbor": {
+        "section": "results",
+        "help": "The section header that appears if we're going to show a response for NYS DWBoR",
+        "markdown_allowed": false
+    },
+    "results_section_header_cares": {
+        "section": "results",
+        "help": "The section header that appears if we're going to show a response for CARES Act: UI Benefits",
+        "markdown_allowed": false
+    },
+    "results_no_benefits": {
+        "section": "results",
+        "help": "This section appears if we don't have any benefit responses. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_intro": {
+        "section": "results",
+        "help": "This section appears before the benefit responses, but only if we have some to show. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_off_the_books_partial_header": {
+        "section": "results",
+        "help": "The header for the text that appears if they selected \"Yes, partially\" in response to the on-the-books question. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": false
+    },
+    "results_off_the_books_partial_text": {
+        "section": "results",
+        "help": "The text that appears if they selected \"Yes, partially\" in response to the on-the-books question, explaining why they should come into full compliance. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_off_the_books_header": {
+        "section": "results",
+        "help": "The header for the text that appears if they selected \"No\" in response to the on-the-books question. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": false
+    },
+    "results_off_the_books_text": {
+        "section": "results",
+        "help": "The text that appears if they selected \"No\" in response to the on-the-books question, encouraging them to get on the books. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_retaliation_warning_header": {
+        "section": "results",
+        "help": "The header for the warning text that instucts employers never to retaliate against their employees for seeking benefits. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": false
+    },
+    "results_retaliation_warning_text": {
+        "section": "results",
+        "help": "The text warning all employers not to retaliate if their employee seeks benefits. If `{{employee_type}}}` appears in the text, it will be replaced by the type selected.",
+        "markdown_allowed": true
+    },
+    "results_resources_ffcra_header": {
+        "section": "results",
+        "help": "The header for the FFCRA part of the resources section (appears only if we have a FFCRA response)",
+        "markdown_allowed": false
+    },
+    "results_resources_nys_header": {
+        "section": "results",
+        "help": "The header for the NYS Sick, PFL, and DB part of the resources section (appears only if we have a NYS Sick, PFL, and DB response)",
+        "markdown_allowed": false
+    },
+    "results_resources_pssl_header": {
+        "section": "results",
+        "help": "The header for the NYC PSSL part of the resources section (appears only if we have a NYC PSSL response)",
+        "markdown_allowed": false
+    },
+    "results_resources_dwbor_header": {
+        "section": "results",
+        "help": "The header for the NYS DWBoR part of the resources section (appears only if we have a NYS DWBoR response)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_header": {
+        "section": "results",
+        "help": "The header for the CARES Act: UI Benefits part of the resources section (appears only if we have a CARES Act: UI Benefits response)",
+        "markdown_allowed": false
+    },
+    "results_resources_other_header": {
+        "section": "results",
+        "help": "The header for the always-show part of the resources section (displayed with no header if there aren't any benefit resources)",
+        "markdown_allowed": false
+    },
+    "results_resources_ffcra_33c7d4e0": {
+        "section": "results resources",
+        "help": "The link text for [this FFCRA resource](https://www.dol.gov/agencies/whd/pandemic)",
+        "markdown_allowed": false
+    },
+    "results_resources_ffcra_6d593dce": {
+        "section": "results resources",
+        "help": "The link text for [this FFCRA resource](https://www.dol.gov/sites/dolgov/files/WHD/posters/FFCRA_Poster_WH1422_Non-Federal.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_nys_8589ffd0": {
+        "section": "results resources",
+        "help": "The link text for [this NYS Sick, PFL, and DB resource](https://paidfamilyleave.ny.gov/COVID19)",
+        "markdown_allowed": false
+    },
+    "results_resources_nys_c6582622": {
+        "section": "results resources",
+        "help": "The link text for [this NYS Sick, PFL, and DB resource](https://paidfamilyleave.ny.gov/system/files/documents/2020/03/covid-19-sick-leave-employees.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_nys_2c42086d": {
+        "section": "results resources",
+        "help": "The link text for [this NYS Sick, PFL, and DB resource](https://labor.ny.gov/formsdocs/factsheets/pdfs/P713.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_nys_e5642f77": {
+        "section": "results resources",
+        "help": "The link text for [this NYS Sick, PFL, and DB resource](https://www1.nyc.gov/site/dca/about/paid-sick-leave-domestic-workers.page)",
+        "markdown_allowed": false
+    },
+    "results_resources_dwbor_d6cba143": {
+        "section": "results resources",
+        "help": "The link text for [this NYS DWBoR resource](https://labor.ny.gov/legal/domestic-workers-bill-of-rights.shtm)",
+        "markdown_allowed": false
+    },
+    "results_resources_dwbor_2d6711ea": {
+        "section": "results resources",
+        "help": "The link text for [this NYS DWBoR resource](https://www1.nyc.gov/site/dca/about/paid-sick-leave-domestic-workers.page)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_82238d0e": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://dol.ny.gov/unemployment/employer-unemployment-insurance-information)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_ae4c789b": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://labor.ny.gov/formsdocs/ui/IA318D.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_adce9590": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://labor.ny.gov/ui/cares-act.shtm)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_d1bab6c5": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://dol.ny.gov/coronavirus-aid-relief-and-economic-security-cares-act)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_548bc0fd": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://labor.ny.gov/legal/laws/pdf/domestic-workers/facts-for-employers.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_cares_364bfe25": {
+        "section": "results resources",
+        "help": "The link text for [this CARES Act: UI Benefits resource](https://www.labor.ny.gov/ui/pdfs/pandemic-unemployment-assistance.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_other_ab4aa0fc": {
+        "section": "results resources",
+        "help": "The link text for [this general resource](https://domesticemployers.org/covid-19-benefits-eligibility-faqs-new-york-city/)",
+        "markdown_allowed": false
+    },
+    "results_resources_other_9d2c27c1": {
+        "section": "results resources",
+        "help": "The link text for [this general resource](https://www1.nyc.gov/assets/dca/downloads/pdf/businesses/Domestic-Household-Employee-Rights.pdf)",
+        "markdown_allowed": false
+    },
+    "results_resources_other_70f6c69a": {
+        "section": "results resources",
+        "help": "The link text for [this general resource](https://www.irs.gov/coronavirus/economic-impact-payments)",
+        "markdown_allowed": false
+    },
+    "results_resources_other_d34a64e3": {
+        "section": "results resources",
+        "help": "The link text for [this general resource](https://www1.nyc.gov/assets/dca/downloads/pdf/about/Paid-Care-Brochure.pdf)",
+        "markdown_allowed": false
+    },
+    "results_cta_pledge_button_text": {
+        "section": "results",
+        "help": "The button text for the CTA item asking users to take the COVID-19 Fair Care Pledge",
+        "markdown_allowed": false
+    },
+    "results_cta_pledge_button_help": {
+        "section": "results",
+        "help": "The tooltip text for the CTA item asking users to take the COVID-19 Fair Care Pledge",
+        "markdown_allowed": false
+    },
+    "results_cta_join_button_text": {
+        "section": "results",
+        "help": "The button text for the CTA item asking users to join Hand-In-Hand",
+        "markdown_allowed": false
+    },
+    "results_cta_join_button_help": {
+        "section": "results",
+        "help": "The tooltip text for the CTA item asking users to join Hand-In-Hand",
+        "markdown_allowed": false
+    },
+    "results_cta_donate_button_text": {
+        "section": "results",
+        "help": "The button text for the CTA item asking users to donate to the NDWA Coronavirus Care Fund",
+        "markdown_allowed": false
+    },
+    "results_cta_join_button_help": {
+        "section": "results",
+        "help": "The tooltip text for the CTA item asking users donate to the NDWA Coronavirus Care Fund",
         "markdown_allowed": false
     }
 }

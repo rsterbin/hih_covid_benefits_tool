@@ -16,7 +16,7 @@ const intro = (props) => {
         <div>
             <h2>{props.lang.header}</h2>
 
-            <div className="Intro Message" dangerouslySetInnerHTML={{__html: props.lang.message}}></div>
+            <div className="IntroMessage" dangerouslySetInnerHTML={{__html: props.lang.message}}></div>
 
             <Controls buttons={buttons} />
         </div>

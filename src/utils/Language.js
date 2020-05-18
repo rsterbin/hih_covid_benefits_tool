@@ -1,4 +1,5 @@
 import Logger from './Logger';
+import LanguageCookie from '../storage/cookies/LanguageCookie';
 
 import Keys from '../data/lang/keys.json';
 
@@ -7,12 +8,7 @@ class Language {
     language_code = null;
     loaded = false;
     translations = null;
-
-    constructor(code) {
-        if (code) {
-            this.load(code);
-        }
-    }
+    allowed_languages = [ 'en' ];
 
     load(code) {
         let r = null;
@@ -30,13 +26,28 @@ class Language {
         this.loaded = true;
     }
 
-    get(key) {
+    init() {
+        let cookie_lang = LanguageCookie.get();
+        if (cookie_lang && this.allowed_languages.includes(cookie_lang)) {
+            this.load(cookie_lang);
+        } else {
+            this.load('en');
+        }
+    }
+
+    get(key, transform) {
         if (!this.loaded) {
-            Logger.alert('Translation requested before the language was loaded', { key: key });
-            return key;
+            this.init();
+            if (!this.loaded) {
+                Logger.alert('Translation was requested, but the current language could not be loaded ', { key: key });
+                return key;
+            }
         }
         if (key in this.translations) {
             let translation = this.translations[key];
+            if (typeof transform === 'function') {
+                translation = transform(translation);
+            }
             if (key in Keys) {
                 if (Keys[key].markdown_allowed) {
                     translation = this.markdown(translation);
