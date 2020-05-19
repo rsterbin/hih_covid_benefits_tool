@@ -1,11 +1,13 @@
 .BenefitsTool {
     width: 100%;
+    height: 100%;
     background-color: white;
 }
 
 .Logo img {
-    height: 10%;
-    width: 50%;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .Header {
@@ -29,7 +31,69 @@
 }
 
 .MainContent {
-    width: 80%;
+    width: 90%;
     margin: 10px auto;
+    padding-bottom: 5em;
+}
+
+.Footer {
+    border-top: 0.03em solid #01BF90;
+    color: white;
+    font-weight: bold;
+    padding: 1em 0;
+    overflow: hidden;
+}
+
+.Footer a,
+.Footer a:hover,
+.Footer a:visited,
+.Footer a:active {
+    color: #01BF90;
+    text-decoration: none;
+}
+
+.SocialIcons {
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+.SocialIcons li {
+    display: inline-block;
+    padding: 0;
+    margin-left: 1em;
+    font-size: 1em;
+}
+
+.Footer .Links {
+    list-style: none;
+    display: block;
+    padding: 0;
+    margin: 0;
+    float: right;
+}
+
+.Footer .Links li {
+    display: inline-block;
+    padding: 0;
+    margin-right: 1em;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+@media (min-width: 600px) {
+    .Logo img {
+        width: 50%;
+        margin: 0;
+    }
+
+    .MainContent {
+        width: 80%;
+        margin: 10px auto;
+        min-height: 400px;
+        padding-bottom: 3em;
+    }
 }
 

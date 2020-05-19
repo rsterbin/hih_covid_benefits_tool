@@ -8,7 +8,7 @@ const viewAnswer = (props) => {
                 className="EditButton"
                 title={props.lang.edit_title}
                 onClick={props.clickedEdit}>
-                <i className="fas fa-pencil-alt" aria-hidden="true" title={props.lang.edit_alt}></i>
+                <i className="fas fa-pencil-alt" title={props.lang.edit_alt}></i>
             </button>
         </div>
     );
