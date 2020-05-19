@@ -4,7 +4,7 @@ const identifierCookie = new CookieBase(
     'hnct-sessionid', // name
     {
         path: '/',
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 10,
         sameSite: 'Strict'
     } // spec
 );

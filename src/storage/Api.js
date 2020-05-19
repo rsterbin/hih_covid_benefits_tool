@@ -59,6 +59,7 @@ class Api {
         if (token) {
             this.checkToken({ visitor_id: visitor_id, token: token })
                 .then(response => {
+                    IdentifierCookie.set(token); // re-up on the expiration
                     if (typeof on_success === 'function') {
                         on_success();
                     }
