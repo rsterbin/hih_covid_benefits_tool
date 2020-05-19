@@ -43,6 +43,10 @@ class CookieBase {
         return this.manager.set(this.name, val, this.specs);
     }
 
+    remove() {
+        this.manager.remove(this.name);
+    }
+
     expandData(cookiestring) {
         let cookieobj = {};
         try {

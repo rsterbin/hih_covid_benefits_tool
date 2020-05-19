@@ -18,7 +18,7 @@ const intro = (props) => {
 
             <div className="IntroMessage" dangerouslySetInnerHTML={{__html: props.lang.message}}></div>
 
-            <Controls buttons={buttons} />
+            <Controls buttons={buttons} errorMessage={props.error} />
         </div>
     );
 };

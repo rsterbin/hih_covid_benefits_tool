@@ -93,6 +93,7 @@ class BenefitsTool extends Component {
         }
 
         const doQuiz = () => <Quiz
+            visitor_id={this.state.visitor_id}
             answers={this.state.answers}
             saveAnswer={this.saveAnswer} />;
 
@@ -107,6 +108,7 @@ class BenefitsTool extends Component {
             needsRedirect={this.needsRedirect} />;
 
         const doLanding = () => <Landing
+            visitor_id={this.state.visitor_id}
             clearAnswers={this.clearAnswers} />;
 
         return (

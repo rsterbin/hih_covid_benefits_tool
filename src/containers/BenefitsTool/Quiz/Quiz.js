@@ -7,6 +7,7 @@ import Controls from '../../../components/UI/Controls/Controls';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
+import Api from '../../../storage/Api';
 
 import Questions from '../../../logic/Questions';
 
@@ -71,6 +72,7 @@ class Quiz extends Component {
             cancel_link_text: Language.get('quiz_cancel_link_text'),
         };
         this.setState({ loaded_lang: true });
+        Api.bumpSession(this.props.visitor_id);
     }
 
     currentStep() {

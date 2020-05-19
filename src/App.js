@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+// After launch, load Main directly instead
 import PreLaunch from './containers/PreLaunch/PreLaunch';
 
 import './App.css';
 
-// TODO: Admin tool for language
 // TODO: Tests
 
 class App extends Component {

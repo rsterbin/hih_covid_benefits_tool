@@ -9,6 +9,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
+import IdentifierCookie from '../../../storage/cookies/IdentifierCookie';
 
 import Questions from '../../../logic/Questions';
 
@@ -69,6 +70,7 @@ class Confirmation extends Component {
 
     confirmAnswers = () => {
         const data = {
+            token: IdentifierCookie.get(),
             visitor_id: this.props.visitor_id,
             answers: Questions.getEnglishAnswers(this.props.answers)
         };
@@ -83,21 +85,28 @@ class Confirmation extends Component {
         this.setState({ loading: true });
         Api.recordResponse(data)
             .then(response => {
+                IdentifierCookie.remove();
                 this.setState({ loading: false });
                 this.props.history.push('/results');
             })
             .catch(error => {
+                if (!error.isAxiosError) {
+                    throw error;
+                }
                 // This is an alert-level error for me the programmer, but not
                 // for the user -- if the API is malfunctioning, let's give it
                 // one chance to get over a hiccup, then send them on to the
                 // results page without recording anything
                 Logger.alert('Could not record response', { api_error: Api.parseAxiosError(error) });
-                if (this.state.hasRecordingError) {
-                    this.setState({ loading: false, hasRecordingError: false });
-                    this.props.history.push('/results');
-                } else {
-                    this.setState({ loading: false, hasRecordingError: true });
-                }
+                this.setState((current) => {
+                    if (this.state.hasRecordingError) {
+                        IdentifierCookie.remove();
+                        this.props.history.push('/results');
+                        return { loading: false, hasRecordingError: false };
+                    } else {
+                        return { loading: false, hasRecordingError: true };
+                    }
+                });
             });
     };
 
@@ -120,10 +129,12 @@ class Confirmation extends Component {
             },
             controls: {
                 confirm_button: Language.get('confirm_button_text'),
-                restart_link: Language.get('confirm_restart_link_text')
+                restart_link: Language.get('confirm_restart_link_text'),
+                recording_error: Language.get('confirm_recording_error')
             }
         };
         this.setState({ loaded_lang: true });
+        Api.bumpSession(this.props.visitor_id);
     }
 
     okToSubmitContact() {
@@ -186,7 +197,7 @@ class Confirmation extends Component {
                     zipChanged={this.changeZip}
                     lang={this.lang.contact} />
                 <Controls
-                    errorMessage={this.state.hasRecordingError ? 'Oops! Please try again' : null}
+                    errorMessage={this.state.hasRecordingError ? this.lang.controls.recording_error : null}
                     buttons={buttons}
                     links={links} />
             </div>

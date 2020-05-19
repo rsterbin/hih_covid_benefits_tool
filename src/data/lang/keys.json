@@ -64,6 +64,11 @@
         "help": "Complete message for the landing page",
         "markdown_allowed": true
     },
+    "landing_error": {
+        "section": "landing",
+        "help": "If we can't set things up properly when starting the quiz, this message appears",
+        "markdown_allowed": false
+    },
     "results_resources_header": {
         "section": "Results",
         "help": "Header for the resources list",
@@ -122,6 +127,11 @@
     "confirm_button_text": {
         "section": "confirm",
         "help": "Text for the button you use to confirm answers and get results",
+        "markdown_allowed": false
+    },
+    "confirm_recording_error": {
+        "section": "confirm",
+        "help": "Error message that appears if the backend isn't working properly and we couldn't record their answers.",
         "markdown_allowed": false
     },
     "confirm_restart_link_text": {

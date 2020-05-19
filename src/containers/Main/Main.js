@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Aux from '../../hoc/Aux/Aux';
 import Layout from '../../hoc/Layout/Layout';
-import BenefitsTool from '../BenefitsTool/BenefitsTool';
+import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
+import Admin from '../../containers/Admin/Admin';
 import CookieNotice from '../CookieNotice/CookieNotice';
 import Language from '../../utils/Language';
 
-class PostLaunch extends Component {
+class Main extends Component {
 
     state = {
         loaded: false
@@ -29,11 +32,18 @@ class PostLaunch extends Component {
 
         return (
             <Layout lang={this.lang.layout}>
-                <BenefitsTool />
-                <CookieNotice />
+                <Switch>
+                    <Route path="/admin" component={Admin} />
+                    <Route path="/" render={() => (
+                        <Aux>
+                            <BenefitsTool />
+                            <CookieNotice />
+                        </Aux>
+                    )} />
+                </Switch>
             </Layout>
         );
     }
 }
 
-export default PostLaunch;
+export default Main;

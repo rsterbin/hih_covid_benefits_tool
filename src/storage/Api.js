@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+import IdentifierCookie from './cookies/IdentifierCookie';
+import Logger from '../utils/Logger';
+
 const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/v1.0' : 'http://localhost2:3001/api/v1.0';
 
 class Api {
@@ -51,15 +54,77 @@ class Api {
         }
     }
 
+    bumpSession(visitor_id, on_success, on_error) {
+        let token = IdentifierCookie.get();
+        if (token) {
+            this.checkToken({ visitor_id: visitor_id, token: token })
+                .then(response => {
+                    if (typeof on_success === 'function') {
+                        on_success();
+                    }
+                })
+                .catch(error => {
+                    if (!error.isAxiosError) {
+                        throw error;
+                    }
+                    const parsed = this.parseAxiosError(error);
+                    if (parsed.code !== 'TOKEN_INVALID') {
+                        Logger.alert('Session check failed', { api_error: parsed });
+                        if (typeof on_error === 'function') {
+                            on_error();
+                        }
+                    }
+                    this.bumpSessionInit(visitor_id, on_success, on_error);
+                });
+        } else {
+            this.bumpSessionInit(visitor_id, on_success, on_error);
+        }
+    }
+
+    bumpSessionInit(visitor_id, on_success, on_error) {
+        this.initSession({ visitor_id: visitor_id })
+            .then(response => {
+                if (response.data.token) {
+                    IdentifierCookie.set(response.data.token);
+                    if (typeof on_success === 'function') {
+                        on_success();
+                    }
+                } else {
+                    Logger.alert('Session init succeeded without returning a token', { returned: response.data });
+                    if (typeof on_error === 'function') {
+                        on_error();
+                    }
+                }
+            })
+            .catch(error => {
+                if (!error.isAxiosError) {
+                    throw error;
+                }
+                const parsed = this.parseAxiosError(error);
+                Logger.alert('Session init failed', { api_error: parsed });
+                if (typeof on_error === 'function') {
+                    on_error();
+                }
+            });
+    }
+
+    initSession(data) {
+        return this.getAxios().post('/session/init', data);
+    }
+
+    checkToken(data) {
+        return this.getAxios().post('/session/check', data);
+    }
+
     recordResponse(data) {
         return this.getAxios().post('/response/record', data);
     }
 
-    checkLogin(data) {
+    checkPrelaunchLogin(data) {
         return this.getAxios().post('/prelaunch/login', data);
     }
 
-    checkToken(data) {
+    checkPrelaunchToken(data) {
         return this.getAxios().post('/prelaunch/check', data);
     }
 }

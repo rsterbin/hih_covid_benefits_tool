@@ -32,7 +32,7 @@ class Login extends Component {
             loading: true,
             loginError: false
         });
-        Api.checkLogin({
+        Api.checkPrelaunchLogin({
             username: this.state.username,
             password: this.state.password
         })

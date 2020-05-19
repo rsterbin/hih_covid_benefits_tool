@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Layout from '../../hoc/Layout/Layout';
+import Main from '../Main/Main';
+import Login from '../Login/Login';
 import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
-import BenefitsTool from '../../containers/BenefitsTool/BenefitsTool';
-import Login from '../../containers/Login/Login';
 import LoginCookie from '../../storage/cookies/LoginCookie';
-import CookieNotice from '../CookieNotice/CookieNotice';
 import Api from '../../storage/Api';
-import Language from '../../utils/Language';
 import Logger from '../../utils/Logger';
 
 class PreLaunch extends Component {
@@ -24,15 +21,9 @@ class PreLaunch extends Component {
     };
 
     componentDidMount() {
-        this.lang = {
-            layout: {
-                logo_alt_text: Language.get('layout_logo_alt_text'),
-                header_title: Language.get('layout_header_title')
-            }
-        };
         let token = LoginCookie.get();
         if (token) {
-            Api.checkToken({ token: token })
+            Api.checkPrelaunchToken({ token: token })
                 .then(response => {
                     this.setState({ loggedIn: true, loaded: true });
                 })
@@ -57,12 +48,7 @@ class PreLaunch extends Component {
         }
 
         if (this.state.loggedIn) {
-            return (
-                <Layout lang={this.lang.layout}>
-                    <BenefitsTool />
-                    <CookieNotice />
-                </Layout>
-            );
+            return <Main />;
         } else {
             return (
                 <LoginLayout>
