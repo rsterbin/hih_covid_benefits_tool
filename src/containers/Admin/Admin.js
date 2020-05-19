@@ -60,9 +60,10 @@ class Admin extends Component {
             );
 
         } else {
+            const header = 'Admin Login';
             return (
                 <LoginLayout>
-                    <Login updateLoginState={this.updateLogin} />
+                    <Login header={header} updateLoginState={this.updateLogin} />
                 </LoginLayout>
             );
         }

@@ -85,6 +85,7 @@ class Login extends Component {
             return <Spinner />;
         }
         return <LoginBox
+            header={this.props.header}
             loading={this.state.loading}
             loginError={this.state.loginError}
             username={this.state.username}

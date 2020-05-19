@@ -12,6 +12,9 @@ const loginBox = (props) => {
 
     return (
         <div className="LoginBox">
+            {props.header ? (
+                <h3>{props.header}</h3>
+            ) : null}
             {props.loginError ?
                 <div className="Error">{props.lang.login_error}</div>
             : null}
