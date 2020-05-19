@@ -32,18 +32,24 @@ class Login extends Component {
             loading: true,
             loginError: false
         });
-        Api.checkPrelaunchLogin({
+        const data = {
             username: this.state.username,
             password: this.state.password
-        })
-        .then(response => {
+        };
+        let call = null;
+        if (this.props.login_type === 'prelaunch') {
+            call = Api.checkPrelaunchLogin(data);
+        } else {
+            call = Api.checkAdminLogin(data);
+        }
+        call.then(response => {
             if (response.data.token) {
                 this.setState({
                     loading: false,
                 });
                 this.props.updateLoginState(response.data.token);
             } else {
-                Logger.alert('Prelaunch log in succeeded without returning a token', { returned: response.data });
+                Logger.alert('Log in succeeded without returning a token', { returned: response.data, login_type: this.props.login_type });
                 this.setState({
                     loading: false,
                     loginError: true
@@ -55,7 +61,7 @@ class Login extends Component {
             if (parsed.code !== 'LOGIN_INCORRECT' &&
                 parsed.code !== 'USERNAME_REQUIRED' &&
                 parsed.code !== 'PASSWORD_REQUIRED') {
-                Logger.alert('Prelaunch log in failed', { api_error: parsed });
+                Logger.alert('Log in failed', { api_error: parsed, login_type: this.props.login_type });
             }
             this.setState({
                 loading: false,

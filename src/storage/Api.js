@@ -118,7 +118,15 @@ class Api {
     }
 
     recordResponse(data) {
-        return this.getAxios().post('/response/record', data);
+        return this.getAxios().post('/response', data);
+    }
+
+    checkAdminLogin(data) {
+        return this.getAxios().post('/admin/session/login', data);
+    }
+
+    checkAdminToken(data) {
+        return this.getAxios().post('/admin/session/check', data);
     }
 
     checkPrelaunchLogin(data) {

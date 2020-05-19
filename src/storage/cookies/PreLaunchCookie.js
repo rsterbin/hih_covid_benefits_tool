@@ -1,7 +1,7 @@
 import CookieBase from '../CookieBase';
 
-const loginCookie = new CookieBase(
-    'hnct-login', // name
+const preLaunchCookie = new CookieBase(
+    'hnct-prelaunch', // name
     {
         path: '/',
         maxAge: 60 * 60,
@@ -9,4 +9,4 @@ const loginCookie = new CookieBase(
     } // spec
 );
 
-export default loginCookie;
+export default preLaunchCookie;

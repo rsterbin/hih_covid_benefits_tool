@@ -4,7 +4,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Main from '../Main/Main';
 import Login from '../Login/Login';
 import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
-import LoginCookie from '../../storage/cookies/LoginCookie';
+import PreLaunchCookie from '../../storage/cookies/PreLaunchCookie';
 import Api from '../../storage/Api';
 import Logger from '../../utils/Logger';
 
@@ -17,11 +17,11 @@ class PreLaunch extends Component {
 
     updateLogin = (token) => {
         this.setState({ loggedIn: true, loaded: true });
-        LoginCookie.set(token);
+        PreLaunchCookie.set(token);
     };
 
     componentDidMount() {
-        let token = LoginCookie.get();
+        let token = PreLaunchCookie.get();
         if (token) {
             Api.checkPrelaunchToken({ token: token })
                 .then(response => {
@@ -52,7 +52,9 @@ class PreLaunch extends Component {
         } else {
             return (
                 <LoginLayout>
-                    <Login updateLoginState={this.updateLogin} />
+                    <Login
+                        login_type="prelaunch"
+                        updateLoginState={this.updateLogin} />
                 </LoginLayout>
             );
         }
