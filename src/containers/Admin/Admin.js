@@ -5,10 +5,11 @@ import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
 import Login from '../Login/Login';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
 import LoginCookie from '../../storage/cookies/LoginCookie';
 import Api from '../../storage/Api';
 import Logger from '../../utils/Logger';
+
+import './Admin.css';
 
 class Admin extends Component {
 
@@ -62,9 +63,9 @@ class Admin extends Component {
         } else {
             const header = 'Admin Login';
             return (
-                <LoginLayout>
+                <div className="AdminLogin">
                     <Login header={header} updateLoginState={this.updateLogin} />
-                </LoginLayout>
+                </div>
             );
         }
     }
