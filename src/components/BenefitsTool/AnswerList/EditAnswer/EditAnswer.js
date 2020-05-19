@@ -22,8 +22,7 @@ const editAnswer = (props) => {
             <button className="CancelButton"
                 title={props.lang.cancel_title}
                 onClick={props.clickedCancel}>
-                <i className="fas fa-times" aria-hidden="true"></i>
-                <span>{props.lang.cancel_alt}</span>
+                <i className="fas fa-times" aria-hidden="true" title={props.lang.cancel_alt}></i>
             </button>
             <Controls
                 buttons={abuttons}
