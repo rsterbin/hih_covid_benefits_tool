@@ -9,8 +9,6 @@ import CollectResults from '../../../logic/CollectResults';
 
 import CtaData from '../../../data/cta.json';
 
-// TODO: Language keys for CTA buttons and links
-
 const CTA_TRACKING_CODE = '?utm_source=hih-covid-quiz';
 
 class Results extends Component {

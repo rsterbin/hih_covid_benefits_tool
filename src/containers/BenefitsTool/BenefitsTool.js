@@ -12,9 +12,6 @@ import VisitorCookie from '../../storage/cookies/VisitorCookie';
 import Logger from '../../utils/Logger';
 import Questions from '../../logic/Questions';
 
-// TODO: Session tokens for securing the confirmation
-// TODO: Social icons in the footer
-
 class BenefitsTool extends Component {
 
     state = {

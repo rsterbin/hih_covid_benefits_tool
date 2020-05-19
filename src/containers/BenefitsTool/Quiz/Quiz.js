@@ -11,9 +11,6 @@ import Api from '../../../storage/Api';
 
 import Questions from '../../../logic/Questions';
 
-// TODO: Add links in the controls to Language
-// TODO: Replace console logging with use of the logger
-
 class Quiz extends Component {
 
     state = {
