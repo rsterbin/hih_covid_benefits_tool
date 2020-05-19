@@ -20,12 +20,12 @@ class Logger {
     constructor(level, options) {
         this.cutoffLevel = this.getLevelRank(level ? level : 'WARN');
         let clevel = 'DEBUG';
-        if (typeof options === 'object' && options.console_level) {
+        if (options && 'console_level' in options) {
             clevel = options.console_level;
         }
         this.cutoffLevelConsole = this.getLevelRank(clevel);
         let alevel = 'ALERT';
-        if (typeof options === 'object' && options.api_level) {
+        if (options && 'api_level' in options) {
             alevel = options.api_level;
         }
         this.cutoffLevelApi = this.getLevelRank(alevel);
