@@ -1,0 +1,14 @@
+
+.DashboardBlock {
+    width: 40%;
+    display: inline-block;
+    border: 0.05em solid #ccc;
+    margin: 1em;
+    padding: 1em;
+}
+
+.DashboardBlock h4 {
+    margin: 0;
+    padding: 0;
+}
+

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Message from '../Message/Message';
+
 import './Controls.css';
 
 const controls = (props) => {
@@ -42,9 +44,7 @@ const controls = (props) => {
     return (
         <div className="Controls">
         {props.errorMessage ?
-            <div className="ControlsError">
-                <p>{props.errorMessage}</p>
-            </div>
+            <Message type="error" text={props.errorMessage} />
         : null}
         {buttons.length > 0 ?
             <div className={props.buttonLayout === 'vert' ? 'VertButtonContainer' : 'ButtonContainer'}>

@@ -3,7 +3,8 @@
 .Spinner {
     font-size: 10px;
     margin: 50px auto;
-    text-indent: -9999em;
+    /* text-indent: -9999em; */
+    color: transparent; /* replaced the text hider because the indent was making the scroll bars go nuts */
     width: 11em;
     height: 11em;
     border-radius: 50%;
@@ -45,6 +46,24 @@
     bottom: 0;
     right: 0;
 }
+
+.Spinner.GrayFlipped {
+    background: #ffffff;
+    background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
+}
+
+.Spinner.GrayFlipped:before {
+    background: #ffffff;
+}
+
+.Spinner.GrayFlipped:after {
+    background: #acbfba;
+}
+
 
 @-webkit-keyframes load3 {
     0% {

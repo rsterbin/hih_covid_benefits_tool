@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
+import AdminLayout from '../../hoc/AdminLayout/AdminLayout';
 import Login from '../Login/Login';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import LoginCookie from '../../storage/cookies/LoginCookie';
@@ -11,15 +12,21 @@ import Logger from '../../utils/Logger';
 
 import './Admin.css';
 
+// TODO: Use context to pass the token to children?
+// const TokenContext = React.createContext(null);
+// TODO: Use react-idle-timer to trigger token updates?
+// https://github.com/SupremeTechnopriest/react-idle-timer
+
 class Admin extends Component {
 
     state = {
         loggedIn: false,
-        loaded: false
+        loaded: false,
+        token: null
     };
 
     updateLogin = (token) => {
-        this.setState({ loggedIn: true, loaded: true });
+        this.setState({ loggedIn: true, loaded: true, token: token });
         LoginCookie.set(token);
     };
 
@@ -28,7 +35,7 @@ class Admin extends Component {
         if (token) {
             Api.checkAdminToken({ token: token })
                 .then(response => {
-                    this.setState({ loggedIn: true, loaded: true });
+                    this.setState({ loggedIn: true, loaded: true, token: token });
                 })
                 .catch(error => {
                     if (!error.isAxiosError) {
@@ -51,13 +58,15 @@ class Admin extends Component {
         }
 
         if (this.state.loggedIn) {
+            const doLanguage = () => <Language token={this.state.token} />;
+            const doDashboard = () => <Dashboard token={this.state.token} />;
             return (
-                <div className="Admin">
+                <AdminLayout>
                     <Switch>
-                        <Route path="/admin/language" render={() => <Language />} />
-                        <Route path="/admin" render={() => <Dashboard />} />
+                        <Route path="/admin/language" name="Language" render={doLanguage} />
+                        <Route path="/admin" name="Dashboard" render={doDashboard} />
                     </Switch>
-                </div>
+                </AdminLayout>
             );
 
         } else {

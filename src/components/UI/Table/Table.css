@@ -1,0 +1,35 @@
+
+.AdminTable table {
+    width: 100%;
+    background-color: #ccf9ee;
+    border: 0.03em solid #017054;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.AdminTable th {
+    padding: 0.3em;
+}
+
+.AdminTable table thead th {
+    border-bottom: 0.03em solid slateblue;
+}
+
+.AdminTable td {
+    padding: 0.5em 0.75em;
+}
+
+.AdminTable table tbody tr {
+    background-color: white;
+}
+
+.AdminTable table tbody tr:nth-child(even) {
+    background-color: #f2fcf9;
+}
+
+.AdminTable td.Clickable {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #01BF90;
+}
+

@@ -32,7 +32,7 @@ class Api {
             context.status = error.response.status;
             return {
                 code: error.response.data.code,
-                message: error.response.data.message,
+                message: error.response.data.msg,
                 context: context
             };
         } else if (error.request) {
@@ -53,6 +53,8 @@ class Api {
             };
         }
     }
+
+    // Front end
 
     bumpSession(visitor_id, on_success, on_error) {
         let token = IdentifierCookie.get();
@@ -121,6 +123,8 @@ class Api {
         return this.getAxios().post('/response', data);
     }
 
+    // Admin
+
     checkAdminLogin(data) {
         return this.getAxios().post('/admin/session/login', data);
     }
@@ -128,6 +132,24 @@ class Api {
     checkAdminToken(data) {
         return this.getAxios().post('/admin/session/check', data);
     }
+
+    getAllLanguage(data) {
+        return this.getAxios().post('/admin/language', data);
+    }
+
+    getLanguageInfo(data) {
+        return this.getAxios().post('/admin/language/info', data);
+    }
+
+    saveTranslation(data) {
+        return this.getAxios().post('/admin/language/save', data);
+    }
+
+    initializeLanguage(data) {
+        return this.getAxios().post('/admin/language/init', data);
+    }
+
+    // Prelaunch
 
     checkPrelaunchLogin(data) {
         return this.getAxios().post('/prelaunch/login', data);

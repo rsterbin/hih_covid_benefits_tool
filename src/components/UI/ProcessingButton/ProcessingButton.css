@@ -1,0 +1,36 @@
+
+.ProcessingButton {
+    width: 5em;
+    height: 1.5em;
+    border: 0.03em solid #818181;
+    background-color: #01BF90;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.5em;
+}
+
+.ProcessingButton.Working {
+    border-color: #aaa;
+    background-color: #ACBFBA;
+}
+
+.ProcessingButton .Spinner {
+    width: 1em;
+    height: 1em;
+    margin: 0.75em auto;
+}
+
+.ProcessingButton.LargeSize {
+    width: 10em;
+    height: 3em;
+    line-height: 3em;
+}
+
+.ProcessingButton.LargeSize .Spinner {
+    width: 1.5em;
+    height: 1.5em;
+    margin: 1.5em auto;
+}
+

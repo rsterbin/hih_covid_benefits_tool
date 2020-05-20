@@ -1,0 +1,20 @@
+.AdminSection .Warning {
+    color: brown;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.AdminSection h2 {
+    color: #01BF90;
+    margin-bottom: 0.5em;
+}
+
+.AdminBreadcrumbs {
+    color: #818181;
+    font-size: 0.85em;
+}
+
+.AdminBody {
+    margin-top: 1em;
+}
+

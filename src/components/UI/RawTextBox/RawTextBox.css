@@ -1,0 +1,12 @@
+
+.RawTextBox {
+    border: 0.03em solid #818181;
+    padding: 0.75em;
+    margin: 1em 0;
+}
+
+.RawTextBox.Empty {
+    color: #ccc;
+    font-style: italic;
+}
+

@@ -1,0 +1,38 @@
+.Message {
+    background-color: aliceblue;
+    color: darkblue;
+    border: 0.025em solid darkblue;
+    margin: 2em;
+    padding: 1em;
+}
+
+.Message.ErrorMessage {
+    background-color: salmon;
+    color: darkred;
+    border-color: darkred;
+}
+
+.Message.SuccessMessage {
+    background-color: lightgreen;
+    color: darkgreen;
+    border-color: darkgreen;
+}
+
+.Message p {
+    display: inline;
+}
+
+.TryAgain {
+    display: inline;
+    border: none;
+    padding: 0 0 0 1em;
+    margin: 0;
+    cursor: pointer;
+    background-color: transparent;
+    color: inherit;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+
