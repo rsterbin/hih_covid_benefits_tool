@@ -133,6 +133,14 @@ class Api {
         return this.getAxios().post('/admin/session/check', data);
     }
 
+    getRecentResponses(data) {
+        return this.getAxios().post('/admin/responses/recent', data);
+    }
+
+    getRecentContacts(data) {
+        return this.getAxios().post('/admin/contacts/recent', data);
+    }
+
     getAllLanguage(data) {
         return this.getAxios().post('/admin/language', data);
     }

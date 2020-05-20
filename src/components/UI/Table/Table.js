@@ -38,9 +38,12 @@ const table = (props) => {
         }
         return <tr key={i}>{cells}</tr>;
     });
-    console.log(props);
+    let classes = [ 'AdminTable' ];
+    if (props.size === 'tiny') {
+        classes.push('TinyTable');
+    }
     return (
-        <div className="AdminTable">
+        <div className={classes.join(' ')}>
             <table>
                 <thead>
                     <tr>

@@ -8,11 +8,13 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "email-validator": "^2.0.4",
+    "luxon": "^1.24.1",
     "markdown-it": "^10.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-textarea-autosize": "^7.1.2",
     "universal-cookie": "^4.0.3",
     "uuid": "^8.0.0"
   },

@@ -33,3 +33,12 @@
     color: #01BF90;
 }
 
+.AdminTable.TinyTable th {
+    font-size: 0.85em;
+}
+
+.AdminTable.TinyTable td {
+    padding: 0.3em;
+    font-size: 0.85em;
+}
+

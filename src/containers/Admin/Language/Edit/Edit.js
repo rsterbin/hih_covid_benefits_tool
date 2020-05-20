@@ -55,7 +55,7 @@ class AdminLanguageEdit extends Component {
             token: this.props.token,
             key: this.getKey(),
             language: 'en',
-            english: this.state.english
+            translation: this.state.english
         };
         Api.saveTranslation(data)
             .then((response) => {
@@ -129,7 +129,9 @@ class AdminLanguageEdit extends Component {
                 <div className="EditLanguage">
                     <h4>Editing: {this.getKey()}</h4>
                     <p><i>Appears in: <strong>{this.state.language_info.section}</strong></i></p>
-                    <div dangerouslySetInnerHTML={{__html: help}} />
+                    {help ?
+                        <div className="HelpBox" dangerouslySetInnerHTML={{__html: help}} />
+                    : null}
                     <form method="post" onSubmit={this.submitEdit}>
                         {this.state.language_info.markdown_allowed ?
                             <EditMarkdown

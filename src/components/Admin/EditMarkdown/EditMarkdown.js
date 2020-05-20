@@ -1,4 +1,5 @@
 import React from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import './EditMarkdown.css';
 
@@ -16,9 +17,10 @@ const editMarkdown = (props) => {
     } else {
         return (
             <div className="EditMarkdown">
-                <textarea rows="5" cols="80"
+                <TextareaAutosize rows="5" cols="75"
+                    minrows="5"
                     name={props.name}
-                    value={props.value}
+                    defaultValue={props.value}
                     onChange={props.changed} />
                 <button className="PreviewToggle" onClick={props.clickedPreview}><i className="far fa-eye"></i> preview</button>
             </div>

@@ -1,5 +1,6 @@
 
 .DashboardBlock {
+    vertical-align: top;
     width: 40%;
     display: inline-block;
     border: 0.05em solid #ccc;
@@ -10,5 +11,28 @@
 .DashboardBlock h4 {
     margin: 0;
     padding: 0;
+}
+
+.DashboardBlockBody .NoData {
+    padding: 2em;
+    font-style: italic;
+    color: #ccc;
+}
+
+.DashboardBlock .RefreshWrapper {
+    text-align: right;
+}
+
+.DashboardBlock .RefreshButton {
+    border: none;
+    background: transparent;
+    font-size: 0.9em;
+    color: #01bf90;
+    text-decoration: underline;
+}
+
+.DashboardBlockBody .YesData,
+.DashboardBlockBody .NoData {
+    margin-top: 0.5em;
 }
 

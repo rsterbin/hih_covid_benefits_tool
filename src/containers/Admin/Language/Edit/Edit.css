@@ -1,3 +1,9 @@
+.HelpBox {
+    background-color: #eee;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
 .ButtonHolder {
     text-align: center;
 }
