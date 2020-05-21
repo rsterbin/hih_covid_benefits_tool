@@ -53,8 +53,8 @@ class AdminDashboard extends Component {
             .then((response) => {
                 const found = response.data.recent ? response.data.recent : [];
                 const recent = found.map((row) => {
-                    let date = DateTime.fromISO(row.submitted);
-                    let formatted = date.month + '/' + date.day;
+                    let dt = DateTime.fromISO(row.submitted);
+                    let formatted = dt.toFormat('LLL dd');
                     return { ...row, date: formatted };
                 });
                 this.setState({ responses_loaded: true, responses: recent });
@@ -78,8 +78,8 @@ class AdminDashboard extends Component {
             .then((response) => {
                 const found = response.data.recent ? response.data.recent : [];
                 const recent = found.map((row) => {
-                    let date = DateTime.fromISO(row.submitted);
-                    let formatted = date.month + '/' + date.day;
+                    let dt = DateTime.fromISO(row.submitted);
+                    let formatted = dt.toFormat('LLL dd');
                     return { ...row, date: formatted };
                 });
                 this.setState({ contacts_loaded: true, contacts: recent });
