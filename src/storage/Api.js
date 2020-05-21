@@ -3,7 +3,8 @@ import axios from 'axios';
 import IdentifierCookie from './cookies/IdentifierCookie';
 import Logger from '../utils/Logger';
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/v1.0' : 'http://localhost2:3001/api/v1.0';
+const BASE_BACKEND = process.env.NODE_ENV === 'production' ? '' : 'http://localhost2:3001';
+const BASE_URL = BASE_BACKEND + '/api/v1.0';
 
 class Api {
 
@@ -153,6 +154,10 @@ class Api {
         return this.getAxios().post('/admin/language/save', data);
     }
 
+    getAllDeploys(data) {
+        return this.getAxios().post('/admin/deploy', data);
+    }
+
     initializeAdmin(data) {
         return this.getAxios().post('/admin/deploy/init', data);
     }
@@ -162,7 +167,7 @@ class Api {
     }
 
     getDownloadUrl(version, hash, token) {
-        return BASE_URL + '/admin/deploy/download/' + version + '/' + hash + '/' + token;
+        return BASE_BACKEND + '/download/' + version + '/' + hash + '/' + token;
     }
 
     // Prelaunch

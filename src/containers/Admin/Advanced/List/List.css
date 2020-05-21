@@ -1,0 +1,11 @@
+
+.DeployList .RefreshWrapper {
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+.DeployList button,
+.DownloadDeploy {
+    color: #01bf90;
+}
+

@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Advanced from './Advanced/Advanced';
 import List from './List/List';
 import Edit from './Edit/Edit';
 
 class AdminLanguage extends Component {
 
     render() {
-        const doAdvanced = () => {
-            return <Advanced token={this.props.token} />;
-        };
         const doEdit = () => {
             return <Edit token={this.props.token} />;
         };
@@ -19,7 +15,6 @@ class AdminLanguage extends Component {
         };
         return (
             <Switch>
-                <Route path="/admin/language/secret" render={doAdvanced} />
                 <Route path="/admin/language/:key" render={doEdit} />
                 <Route path="/" render={doList} />
             </Switch>
