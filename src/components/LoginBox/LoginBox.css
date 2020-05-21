@@ -39,8 +39,10 @@
     font-weight: bold;
 }
 
+.LoginBox button:disabled,
 .LoginBox button.Loading {
     background-color: #eee;
     color: #666;
+    cursor: not-allowed;
 }
 

@@ -41,6 +41,7 @@
 .ControlButton.DisabledButton {
     background-color: #eee;
     color: #666;
+    cursor: not-allowed;
 }
 
 .VertButtonContainer .ControlButton {
