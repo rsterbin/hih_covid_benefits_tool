@@ -22,17 +22,3 @@
     display: inline;
 }
 
-.TryAgain {
-    display: inline;
-    border: none;
-    padding: 0 0 0 1em;
-    margin: 0;
-    cursor: pointer;
-    background-color: transparent;
-    color: inherit;
-    text-decoration: underline;
-    font-weight: bold;
-    font-size: 1em;
-}
-
-

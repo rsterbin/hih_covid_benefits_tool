@@ -10,3 +10,9 @@
     font-style: italic;
 }
 
+.RawTextBox code {
+    overflow-wrap: break-word;
+    font-size: 0.8em;
+    color: #333;
+}
+

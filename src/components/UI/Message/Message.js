@@ -1,5 +1,7 @@
 import React from 'react';
 
+import IconButton from '../IconButton/IconButton';
+
 import './Message.css';
 
 const message = (props) => {
@@ -14,8 +16,11 @@ const message = (props) => {
         <div className={classes.join(' ')}>
             <p>{props.text}</p>
             {props.tryagain ?
-                <button className="TryAgain" onClick={props.tryagain}>{tryagain_text}</button>
+                <IconButton icon_type="refresh"
+                    clicked={props.tryagain}
+                    title={tryagain_text} />
             : null}
+            {props.custom_button}
         </div>
     );
 

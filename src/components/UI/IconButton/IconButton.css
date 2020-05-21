@@ -1,0 +1,14 @@
+
+button.IconButton {
+    border: none;
+    background: transparent;
+    font-size: 0.9em;
+    text-decoration: underline;
+    color: inherit;
+    cursor: pointer;
+}
+
+button.IconButton span {
+    margin-left: 0.3em;
+}
+

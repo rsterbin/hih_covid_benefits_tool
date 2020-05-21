@@ -21,15 +21,12 @@
 .PreviewMarkdown button,
 .EditMarkdown button {
     display: block;
-    border: none;
-    background: transparent;
-    font-size: 0.9em;
-    color: #01bf90;
-    text-decoration: underline;
     float: right;
+    color: #01bf90;
 }
 
 .EditMarkdown textarea {
-    width: 99%;
+    width: 97%;
+    padding: 0.5em;
 }
 

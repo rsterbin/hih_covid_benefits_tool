@@ -153,8 +153,16 @@ class Api {
         return this.getAxios().post('/admin/language/save', data);
     }
 
-    initializeLanguage(data) {
-        return this.getAxios().post('/admin/language/init', data);
+    initializeAdmin(data) {
+        return this.getAxios().post('/admin/deploy/init', data);
+    }
+
+    deployAdmin(data) {
+        return this.getAxios().post('/admin/deploy/save', data);
+    }
+
+    getDownloadUrl(version, hash, token) {
+        return BASE_URL + '/admin/deploy/download/' + version + '/' + hash + '/' + token;
     }
 
     // Prelaunch

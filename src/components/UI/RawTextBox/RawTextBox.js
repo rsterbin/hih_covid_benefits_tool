@@ -16,9 +16,9 @@ const rawTextBox = (props) => {
             {props.title ?
                 <h6 className="RawTextBoxTitle">{props.title}</h6>
             : null}
-            <pre>
+            <code>
             {rawtext}
-            </pre>
+            </code>
         </div>
     );
 };

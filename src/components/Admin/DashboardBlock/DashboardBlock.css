@@ -24,11 +24,7 @@
 }
 
 .DashboardBlock .RefreshButton {
-    border: none;
-    background: transparent;
-    font-size: 0.9em;
     color: #01bf90;
-    text-decoration: underline;
 }
 
 .DashboardBlockBody .YesData,

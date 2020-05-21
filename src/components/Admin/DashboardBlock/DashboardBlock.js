@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Spinner from '../../UI/Spinner/Spinner';
+import IconButton from '../../UI/IconButton/IconButton';
 import Message from '../../UI/Message/Message';
 import Table from '../../UI/Table/Table';
 
@@ -13,9 +14,8 @@ const dashboardBlock = (props) => {
         if (props.refresh) {
             refresh = (
                 <div className="RefreshWrapper">
-                    <button className="RefreshButton" onClick={props.refresh}>
-                        <i className="fas fa-sync-alt" title="refresh"></i>
-                    </button>
+                    <IconButton icon_type="refresh"
+                        clicked={props.refresh} />
                 </div>
             );
         }

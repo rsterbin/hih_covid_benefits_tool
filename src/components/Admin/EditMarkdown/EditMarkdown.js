@@ -1,6 +1,8 @@
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
+import IconButton from '../../UI/IconButton/IconButton';
+
 import './EditMarkdown.css';
 
 const editMarkdown = (props) => {
@@ -11,18 +13,27 @@ const editMarkdown = (props) => {
             <div className="PreviewMarkdown">
                 <h5>Preview</h5>
                 <div className="View" dangerouslySetInnerHTML={{__html: preview}} />
-                <button className="EditToggle" onClick={props.clickedEdit}><i className="fas fa-pencil-alt"></i> edit</button>
+                <div className="EditToggle">
+                    <IconButton icon_type="edit"
+                        clicked={props.clickedEdit}
+                        append_text="edit" />
+                </div>
             </div>
         );
     } else {
+        const minrows = props.minrows || 5;
         return (
             <div className="EditMarkdown">
                 <TextareaAutosize rows="5" cols="75"
-                    minrows="5"
+                    minRows={minrows}
                     name={props.name}
                     defaultValue={props.value}
                     onChange={props.changed} />
-                <button className="PreviewToggle" onClick={props.clickedPreview}><i className="far fa-eye"></i> preview</button>
+                <div className="PreviewToggle">
+                    <IconButton icon_type="preview"
+                        clicked={props.clickedPreview}
+                        append_text="preview" />
+                </div>
             </div>
         );
     }
