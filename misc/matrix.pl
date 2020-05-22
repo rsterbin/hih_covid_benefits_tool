@@ -2,6 +2,9 @@
 
 use Clone 'clone';
 use Data::Dumper;
+use JSON;
+
+my $JSON = JSON->new->allow_nonref->utf8;;
 
 my $list = "$ARGV[0]" || '';
 my $view = "$ARGV[1]" || '';
@@ -31,14 +34,21 @@ if ($view eq 'options') {
     print "\n";
 } elsif ($view eq 'codes') {
     my $combos = all_combinations($options);
+    my $eligibility = [];
     foreach my $scenario (@$combos) {
-        print "\n";
-        print "{\n";
+        my $conditions = {};
+        my @pairs = ();
         foreach my $item (@$scenario) {
-            print '  "' . $item->{question} . '": "' . $item->{answer_code} . '",' . "\n";
+            $conditions->{$item->{question}} = $item->{answer_code};
+            my $a = lc($item->{answer_code});
+            push @pairs, "$item->{question}_$a";
         }
-        print "}\n";
+        push @$eligibility, {
+            conditions => $conditions,
+            lang_lookup_key => "results_benefit_$list" . join('_', @pairs),
+        };
     }
+    print $JSON->encode($eligibility);
 } elsif ($view eq 'combos') {
     my $combos = all_combinations($options);
     my $count = 0;
@@ -203,17 +213,17 @@ sub get_pssl_options {
             ],
         },
         {
-            q => 'length of employment',
+            q => 'agency',
             a => [
-                { t => 'LESS THAN ONE YEAR', c => 'U' },
-                { t => 'ONE YEAR OR MORE', c => 'O' },
+                { t => 'YES', c => 'A' },
+                { t => 'NO', c => 'B' },
             ],
         },
         {
-            q => 'hours per year',
+            q => 'employed',
             a => [
-                { t => 'UNDER 80', c => 'A' },
-                { t => '80 OR MORE', c => 'B' },
+                { t => 'LESS THAN ONE YEAR or UNDER 80', c => 'U' },
+                { t => 'ONE YEAR OR MORE and OVER 80', c => 'O' },
             ],
         },
     ];

@@ -18,10 +18,10 @@ class Screening {
             }
         },
         pssl: {
-            simple: [ 'hours per year' ],
+            simple: [ 'agency' ],
             complex: {
                 type : 'splitTypeByHomeCare',
-                'length of employment' : 'splitLengthByYear'
+                employed: 'employedByYearAndHours'
             }
         },
         dwbor: {
@@ -82,6 +82,15 @@ class Screening {
 
         splitLengthByMonths: (answers) => {
             if (answers['length of employment'] === 'A') {
+                return 'U';
+            } else {
+                return 'O';
+            }
+        },
+
+        employedByYearAndHours: (answers) => {
+            if (answers['length of employment'] === 'C'
+                && answers['hours per year'] === 'B') {
                 return 'U';
             } else {
                 return 'O';

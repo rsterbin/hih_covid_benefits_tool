@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DateTime } from 'luxon';
 
 import Block from '../../../components/Admin/DashboardBlock/DashboardBlock';
-import Message from '../../../components/UI/Message/Message';
 
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
@@ -53,8 +52,8 @@ class AdminDashboard extends Component {
             .then((response) => {
                 const found = response.data.recent ? response.data.recent : [];
                 const recent = found.map((row) => {
-                    let date = DateTime.fromISO(row.submitted);
-                    let formatted = date.month + '/' + date.day;
+                    let dt = DateTime.fromISO(row.submitted);
+                    let formatted = dt.toFormat('LLL dd');
                     return { ...row, date: formatted };
                 });
                 this.setState({ responses_loaded: true, responses: recent });
@@ -78,8 +77,8 @@ class AdminDashboard extends Component {
             .then((response) => {
                 const found = response.data.recent ? response.data.recent : [];
                 const recent = found.map((row) => {
-                    let date = DateTime.fromISO(row.submitted);
-                    let formatted = date.month + '/' + date.day;
+                    let dt = DateTime.fromISO(row.submitted);
+                    let formatted = dt.toFormat('LLL dd');
                     return { ...row, date: formatted };
                 });
                 this.setState({ contacts_loaded: true, contacts: recent });
@@ -110,7 +109,6 @@ class AdminDashboard extends Component {
                     refresh={this.refreshContacts}
                     rows={this.state.contacts}
                     cols={this.contacts_headers} />
-                <Message type="error" text="Generic error is generic" tryagain={this.refreshContacts} />
             </div>
         );
     }

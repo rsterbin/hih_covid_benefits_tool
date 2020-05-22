@@ -134,24 +134,36 @@
     ],
     "pssl": [
         {
-            "conditions": { "type": "N", "length of employment": "O", "hours per year": "B" },
-            "lang_lookup_key": "results_benefit_pssl_type_n_length_of_employment_o_hours_per_year_b"
+            "conditions": { "type": "N", "agency": "A", "employed": "U"},
+            "lang_lookup_key": "results_benefit_pssl_type_n_agency_a_employed_u"
         },
         {
-            "conditions": { "type": "H", "length of employment": "U", "hours per year": "A" },
-            "lang_lookup_key": "results_benefit_pssl_type_h_length_of_employment_u_hours_per_year_a"
+            "conditions": { "type": "N", "agency": "A", "employed": "O" },
+            "lang_lookup_key":"results_benefit_pssl_type_n_agency_a_employed_o"
         },
         {
-            "conditions": { "type": "H", "length of employment": "U", "hours per year": "B" },
-            "lang_lookup_key": "results_benefit_pssl_type_h_length_of_employment_u_hours_per_year_b"
+            "conditions": { "type": "N", "agency": "B", "employed": "U" },
+            "lang_lookup_key":"results_benefit_pssl_type_n_agency_b_employed_u"
         },
         {
-            "conditions": { "type": "H", "length of employment": "O", "hours per year": "A" },
-            "lang_lookup_key": "results_benefit_pssl_type_h_length_of_employment_o_hours_per_year_a"
+            "conditions": { "type": "N", "agency": "B", "employed": "O" },
+            "lang_lookup_key":"results_benefit_pssl_type_n_agency_b_employed_o"
         },
         {
-            "conditions": { "type": "H", "length of employment": "O", "hours per year": "B" },
-            "lang_lookup_key": "results_benefit_pssl_type_h_length_of_employment_o_hours_per_year_b"
+            "conditions": { "employed": "U", "type": "H", "agency": "A" },
+            "lang_lookup_key":"results_benefit_pssl_type_h_agency_a_employed_u"
+        },
+        {
+            "conditions": { "type": "H", "agency": "A", "employed": "O" },
+            "lang_lookup_key":"results_benefit_pssl_type_h_agency_a_employed_o"
+        },
+        {
+            "conditions": { "type": "H", "agency": "B", "employed": "U" },
+            "lang_lookup_key":"results_benefit_pssl_type_h_agency_b_employed_u"
+        },
+        {
+            "conditions": { "type": "H", "agency": "B", "employed": "O" },
+            "lang_lookup_key":"results_benefit_pssl_type_h_agency_b_employed_o"
         }
     ],
     "dwbor": [
