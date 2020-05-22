@@ -1,0 +1,170 @@
+{
+    "benefits": {
+        "ffcra": {
+            "order": [ "type", "agency", "books", "reason" ],
+            "simple": [ "agency" ],
+            "complex": {
+                "type": "splitTypeByEssential",
+                "books": "splitBooksByTaxes",
+                "reason": "findReasonForFFCRA"
+            }
+        },
+        "nys": {
+            "order": [ "agency", "books", "hours per week", "reason" ],
+            "simple": [ "agency", "hours per week" ],
+            "complex": {
+                "books": "splitBooksByCompliance",
+                "reason": "findReasonForNYS"
+            }
+        },
+        "pssl": {
+            "order": [ "type", "agency", "employed" ],
+            "simple": [ "agency" ],
+            "complex": {
+                "type": "splitTypeByHomeCare",
+                "employed": "employedByYearAndHours"
+            }
+        },
+        "dwbor": {
+            "order": [ "length of employment" ],
+            "simple": [],
+            "complex": {
+                "length of employment": "splitLengthByYear"
+            }
+        },
+        "cares": {
+            "order": [ "books", "length of employment" ],
+            "simple": [],
+            "complex": {
+                "books": "splitBooksByCompliance",
+                "length of employment": "splitLengthByMonths"
+            }
+        }
+    },
+    "complex": {
+        "splitTypeByEssential": {
+            "options": [
+                {
+                    "letter": "N",
+                    "answer": "NANNY, HOUSE CLEANER, or HOME ATTENDANT"
+                },
+                {
+                    "letter": "E",
+                    "answer": "HOME HEALTH CARE WORKER"
+                }
+            ]
+        },
+        "splitBooksByTaxes": {
+            "options": [
+                {
+                    "letter": "Y",
+                    "answer": "YES (EITHER)"
+                },
+                {
+                    "letter": "N",
+                    "answer": "NO"
+                }
+            ]
+        },
+        "findReasonForFFCRA": {
+            "options": [
+                {
+                    "letter": "B",
+                    "answer": "SELF-QUARANTINE AND SCHOOL CLOSED"
+                },
+                {
+                    "letter": "Q",
+                    "answer": "SELF-QUARANTINE"
+                },
+                {
+                    "letter": "S",
+                    "answer": "SCHOOL CLOSED"
+                },
+                {
+                    "letter": "F",
+                    "answer": "FAMILY QUARANTINE OR STAY AT HOME"
+                },
+                {
+                    "letter": "N",
+                    "answer": "NONE"
+                }
+            ]
+        },
+        "splitBooksByCompliance": {
+            "options": [
+                {
+                    "answer": "YES, IN COMPLIANCE",
+                    "letter": "C"
+                },
+                {
+                    "answer": "PARTIALLY OR NO",
+                    "letter": "N"
+                }
+            ]
+        },
+        "findReasonForNYS": {
+            "options": [
+                {
+                    "answer": "SELF-QUARANTINE OR FAMILY QUARANTINE",
+                    "letter": "Q"
+                },
+                {
+                    "answer": "SCHOOL CLOSED",
+                    "letter": "S"
+                },
+                {
+                    "answer": "NONE",
+                    "letter": "N"
+                }
+            ]
+        },
+        "splitTypeByHomeCare": {
+            "options": [
+                {
+                    "answer": "NANNY or HOUSE CLEANER",
+                    "letter": "N"
+                },
+                {
+                    "answer": "HOME ATTENDANT or HOME HEALTH CARE WORKER",
+                    "letter": "H"
+                }
+            ]
+        },
+        "employedByYearAndHours": {
+            "options": [
+                {
+                    "answer": "LESS THAN ONE YEAR or UNDER 80",
+                    "letter": "U"
+                },
+                {
+                    "answer": "ONE YEAR OR MORE and OVER 80",
+                    "letter": "O"
+                }
+            ]
+        },
+        "splitLengthByYear": {
+            "options": [
+                {
+                    "answer": "LESS THAN ONE YEAR",
+                    "letter": "U"
+                },
+                {
+                    "answer": "ONE YEAR OR MORE",
+                    "letter": "O"
+                }
+            ]
+        },
+        "splitLengthByMonths": {
+            "options": [
+                {
+                    "answer": "LESS THAN SIX MONTHS",
+                    "letter": "U"
+                },
+                {
+                    "answer": "SIX MONTHS OR MORE",
+                    "letter": "O"
+                }
+            ]
+        }
+    }
+}
