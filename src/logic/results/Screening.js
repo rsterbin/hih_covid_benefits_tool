@@ -1,43 +1,9 @@
 
+import ConditionsData from '../../data/conditions.json';
+
 class Screening {
 
-    conditions = {
-        ffcra: {
-            simple: [ 'agency' ],
-            complex: {
-                type: 'splitTypeByEssential',
-                books: 'splitBooksByTaxes',
-                reason: 'findReasonForFFCRA'
-            }
-        },
-        nys: {
-            simple: [ 'agency', 'hours per week' ],
-            complex: {
-                books: 'splitBooksByCompliance',
-                reason: 'findReasonForNYS'
-            }
-        },
-        pssl: {
-            simple: [ 'agency' ],
-            complex: {
-                type : 'splitTypeByHomeCare',
-                employed: 'employedByYearAndHours'
-            }
-        },
-        dwbor: {
-            simple: [],
-            complex: {
-                'length of employment' : 'splitLengthByYear'
-            }
-        },
-        cares: {
-            simple: [],
-            complex: {
-                books: 'splitBooksByCompliance',
-                'length of employment': 'splitLengthByMonths'
-            }
-        }
-    };
+    conditions = ConditionsData.benefits;
 
     customAnswers = {
         splitTypeByEssential: (answers) => {
