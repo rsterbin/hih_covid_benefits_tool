@@ -19,6 +19,10 @@
     padding: 0.5em 0.75em;
 }
 
+.AdminTable td p.LineBreak {
+    margin: 0.1em 0;
+}
+
 .AdminTable table tbody tr {
     background-color: white;
 }

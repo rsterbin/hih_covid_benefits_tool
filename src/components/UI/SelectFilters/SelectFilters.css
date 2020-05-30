@@ -1,0 +1,14 @@
+
+.SelectFilters {
+    margin-bottom: 1em;
+}
+
+.SelectFilters .Filter {
+    margin-bottom: 1em;
+}
+
+.SelectFilters .Filter label {
+    display: block;
+    font-weight: bold;
+}
+

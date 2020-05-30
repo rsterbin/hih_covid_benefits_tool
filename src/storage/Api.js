@@ -154,6 +154,14 @@ class Api {
         return this.getAxios().post('/admin/language/save', data);
     }
 
+    getBenefits(data) {
+        return this.getAxios().post('/admin/benefits', data);
+    }
+
+    getScenarios(code, data) {
+        return this.getAxios().post('/admin/benefits/' + code + '/scenarios', data);
+    }
+
     getAllDeploys(data) {
         return this.getAxios().post('/admin/deploy', data);
     }
