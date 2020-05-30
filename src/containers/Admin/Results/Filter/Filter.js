@@ -32,7 +32,7 @@ class AdminResultsFilter extends Component {
     };
 
     editScenario = (row) => {
-        this.props.history.push('/admin/results/' + row.code + '/edit' + row.id);
+        this.props.history.push('/admin/results/' + this.state.benefit.code + '/scenario/' + row.id);
     };
 
     filterResponses = (e) => {
@@ -57,23 +57,12 @@ class AdminResultsFilter extends Component {
         });
     };
 
-    componentDidMount() {
-        this.fetchBenefit(this.props.match.params.benefit);
-    }
+    refresh = () => {
+        this.fetchBenefit();
+    };
 
-    filter() {
-        console.log(this.state.filters);
-        return this.state.scenarios.filter(scenario => {
-            for (const key in this.state.filters) {
-                if (this.state.filters[key] !== null) {
-                    if (scenario.condition_map[key] !== this.state.filters[key]) {
-                        return false;
-                    } else {
-                    }
-                }
-            }
-            return true;
-        });
+    componentDidMount() {
+        this.fetchBenefit();
     }
 
     fetchBenefit() {
@@ -98,7 +87,6 @@ class AdminResultsFilter extends Component {
                     for (const c of conditions) {
                         filters[c.key_name] = null;
                     }
-                    console.log(filters);
                     this.setState({
                         loaded: true,
                         benefit: benefit,
@@ -117,6 +105,19 @@ class AdminResultsFilter extends Component {
             });
     }
 
+    filter() {
+        return this.state.scenarios.filter(scenario => {
+            for (const key in this.state.filters) {
+                if (this.state.filters[key] !== null) {
+                    if (scenario.condition_map[key] !== this.state.filters[key]) {
+                        return false;
+                    } else {
+                    }
+                }
+            }
+            return true;
+        });
+    }
 
     render() {
         let body = null;
@@ -153,6 +154,7 @@ class AdminResultsFilter extends Component {
                     return <p key={i} className="LineBreak">{line}</p>
                 });
                 return {
+                    id: scenario.id,
                     help: lines,
                     enabled: scenario.enabled ? 'Yes' : 'No',
                     en_result: scenario.en_result

@@ -19,7 +19,7 @@ class AdminResults extends Component {
         };
         return (
             <Switch>
-                <Route path="/admin/results/:benefit/:scenario" render={doEdit} />
+                <Route path="/admin/results/:benefit/scenario/:id" render={doEdit} />
                 <Route path="/admin/results/:benefit" render={doFilter} />
                 <Route path="/" render={doList} />
             </Switch>

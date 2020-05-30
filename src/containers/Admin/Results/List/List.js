@@ -17,6 +17,20 @@ class AdminResultsList extends Component {
         error: null
     };
 
+    refresh = () => {
+        this.fetchBenefits();
+    };
+
+    cols = [
+        { key: 'name', title: 'Name' },
+        { key: 'abbreviation', title: 'Abbreviation' },
+        { key: 'manage', title: 'Manage' }
+    ];
+
+    clickable = {
+        manage: (row) => { this.manageBenefit(row); }
+    };
+
     componentDidMount() {
         this.fetchBenefits();
     }
@@ -37,16 +51,6 @@ class AdminResultsList extends Component {
                 this.setState({ error: 'Could not fetch benefits' });
             });
     }
-
-    cols = [
-        { key: 'name', title: 'Name' },
-        { key: 'abbreviation', title: 'Abbreviation' },
-        { key: 'manage', title: 'Manage' }
-    ];
-
-    clickable = {
-        manage: (row) => { this.manageBenefit(row); }
-    };
 
     manageBenefit(row) {
         this.props.history.push('/admin/results/' + row.code);
