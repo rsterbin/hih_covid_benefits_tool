@@ -166,6 +166,10 @@ class Api {
         return this.getAxios().post('/admin/benefits/' + code + '/scenario/' + id, data);
     }
 
+    saveScenario(code, id, data) {
+        return this.getAxios().post('/admin/benefits/' + code + '/scenario/' + id + '/save', data);
+    }
+
     getAllDeploys(data) {
         return this.getAxios().post('/admin/deploy', data);
     }
