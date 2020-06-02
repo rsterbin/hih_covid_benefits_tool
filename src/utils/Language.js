@@ -1,7 +1,7 @@
 import Logger from './Logger';
 import LanguageCookie from '../storage/cookies/LanguageCookie';
 
-import Keys from '../data/lang/keys.json';
+import Keys from '../data/lang_keys.json';
 
 class Language {
 
@@ -13,7 +13,7 @@ class Language {
     load(code) {
         let r = null;
         try {
-            r = require('../data/lang/' + code + '.json');
+            r = require('../data/lang_' + code + '.json');
         } catch {
             r = null;
         }

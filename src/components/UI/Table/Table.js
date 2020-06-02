@@ -23,7 +23,7 @@ const table = (props) => {
             }
             if (h.key in snip) {
                 let full = value;
-                if (full.length > snip[h.key]) {
+                if (full && full.length > snip[h.key]) {
                     let short = value.substring(0, snip[h.key]) + '...';
                     value = short;
                     title = full;

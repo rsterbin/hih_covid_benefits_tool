@@ -16,7 +16,7 @@ class Eligibility {
                     }
                 }
                 if (match) {
-                    found = r.lang_lookup_key;
+                    found = r;
                     break;
                 }
             }

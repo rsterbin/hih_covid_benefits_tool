@@ -3,10 +3,15 @@ import ConditionsData from '../../data/conditions.json';
 
 class Screening {
 
-    conditions = ConditionsData.benefits;
+    conditions = ConditionsData;
 
-    customAnswers = {
-        splitTypeByEssential: (answers) => {
+    processAnswers = {
+
+        simple: (answers, key) => {
+            return answers[key];
+        },
+
+        splitTypeByEssential: (answers, key) => {
             if (answers.type === 'D') {
                 return 'E';
             } else {
@@ -14,7 +19,7 @@ class Screening {
             }
         },
 
-        splitTypeByHomeCare: (answers) => {
+        splitTypeByHomeCare: (answers, key) => {
             if (answers.type === 'C' || answers.type === 'D') {
                 return 'H';
             } else {
@@ -22,7 +27,7 @@ class Screening {
             }
         },
 
-        splitBooksByTaxes: (answers) => {
+        splitBooksByTaxes: (answers, key) => {
             if (answers.books === 'A' || answers.books === 'B') {
                 return 'Y';
             } else {
@@ -30,7 +35,7 @@ class Screening {
             }
         },
 
-        splitBooksByCompliance: (answers) => {
+        splitBooksByCompliance: (answers, key) => {
             if (answers.books === 'A') {
                 return 'C';
             } else {
@@ -38,7 +43,7 @@ class Screening {
             }
         },
 
-        splitLengthByYear: (answers) => {
+        splitLengthByYear: (answers, key) => {
             if (answers['length of employment'] === 'C') {
                 return 'O';
             } else {
@@ -46,7 +51,7 @@ class Screening {
             }
         },
 
-        splitLengthByMonths: (answers) => {
+        splitLengthByMonths: (answers, key) => {
             if (answers['length of employment'] === 'A') {
                 return 'U';
             } else {
@@ -54,7 +59,7 @@ class Screening {
             }
         },
 
-        employedByYearAndHours: (answers) => {
+        employedByYearAndHours: (answers, key) => {
             if (answers['length of employment'] === 'C'
                 && answers['hours per year'] === 'B') {
                 return 'U';
@@ -70,7 +75,7 @@ class Screening {
         // * family quarantine and/or stay at home [F]
         // * none [N]
         // * unhandled case [U] (shouldn't happen)
-        findReasonForFFCRA: (answers) => {
+        findReasonForFFCRA: (answers, key) => {
             if (
                 answers['self-quarantine'] === 'A' &&
                 answers['school closed'] === 'A'
@@ -105,7 +110,7 @@ class Screening {
         // * school closed (but not either quarantine) + any [Q]
         // * none [N]
         // * unhandled case [U] (shouldn't happen)
-        findReasonForNYS: (answers) => {
+        findReasonForNYS: (answers, key) => {
             if (
                 answers['self-quarantine'] === 'A' ||
                 answers['family quarantine'] === 'A'
@@ -129,14 +134,11 @@ class Screening {
 
     getScenarios(answerKey) {
         let byBenefit = {};
-        for (let benefit in this.conditions) {
+        for (const benefit in this.conditions) {
             let scenario = {};
-            for (const q of this.conditions[benefit].simple) {
-                scenario[q] = answerKey[q];
-            }
-            for (let k in this.conditions[benefit].complex) {
-                let m = this.conditions[benefit].complex[k];
-                scenario[k] = this.customAnswers[m](answerKey);
+            for (const k in this.conditions[benefit]) {
+                let m = this.conditions[benefit][k];
+                scenario[k] = this.processAnswers[m](answerKey, k);
             }
             byBenefit[benefit] = scenario;
         }

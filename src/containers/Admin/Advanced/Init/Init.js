@@ -6,8 +6,8 @@ import DeployMessage from '../../../../components/Admin/DeployMessage/DeployMess
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
 
-import EnglishData from '../../../../data/lang/en.json';
-import KeysData from '../../../../data/lang/keys.json';
+import EnglishData from '../../../../data/lang_en.json';
+import KeysData from '../../../../data/lang_keys.json';
 
 class AdminAdvancedInit extends Component {
 

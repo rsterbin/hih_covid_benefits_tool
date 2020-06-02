@@ -27,6 +27,10 @@ class AdminResultsFilter extends Component {
         { key: 'en_result', title: 'Response (Short)' }
     ];
 
+    snip = {
+        en_result: 120
+    };
+
     clickable = {
         help: (row) => { this.editScenario(row); }
     };
@@ -167,6 +171,7 @@ class AdminResultsFilter extends Component {
                     <Table
                         rows={rows}
                         cols={this.cols}
+                        snip={this.snip}
                         clickable={this.clickable} />
                 </Aux>
             );

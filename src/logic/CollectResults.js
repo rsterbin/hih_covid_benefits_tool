@@ -24,7 +24,7 @@ class CollectResults {
             sections: this.getAllSections(eligibility, answerKey),
             resources_header: ProcessText.process('results_resources_header'),
             resources_intro: ProcessText.process('results_resources_intro'),
-            resources: this.getAllResources(eligibility)
+            resources: this.getOtherResources(eligibility)
         };
 
         return results;
@@ -72,13 +72,18 @@ class CollectResults {
 
     getBenefitSections(eligibility) {
         const benefitSections = [];
-        for (let benefit of this.benefits_order) {
-            let header = Language.get('results_section_header_' + benefit);
+        for (const benefit of this.benefits_order) {
+            const header = Language.get('results_section_header_' + benefit);
             if (benefit in eligibility) {
-                let text = ProcessText.process(eligibility[benefit]);
+                const result = ProcessText.process(eligibility[benefit].lang_key_result);
+                const expanded = ProcessText.process(eligibility[benefit].lang_key_expanded);
+                const resources = Resources.getBenefitResources(eligibility, benefit);
                 benefitSections.push({
                     header: header,
-                    text: text
+                    text: result,
+                    read_more: expanded,
+                    resources_header: Language.get('results_section_resources_header'),
+                    resources: resources
                 });
             }
         }
@@ -106,47 +111,16 @@ class CollectResults {
         };
     }
 
-    getAllResources(eligibility) {
-        const b_resources = Resources.getBenefitResources(eligibility);
-        const o_resources = Resources.getOtherResources();
-
-        let all = [];
-
-        // Add the benefit resources
-        for (let benefit of this.benefits_order) {
-            if (benefit in b_resources) {
-                let section = {
-                    header: Language.get('results_resources_' + benefit + '_header'),
-                    links: []
-                };
-                for (let r of b_resources[benefit]) {
-                    section.links.push({
-                        text: ProcessText.process(r.text),
-                        link: r.link
-                    });
-                }
-                all.push(section);
-            }
+    getOtherResources(eligibility) {
+        let links = [];
+        const resources = Resources.getOtherResources();
+        for (let r of resources) {
+            links.push({
+                text: ProcessText.process(r.text),
+                link: r.link
+            });
         }
-
-        // Add the always-include resources
-        if (o_resources.length > 0) {
-            let section = {
-                links: []
-            };
-            if (all.length > 0) {
-                section.header = Language.get('results_resources_other_header');
-            }
-            for (let r of o_resources) {
-                section.links.push({
-                    text: ProcessText.process(r.text),
-                    link: r.link
-                });
-            }
-            all.push(section);
-        }
-
-        return all;
+        return links;
     }
 
 }

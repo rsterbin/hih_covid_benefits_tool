@@ -226,6 +226,7 @@ class AdminResultsEdit extends Component {
                             <label onClick={this.clickedEnabled}>Eligible?</label>
                         </div>
 
+                        {this.state.form.enabled.value ?
                         <div className="TexareaElement">
                             <label>Result (Short)</label>
                             {this.state.form.en_result.error ?
@@ -239,7 +240,9 @@ class AdminResultsEdit extends Component {
                                 clickedPreview={this.doPreviewResult}
                                 changed={this.changedResult} />
                         </div>
+                        : null}
 
+                        {this.state.form.enabled.value ?
                         <div className="TexareaElement">
                             <label>Result (Expanded)</label>
                             {this.state.form.en_expanded.error ?
@@ -253,6 +256,7 @@ class AdminResultsEdit extends Component {
                                 clickedPreview={this.doPreviewExpanded}
                                 changed={this.changedExpanded} />
                         </div>
+                        : null}
 
                         <div className="ButtonHolder">
                             <ProcessingButton
