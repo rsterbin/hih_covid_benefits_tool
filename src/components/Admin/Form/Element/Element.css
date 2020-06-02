@@ -1,0 +1,10 @@
+
+.AdminFormElement {
+    margin-bottom: 2em;
+}
+
+.AdminFormElement .Description {
+    font-style: italic;
+    color: #666666;
+}
+

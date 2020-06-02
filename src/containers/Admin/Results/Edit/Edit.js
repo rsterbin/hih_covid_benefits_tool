@@ -6,11 +6,10 @@ import Aux from '../../../../hoc/Aux/Aux';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from '../../../../components/UI/Message/Message';
 import EditMarkdown from '../../../../components/Admin/EditMarkdown/EditMarkdown';
-import ProcessingButton from '../../../../components/UI/ProcessingButton/ProcessingButton';
+import Form from '../../../../components/Admin/Form/Form';
+import Element from '../../../../components/Admin/Form/Element/Element';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
-
-import './Edit.css';
 
 class AdminResultsEdit extends Component {
 
@@ -22,6 +21,7 @@ class AdminResultsEdit extends Component {
         processing: false,
         processing_error: null,
         saved: false,
+        help: null,
         form: {
             enabled: {
                 value: false,
@@ -29,12 +29,10 @@ class AdminResultsEdit extends Component {
             },
             en_result: {
                 value: null,
-                view: 'edit',
                 error: null
             },
             en_expanded: {
                 value: null,
-                view: 'edit',
                 error: null
             }
         },
@@ -91,34 +89,10 @@ class AdminResultsEdit extends Component {
         }, () => { this.validate(); });
     };
 
-    doEditResult = () => {
-        let newForm = this.copyForm(this.state.form);
-        newForm.en_result.view = 'edit';
-        this.setState({ form: newForm });
-    };
-
-    doPreviewResult = () => {
-        let newForm = this.copyForm(this.state.form);
-        newForm.en_result.view = 'preview';
-        this.setState({ form: newForm });
-    };
-
     changedResult = (e) => {
         let newForm = this.copyForm(this.state.form);
         newForm.en_result.value = e.target.value;
         this.setState({ form: newForm }, () => { this.validate(); });
-    };
-
-    doEditExpanded = () => {
-        let newForm = this.copyForm(this.state.form);
-        newForm.en_expanded.view = 'edit';
-        this.setState({ form: newForm });
-    };
-
-    doPreviewExpanded = () => {
-        let newForm = this.copyForm(this.state.form);
-        newForm.en_expanded.view = 'preview';
-        this.setState({ form: newForm });
     };
 
     changedExpanded = (e) => {
@@ -163,7 +137,8 @@ class AdminResultsEdit extends Component {
                             loaded: true,
                             benefit: benefit,
                             scenario: scenario,
-                            form: newForm
+                            form: newForm,
+                            help: this.buildHelp(scenario)
                         };
                     }, () => { this.validate(); });
                 }
@@ -175,6 +150,32 @@ class AdminResultsEdit extends Component {
                 Logger.alert('Could not fetch scenario', { api_error: Api.parseAxiosError(error) });
                 this.setState({ error: 'Could not fetch scenario' });
             });
+    }
+
+    buildHelp(scenario) {
+        let allhelp = {};
+
+        const scenarioLines = scenario.help.split("\n").join('<br />');
+        allhelp.form = <p dangerouslySetInnerHTML={{__html: scenarioLines}}></p>;
+
+        allhelp.enabled = <p>When this is flag is on, the user will get a response for this scenario.  If we're confident that their employee is not eligible for this benefits, uncheck the box.</p>;
+
+        allhelp.en_result = (
+            <Aux>
+                <p>This text should be kept very short and should answer the following questions where relevant:</p>
+                <ul>
+                    <li>What is this benefit?</li>
+                    <li>Who pays for it?</li>
+                    <li>How do they apply?</li>
+                </ul>
+            </Aux>
+        );
+
+        allhelp.en_expanded = (
+            <p>When the user clicks the "read more" button, this is what appears below the main result.  It will be followed by any resource links that have been set for the benefit, and can be collapsed out of view when they click "read less".</p>
+        );
+
+        return allhelp;
     }
 
     copyForm(form) {
@@ -211,69 +212,66 @@ class AdminResultsEdit extends Component {
             crumbs.push(this.state.benefit.abbreviation);
             crumbs.push('Scenario');
 
-            const help = this.state.scenario.help.split("\n").join('<br />');
+            let i = 0;
+            const elements = [];
+
+            // Enabled
+            ++i;
+            elements.push(
+                <Element key={i} add_class="Checkbox"
+                    label="Eligibility"
+                    help={this.state.help.enabled}
+                    error={this.state.form.enabled.error}>
+                    <input type="checkbox"
+                        name="enabled"
+                        checked={this.state.form.enabled.value}
+                        onChange={this.clickedEnabled} />
+                    <label onClick={this.clickedEnabled}>The employee would be eligible in this scenario</label>
+                </Element>
+            );
+
+            // Main Result
+            if (this.state.form.enabled.value) {
+                ++i;
+                elements.push(
+                    <Element key={i} add_class="Markdown"
+                        label="Main Result"
+                        help={this.state.help.en_result}
+                        error={this.state.form.en_result.error}>
+                        <EditMarkdown
+                            name="en_result"
+                            value={this.state.form.en_result.value}
+                            changed={this.changedResult} />
+                    </Element>
+                );
+            }
+
+            // Expanded Result
+            if (this.state.form.enabled.value) {
+                ++i;
+                elements.push(
+                    <Element key={i} add_class="Markdown"
+                        label="Expanded Info"
+                        help={this.state.help.en_expanded}
+                        error={this.state.form.en_expanded.error}>
+                        <EditMarkdown
+                            name="en_expanded"
+                            value={this.state.form.en_expanded.value}
+                            changed={this.changedExpanded} />
+                    </Element>
+                );
+            }
+
             body = (
-                <Aux>
-                    <div className="FormHeader">
-                        <div className="HelpBox" dangerouslySetInnerHTML={{__html: help}} />
-                    </div>
-                    <form method="post" onSubmit={this.submitForm}>
-                        <div className="CheckboxElement">
-                            {this.state.form.enabled.error ?
-                                <p className="Error">{this.state.form.enabled.error}</p>
-                            : null}
-                            <input type="checkbox" name="enabled" checked={this.state.form.enabled.value} onChange={this.clickedEnabled} />
-                            <label onClick={this.clickedEnabled}>Eligible?</label>
-                        </div>
-
-                        {this.state.form.enabled.value ?
-                        <div className="TexareaElement">
-                            <label>Result (Short)</label>
-                            {this.state.form.en_result.error ?
-                                <p className="Error">{this.state.form.en_result.error}</p>
-                            : null}
-                            <EditMarkdown
-                                name="en_result"
-                                previewing={this.state.form.en_result.view === 'preview'}
-                                value={this.state.form.en_result.value}
-                                clickedEdit={this.doEditResult}
-                                clickedPreview={this.doPreviewResult}
-                                changed={this.changedResult} />
-                        </div>
-                        : null}
-
-                        {this.state.form.enabled.value ?
-                        <div className="TexareaElement">
-                            <label>Result (Expanded)</label>
-                            {this.state.form.en_expanded.error ?
-                                <p className="Error">{this.state.form.en_expanded.error}</p>
-                            : null}
-                            <EditMarkdown
-                                name="en_expanded"
-                                previewing={this.state.form.en_expanded.view === 'preview'}
-                                value={this.state.form.en_expanded.value}
-                                clickedEdit={this.doEditExpanded}
-                                clickedPreview={this.doPreviewExpanded}
-                                changed={this.changedExpanded} />
-                        </div>
-                        : null}
-
-                        <div className="ButtonHolder">
-                            <ProcessingButton
-                                disabled={!this.state.formValid}
-                                working={this.state.processing}
-                                clicked={this.submitForm}
-                                text="Submit" />
-                        </div>
-
-                        {this.state.saved ?
-                            <Message type="success" text="The scenario response has been saved" />
-                        : null}
-                        {this.state.processing_error ?
-                            <Message type="error" text={this.state.processing_error} />
-                        : null}
-                    </form>
-                </Aux>
+                <Form
+                    help={this.state.help.form}
+                    success={this.state.saved ? 'The scenario response has been saved' : null}
+                    error={this.state.processing_error}
+                    valid={this.state.formValid}
+                    processing={this.state.processing}
+                    submitted={this.submitForm}>
+                    {elements}
+                </Form>
             );
 
         } else {

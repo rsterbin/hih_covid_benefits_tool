@@ -36,27 +36,34 @@ class Language {
     }
 
     get(key, transform) {
+        let translation = this.get_raw(key);
+        if (translation === null) {
+            return key;
+        }
+        if (typeof transform === 'function') {
+            translation = transform(translation);
+        }
+        if (key in Keys) {
+            if (Keys[key].markdown_allowed) {
+                translation = this.markdown(translation);
+                if (!translation.match(/^</)) {
+                    translation = '<p>' + translation + '</p>';
+                }
+            }
+        }
+        return translation;
+    }
+
+    get_raw(key) {
         if (!this.loaded) {
             this.init();
             if (!this.loaded) {
                 Logger.alert('Translation was requested, but the current language could not be loaded ', { key: key });
-                return key;
+                return null;
             }
         }
         if (key in this.translations) {
-            let translation = this.translations[key];
-            if (typeof transform === 'function') {
-                translation = transform(translation);
-            }
-            if (key in Keys) {
-                if (Keys[key].markdown_allowed) {
-                    translation = this.markdown(translation);
-                    if (!translation.match(/^</)) {
-                        translation = '<p>' + translation + '</p>';
-                    }
-                }
-            }
-            return translation;
+            return this.translations[key];
         } else {
             if (key in Keys) {
                 Logger.alert('Missing translation', { lang: this.language_code, key: key, doc: Keys[key] });
@@ -64,7 +71,7 @@ class Language {
                 Logger.alert('Translation requested for undocumented key', { key: key });
             }
         }
-        return key;
+        return null;
     }
 
     markdown(translation) {
