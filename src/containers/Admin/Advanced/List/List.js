@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { DateTime } from 'luxon';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
@@ -25,7 +26,12 @@ class AdminAdvancedList extends Component {
         { key: 'version_num', title: 'Version Number' },
         { key: 'deploy_date', title: 'Created At' },
         { key: 'download', title: 'Download' },
+        { key: 'load', title: 'Revert' },
     ];
+
+    clickable = {
+        load: (row) => { this.revertToRow(row); }
+    };
 
     refresh = () => {
         this.fetchDeploys();
@@ -52,6 +58,10 @@ class AdminAdvancedList extends Component {
             });
     }
 
+    revertToRow(row) {
+        this.props.history.push('/admin/advanced/load/' + row.id);
+    }
+
     render() {
         let body = null;
         if (this.state.loaded) {
@@ -60,7 +70,7 @@ class AdminAdvancedList extends Component {
                 const formatted = dt.toLocaleString(DateTime.DATETIME_SHORT);
                 const url = Api.getDownloadUrl(
                     item.version_num,
-                    item.hash,
+                    item.uuid,
                     this.props.token);
                 const fname = 'hnct-' + item.version_num + '.zip';
                 const download = (
@@ -69,10 +79,12 @@ class AdminAdvancedList extends Component {
                     </a>
                 );
                 return {
+                    id: item.deployment_id,
                     version_num: item.version_num,
-                    hash: item.hash,
+                    uuid: item.uuid,
                     deploy_date: formatted,
-                    download: download
+                    download: download,
+                    load: <i className="fas fa-history" title="revert"></i>
                 };
             });
             body = (
@@ -81,7 +93,9 @@ class AdminAdvancedList extends Component {
                     <IconButton icon_type="refresh"
                         clicked={this.refresh} />
                     </div>
-                    <Table rows={rows} cols={this.cols} />
+                    <Table rows={rows}
+                        cols={this.cols}
+                        clickable={this.clickable} />
                 </div>
             );
         } else {
@@ -107,4 +121,4 @@ class AdminAdvancedList extends Component {
 
 }
 
-export default AdminAdvancedList;
+export default withRouter(AdminAdvancedList);

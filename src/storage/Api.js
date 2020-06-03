@@ -174,16 +174,20 @@ class Api {
         return this.getAxios().post('/admin/deploy', data);
     }
 
-    initializeAdmin(data) {
-        return this.getAxios().post('/admin/deploy/init', data);
+    getDeploymentInfo(data) {
+        return this.getAxios().post('/admin/deploy/info', data);
+    }
+
+    revertAdmin(data) {
+        return this.getAxios().post('/admin/deploy/revert', data);
     }
 
     deployAdmin(data) {
         return this.getAxios().post('/admin/deploy/save', data);
     }
 
-    getDownloadUrl(version, hash, token) {
-        return BASE_BACKEND + '/download/' + version + '/' + hash + '/' + token;
+    getDownloadUrl(version, uuid, token) {
+        return BASE_BACKEND + '/download/' + version + '/' + uuid + '/' + token;
     }
 
     // Prelaunch
