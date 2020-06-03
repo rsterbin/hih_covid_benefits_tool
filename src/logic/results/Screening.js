@@ -136,8 +136,9 @@ class Screening {
         let byBenefit = {};
         for (const benefit in this.conditions) {
             let scenario = {};
-            for (const k in this.conditions[benefit]) {
-                let m = this.conditions[benefit][k];
+            for (const cond of this.conditions[benefit]) {
+                let k = cond.code;
+                let m = cond.method;
                 scenario[k] = this.processAnswers[m](answerKey, k);
             }
             byBenefit[benefit] = scenario;

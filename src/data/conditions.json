@@ -1,1 +1,143 @@
-{"ffcra":{"type":"splitTypeByEssential","agency":"simple","books":"splitBooksByTaxes","reason":"findReasonForFFCRA"},"nys":{"agency":"simple","books":"splitBooksByCompliance","hours per week":"simple","reason":"findReasonForNYS"},"pssl":{"type":"splitTypeByHomeCare","agency":"simple","employed":"employedByYearAndHours"},"dwbor":{"length of employment":"simple"},"cares":{"books":"splitBooksByCompliance","length of employment":"splitLengthByMonths"}}
+{
+    "ffcra": [
+        {
+            "name": "Employee Type",
+            "code": "type",
+            "method": "splitTypeByEssential",
+            "outcomes": [
+                { "letter": "N", "answer": "NANNY, HOUSE CLEANER, or HOME ATTENDANT" },
+                { "letter": "E", "answer": "HOME HEALTH CARE WORKER" }
+
+            ]
+        },
+        {
+            "name": "Agency?",
+            "code": "agency",
+            "method": "simple",
+            "outcomes": [
+                { "letter": "A", "answer": "YES" },
+                { "letter": "B", "answer": "NO" }
+            ]
+        },
+        {
+            "name": "On the Books?",
+            "code": "books",
+            "method": "splitBooksByTaxes",
+            "outcomes": [
+                { "letter": "Y", "answer": "YES (EITHER)" },
+                { "letter": "N", "answer": "NO" }
+            ]
+        },
+        {
+            "name": "Reason",
+            "code": "reason",
+            "method": "findReasonForFFCRA",
+            "outcomes": [
+                { "letter": "B", "answer": "SELF-QUARANTINE AND SCHOOL CLOSED" },
+                { "letter": "Q", "answer": "SELF-QUARANTINE" },
+                { "letter": "S", "answer": "SCHOOL CLOSED" },
+                { "letter": "F", "answer": "FAMILY QUARANTINE OR STAY AT HOME" },
+                { "letter": "N", "answer": "NONE" }
+            ]
+        }
+    ],
+    "nys": [
+        {
+            "name": "Agency?",
+            "code": "agency",
+            "method": "simple",
+            "outcomes": [
+                { "letter": "A", "answer": "YES" },
+                { "letter": "B", "answer": "NO" }
+            ]
+        },
+        {
+            "name": "On the Books?",
+            "code": "books",
+            "method": "splitBooksByCompliance",
+            "outcomes": [
+                { "letter": "C", "answer": "YES, IN COMPLIANCE" },
+                { "letter": "N", "answer": "PARTIALLY OR NO" }
+            ]
+        },
+        {
+            "name": "Hours per Week",
+            "code": "hours per week",
+            "method": "simple",
+            "outcomes": [
+                { "letter": "A", "answer": "Under 40" },
+                { "letter": "B", "answer": "40 or more" }
+            ]
+        },
+        {
+            "name": "Reason",
+            "code": "reason",
+            "method": "findReasonForNYS",
+            "outcomes": [
+                { "letter": "Q", "answer": "SELF-QUARANTINE OR FAMILY QUARANTINE" },
+                { "letter": "S", "answer": "SCHOOL CLOSED" },
+                { "letter": "N", "answer": "NONE" }
+            ]
+        }
+    ],
+    "pssl": [
+        {
+            "name": "Employee Type",
+            "code": "type",
+            "method": "splitTypeByHomeCare",
+            "outcomes": [
+                { "letter": "N", "answer": "NANNY or HOUSE CLEANER" },
+                { "letter": "H", "answer": "HOME ATTENDANT or HOME HEALTH CARE WORKER" }
+            ]
+        },
+        {
+            "name": "Agency?",
+            "code": "agency",
+            "method": "simple",
+            "outcomes": [
+                { "letter": "A", "answer": "YES" },
+                { "letter": "B", "answer": "NO" }
+            ]
+        },
+        {
+            "name": "Employment",
+            "code": "employed",
+            "method": "employedByYearAndHours",
+            "outcomes": [
+                { "letter": "U", "answer": "LESS THAN ONE YEAR or UNDER 80" },
+                { "letter": "O", "answer": "ONE YEAR OR MORE and OVER 80" }
+            ]
+        }
+    ],
+    "dwbor": [
+        {
+            "name": "Employment",
+            "code": "length of employment",
+            "method": "simple",
+            "outcomes": [
+                { "letter": "U", "answer": "LESS THAN ONE YEAR" },
+                { "letter": "O", "answer": "ONE YEAR OR MORE" }
+            ]
+        }
+    ],
+    "cares": [
+        {
+            "name": "On the Books?",
+            "code": "books",
+            "method": "splitBooksByCompliance",
+            "outcomes": [
+                { "letter": "C", "answer": "YES, IN COMPLIANCE" },
+                { "letter": "N", "answer": "PARTIALLY OR NO" }
+            ]
+        },
+        {
+            "name": "Employment",
+            "code": "length of employment",
+            "method": "splitLengthByMonths",
+            "outcomes": [
+                { "letter": "U", "answer": "LESS THAN SIX MONTHS" },
+                { "letter": "O", "answer": "SIX MONTHS OR MORE" }
+            ]
+        }
+    ]
+}

@@ -5,9 +5,11 @@ import ProcessText from './results/ProcessText';
 import Resources from './results/Resources';
 import Language from '../utils/Language';
 
+import BenefitsData from '../data/benefits.json';
+
 class CollectResults {
 
-    benefits_order = [ 'ffcra', 'nys', 'pssl', 'dwbor', 'cares' ];
+    benefits = BenefitsData;
 
     compile(answerKey) {
 
@@ -72,7 +74,7 @@ class CollectResults {
 
     getBenefitSections(eligibility) {
         const benefitSections = [];
-        for (const benefit of this.benefits_order) {
+        for (const benefit of this.benefits.order) {
             const header = Language.get('results_section_header_' + benefit);
             if (benefit in eligibility) {
                 const result = ProcessText.process(eligibility[benefit].lang_key_result);
