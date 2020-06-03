@@ -8,6 +8,9 @@ import Logger from '../../../../utils/Logger';
 
 import EnglishData from '../../../../data/lang_en.json';
 import KeysData from '../../../../data/lang_keys.json';
+import BenefitsData from '../../../../data/benefits.json';
+import ConditionsData from '../../../../data/conditions.json';
+import ScenariosData from '../../../../data/scenarios.json';
 
 class AdminAdvancedInit extends Component {
 
@@ -25,8 +28,13 @@ class AdminAdvancedInit extends Component {
         });
         const data = {
             token: this.props.token,
-            en: EnglishData,
-            keys: KeysData
+            deploy: {
+                lang_en: EnglishData,
+                lang_keys: KeysData,
+                benefits: BenefitsData,
+                conditions: ConditionsData,
+                scenarios: ScenariosData
+            }
         };
         Api.initializeAdmin(data)
             .then(response => {
