@@ -9,6 +9,7 @@ import EditMarkdown from '../../../../components/Admin/EditMarkdown/EditMarkdown
 import Form from '../../../../components/Admin/Form/Form';
 import Element from '../../../../components/Admin/Form/Element/Element';
 import Api from '../../../../storage/Api';
+import Language from '../../../../utils/Language';
 import Logger from '../../../../utils/Logger';
 
 class AdminResultsEdit extends Component {
@@ -241,7 +242,9 @@ class AdminResultsEdit extends Component {
                         <EditMarkdown
                             name="en_result"
                             value={this.state.form.en_result.value}
-                            changed={this.changedResult} />
+                            changed={this.changedResult}
+                            replace_token="employee_type"
+                            replace_options={Language.get_token_options('employee_type')} />
                     </Element>
                 );
             }

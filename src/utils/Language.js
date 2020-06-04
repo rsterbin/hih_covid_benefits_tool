@@ -3,6 +3,13 @@ import LanguageCookie from '../storage/cookies/LanguageCookie';
 
 import Keys from '../data/lang_keys.json';
 
+const TOKEN_OPTIONS = {
+    employee_type: [ 'nanny', 'house cleaner', 'home attendant', 'home health care worker' ],
+};
+
+const TOKEN_REGEX_TAG_OPEN = '\\{\\{';
+const TOKEN_REGEX_TAG_CLOSE = '\\}\\}';
+
 class Language {
 
     language_code = null;
@@ -35,13 +42,13 @@ class Language {
         }
     }
 
-    get(key, transform) {
+    get(key, tokens) {
         let translation = this.get_raw(key);
         if (translation === null) {
             return key;
         }
-        if (typeof transform === 'function') {
-            translation = transform(translation);
+        if (tokens) {
+            translation = this.replace_tokens(translation, tokens);
         }
         if (key in Keys) {
             if (Keys[key].markdown_allowed) {
@@ -81,7 +88,25 @@ class Language {
         return this.md.render(translation);
     }
 
+    replace_tokens(translation, tokens) {
+        for (const token in tokens) {
+            if (this.get_token_options(token).includes(tokens[token])) {
+                const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
+                    token + TOKEN_REGEX_TAG_CLOSE, 'g');
+                translation = translation.replace(regexp, tokens[token]);
+            }
+        }
+        return translation;
+    }
+
+    get_token_options(token) {
+        if (token in TOKEN_OPTIONS) {
+            return TOKEN_OPTIONS[token];
+        }
+        return [];
+    }
+
 }
 
-export { Language };
+export { Language, TOKEN_REGEX_TAG_OPEN, TOKEN_REGEX_TAG_CLOSE };
 export default new Language('en');

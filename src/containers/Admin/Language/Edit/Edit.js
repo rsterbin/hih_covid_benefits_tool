@@ -10,6 +10,7 @@ import Form from '../../../../components/Admin/Form/Form';
 import Element from '../../../../components/Admin/Form/Element/Element';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import Language from '../../../../utils/Language';
 
 class AdminLanguageEdit extends Component {
 
@@ -131,7 +132,9 @@ class AdminLanguageEdit extends Component {
                 input = <EditMarkdown
                     name="english"
                     value={this.state.english}
-                    changed={this.changeEnglish} />;
+                    changed={this.changeEnglish}
+                    replace_token={this.state.language_info.token_replace}
+                    replace_options={Language.get_token_options(this.state.language_info.token_replace)} />
             } else {
                 elem_class = 'PlainText';
                 input = <input type="text"

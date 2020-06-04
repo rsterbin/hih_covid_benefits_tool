@@ -31,6 +31,30 @@
     border-right: 0.05em solid #080808;
 }
 
+.ViewReplacement {
+    border: 0.05em solid #01bf90;
+    border-bottom: none;
+    padding: 0.75em;
+}
+
+.ViewReplacement .ReplacementToken {
+    font-family: "Lucida Console", Courier, monospace;
+    padding: 0 0.25em;
+}
+
+.ViewReplacement .ExplainReplacement,
+.ViewReplacement .ReplacementOptions {
+    display: inline-block;
+}
+
+.ViewReplacement .ReplacementOptions {
+    margin-left: 0.75em;
+}
+
+.SplitEditor .ViewReplacement {
+    border-color: #080808;
+}
+
 .PreviewOnly .PreviewBox .View {
     border: 0.05em solid #01bf90;
     padding: 0.75em;

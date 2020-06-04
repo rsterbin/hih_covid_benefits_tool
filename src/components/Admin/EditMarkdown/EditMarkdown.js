@@ -3,6 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import IconButton from '../../UI/IconButton/IconButton';
 import Markdown from '../../../utils/Markdown';
+import { TOKEN_REGEX_TAG_OPEN, TOKEN_REGEX_TAG_CLOSE } from '../../../utils/Language';
 
 import './EditMarkdown.css';
 
@@ -10,6 +11,8 @@ const MARKDOWN_HELP_LINK = 'https://www.markdownguide.org/basic-syntax';
 
 const EditMarkdown = (props) => {
     const [viewtype, setViewType] = useState('split');
+    const [replacement, setReplacement] = useState('');
+    const [previewText, setPreviewText] = useState(props.value || '');
 
     // Toggle buttons
     const doChange = (e, choice) => {
@@ -42,8 +45,46 @@ const EditMarkdown = (props) => {
         </div>
     );
 
+    // Replacement buttons
+    let replacementButtons = null;
+    if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
+        const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
+            props.replace_token + TOKEN_REGEX_TAG_CLOSE, 'g');
+        const doReplacement = (e) => {
+            if (e) {
+                e.preventDefault();
+            }
+            var choice = e.target.options[e.target.selectedIndex].value;
+            setReplacement(choice);
+            let newtext = props.value || '';
+            if (choice) {
+                newtext = newtext.replace(regexp, choice);
+            }
+            setPreviewText(newtext);
+        };
+        let token = '{{' + props.replace_token + '}}';
+        let options = props.replace_options.map(option => {
+            return <option key={option} value={option}>{option}</option>;
+        });
+        replacementButtons = (
+            <div className="ViewReplacement">
+                <div className="ExplainReplacement">
+                    Replace
+                    <span className="ReplacementToken">{token}</span>
+                    with:
+                </div>
+                <div className="ReplacementOptions">
+                    <select name="replacement" onChange={doReplacement} value={replacement}>
+                        <option value="">-- do not replace --</option>
+                        {options}
+                    </select>
+                </div>
+            </div>
+        );
+    }
+
     // Preview window
-    const preview = Markdown.render(props.value);
+    const preview = Markdown.render(previewText);
     const previewBox = (
         <div className="PreviewBox">
             <div className="View" dangerouslySetInnerHTML={{__html: preview}} />
@@ -66,6 +107,7 @@ const EditMarkdown = (props) => {
         return (
             <div className="EditMarkdown SplitEditor">
                 {toggle}
+                {replacementButtons}
                 <div className="SplitWrapper">
                     <div className="SplitContainer">
                         <div className="SplitInternal">
@@ -91,6 +133,7 @@ const EditMarkdown = (props) => {
         return (
             <div className="EditMarkdown PreviewOnly">
                 {toggle}
+                {replacementButtons}
                 {previewBox}
             </div>
         );
