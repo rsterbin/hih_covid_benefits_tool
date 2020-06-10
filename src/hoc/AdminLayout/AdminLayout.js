@@ -13,6 +13,7 @@ class AdminLayout extends Component {
                         <li><NavLink exact to="/admin">Dashboard</NavLink></li>
                         <li><NavLink to="/admin/language">Language</NavLink></li>
                         <li><NavLink to="/admin/results">Results</NavLink></li>
+                        <li><NavLink to="/admin/resources">Resources</NavLink></li>
                         <li><NavLink to="/admin/advanced">Advanced</NavLink></li>
                     </ul>
                 </div>

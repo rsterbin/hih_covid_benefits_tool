@@ -47,6 +47,9 @@ const EditMarkdown = (props) => {
 
     // Replacement buttons
     let replacementButtons = null;
+    let doValueChange = (e) => {
+        props.changed(e);
+    };
     if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
         const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
             props.replace_token + TOKEN_REGEX_TAG_CLOSE, 'g');
@@ -62,6 +65,16 @@ const EditMarkdown = (props) => {
             }
             setPreviewText(newtext);
         };
+        doValueChange = (e) => {
+            props.changed(e);
+            if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
+                let newtext = e.target.value;
+                if (replacement) {
+                    newtext = newtext.replace(regexp, replacement);
+                }
+                setPreviewText(newtext);
+            }
+        }
         let token = '{{' + props.replace_token + '}}';
         let options = props.replace_options.map(option => {
             return <option key={option} value={option}>{option}</option>;
@@ -99,7 +112,7 @@ const EditMarkdown = (props) => {
                 minRows={minrows}
                 name={props.name}
                 defaultValue={props.value}
-                onChange={props.changed} />
+                onChange={doValueChange} />
         </div>
     );
 

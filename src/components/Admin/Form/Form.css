@@ -12,3 +12,17 @@
     margin: 0 auto;
 }
 
+.AdminForm input[type="text"] {
+    border: 0.05em solid #808080;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 97%;
+}
+
+.AdminForm select {
+    border: 0.05em solid #080808;
+    padding: 0.5rem;
+    font-size: 1rem;
+    max-width: 97%;
+}
+

@@ -15,6 +15,9 @@ class Api {
         if (this.axiosInstance === null) {
             this.axiosInstance = axios.create({
                 baseURL: BASE_URL,
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                }
             });
         }
         return this.axiosInstance;
@@ -146,6 +149,10 @@ class Api {
         return this.getAxios().post('/admin/language', data);
     }
 
+    getLanguageForSection(data) {
+        return this.getAxios().post('/admin/language/section', data);
+    }
+
     getLanguageInfo(data) {
         return this.getAxios().post('/admin/language/info', data);
     }
@@ -158,6 +165,10 @@ class Api {
         return this.getAxios().post('/admin/benefits', data);
     }
 
+    getBenefitInfo(code, data) {
+        return this.getAxios().post('/admin/benefits/' + code, data);
+    }
+
     getScenarios(code, data) {
         return this.getAxios().post('/admin/benefits/' + code + '/scenarios', data);
     }
@@ -168,6 +179,22 @@ class Api {
 
     saveScenario(code, id, data) {
         return this.getAxios().post('/admin/benefits/' + code + '/scenario/' + id + '/save', data);
+    }
+
+    getResources(data, which) {
+        if (which) {
+            return this.getAxios().post('/admin/resources/' + which, data);
+        } else {
+            return this.getAxios().post('/admin/resources', data);
+        }
+    }
+
+    getResource(id, data) {
+        return this.getAxios().post('/admin/resources/info/' + id, data);
+    }
+
+    saveResource(data) {
+        return this.getAxios().post('/admin/resources/save', data);
     }
 
     getAllDeploys(data) {

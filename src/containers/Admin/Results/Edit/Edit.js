@@ -126,11 +126,7 @@ class AdminResultsEdit extends Component {
                     const benefit = response.data.benefit;
                     const scenario = response.data.scenario;
                     this.setState(prevState => {
-                        let newForm = {
-                            enabled: { ...prevState.form.enabled },
-                            en_result: { ...prevState.form.en_result },
-                            en_expanded: { ...prevState.form.en_expanded },
-                        };
+                        let newForm = this.copyForm(prevState.form);
                         newForm.enabled.value = scenario.enabled;
                         newForm.en_result.value = scenario.en_result;
                         newForm.en_expanded.value = scenario.en_expanded;

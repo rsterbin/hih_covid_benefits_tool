@@ -6,6 +6,7 @@ import Aux from '../../../../hoc/Aux/Aux';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from '../../../../components/UI/Message/Message';
 import Table from '../../../../components/UI/Table/Table';
+import IconButton from '../../../../components/UI/IconButton/IconButton';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
 
@@ -14,21 +15,32 @@ class AdminResultsList extends Component {
     state = {
         loaded: false,
         benefits: null,
+        language: null,
         error: null
+    };
+
+    cols = [
+        { key: 'name', title: 'Name' },
+        { key: 'abbreviation', title: 'Abbreviation' },
+        { key: 'scenarios', title: 'Scenarios' },
+        { key: 'resources', title: 'Resources' }
+    ];
+
+    clickable = {
+        scenarios: (row) => { this.editScenarios(row); },
+        resources: (row) => { this.editResources(row); }
     };
 
     refresh = () => {
         this.fetchBenefits();
     };
 
-    cols = [
-        { key: 'name', title: 'Name' },
-        { key: 'abbreviation', title: 'Abbreviation' },
-        { key: 'manage', title: 'Manage' }
-    ];
+    editCommonResources = () => {
+        this.props.history.push('/admin/resources/common');
+    };
 
-    clickable = {
-        manage: (row) => { this.manageBenefit(row); }
+    editCommonLanguage = () => {
+        this.props.history.push('/admin/language/results');
     };
 
     componentDidMount() {
@@ -52,8 +64,12 @@ class AdminResultsList extends Component {
             });
     }
 
-    manageBenefit(row) {
+    editScenarios(row) {
         this.props.history.push('/admin/results/' + row.code);
+    }
+
+    editResources(row) {
+        this.props.history.push('/admin/resources/filter/' + row.code);
     }
 
     render() {
@@ -66,15 +82,29 @@ class AdminResultsList extends Component {
                         code: benefit.code,
                         name: benefit.name,
                         abbreviation: benefit.abbreviation,
-                        manage: <i className="fas fa-cog" title="Manage"></i>,
+                        scenarios: <i className="fas fa-align-justify" title="Edit Scenarios"></i>,
+                        resources: <i className="fas fa-link" title="Resources"></i>,
                     };
                 });
-            console.log(rows);
             body = (
-                <Table
-                    rows={rows}
-                    cols={this.cols}
-                    clickable={this.clickable} />
+                <Aux>
+                    <h3>Results By Benefit</h3>
+                    <Table
+                        rows={rows}
+                        cols={this.cols}
+                        clickable={this.clickable} />
+                    <div className="Extras">
+                        <h3>Non-Benefit Related Results</h3>
+                        <p><IconButton icon="fas fa-align-justify"
+                            title="Language"
+                            append_text="Common Language"
+                            clicked={this.editCommonResources} /></p>
+                        <p><IconButton icon="fas fa-link"
+                            title="Resources"
+                            append_text="Common Resources"
+                            clicked={this.editCommonResources} /></p>
+                    </div>
+                </Aux>
             );
         } else {
             body = (
@@ -88,7 +118,7 @@ class AdminResultsList extends Component {
         }
         return (
             <AdminPage
-                title="Results: Manage results by benefit"
+                title="Results: Manage the Results Page"
                 breadcrumbs={['Admin', 'Results', 'List']}>
                 {body}
             </AdminPage>

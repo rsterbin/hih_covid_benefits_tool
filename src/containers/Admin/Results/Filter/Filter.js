@@ -36,7 +36,7 @@ class AdminResultsFilter extends Component {
     };
 
     editScenario = (row) => {
-        this.props.history.push('/admin/results/' + this.state.benefit.code + '/scenario/' + row.id);
+        this.props.history.push('/admin/results/' + this.state.benefit.code + '/edit/' + row.id);
     };
 
     filterResponses = (e) => {
@@ -79,6 +79,7 @@ class AdminResultsFilter extends Component {
             filters: null
         });
         const data = { token: this.props.token };
+        console.log(this.props.match.params.benefit);
         Api.getScenarios(this.props.match.params.benefit, data)
             .then((response) => {
                 if (!response.data.benefit) {

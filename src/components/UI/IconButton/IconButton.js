@@ -15,6 +15,9 @@ const iconButton = (props) => {
     } else if (props.icon_type === 'preview') {
         title = 'preview';
         icon = 'far fa-eye';
+    } else if (props.icon_type === 'new') {
+        title = 'new';
+        icon = 'fas fa-plus-circle';
     }
     if (props.title) {
         title = props.title;

@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Advanced from './Advanced/Advanced';
 import Results from './Results/Results';
+import Resources from './Resources/Resources';
 import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
 import AdminLayout from '../../hoc/AdminLayout/AdminLayout';
@@ -61,6 +62,7 @@ class Admin extends Component {
 
         if (this.state.loggedIn) {
             const doAdvanced = () => <Advanced token={this.state.token} />;
+            const doResources = () => <Resources token={this.state.token} />;
             const doResults = () => <Results token={this.state.token} />;
             const doLanguage = () => <Language token={this.state.token} />;
             const doDashboard = () => <Dashboard token={this.state.token} />;
@@ -68,6 +70,7 @@ class Admin extends Component {
                 <AdminLayout>
                     <Switch>
                         <Route path="/admin/advanced" render={doAdvanced} />
+                        <Route path="/admin/resources" render={doResources} />
                         <Route path="/admin/results" render={doResults} />
                         <Route path="/admin/language" render={doLanguage} />
                         <Route path="/admin" render={doDashboard} />

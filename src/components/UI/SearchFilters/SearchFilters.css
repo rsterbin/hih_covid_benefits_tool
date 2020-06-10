@@ -1,19 +1,19 @@
 
-.SelectFilters {
+.SearchFilters {
     margin-bottom: 1em;
 }
 
-.SelectFilters .Filter {
+.SearchFilters .Filter {
     margin-bottom: 1em;
 }
 
-.SelectFilters .Filter label {
+.SearchFilters .Filter label {
     display: block;
     font-weight: bold;
 }
 
-.SelectFilters select {
-    border: 0.05em solid #080808;
+.SearchFilters input[type="text"] {
+    border: 0.05em solid #808080;
     padding: 0.5rem;
     font-size: 1rem;
     max-width: 97%;
