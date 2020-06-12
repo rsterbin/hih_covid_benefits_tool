@@ -13,7 +13,6 @@ import Language from '../../../../utils/Language';
 import Logger from '../../../../utils/Logger';
 
 // TODO: new resource button on the resources list page that respects the current benefit
-// TODO: delete resource option
 
 class AdminResourcesEdit extends Component {
 
@@ -93,9 +92,10 @@ class AdminResourcesEdit extends Component {
             info.lang_key_desc = this.state.resource.lang_key_desc;
         }
         info.benefit = null;
-        if (this.state.form.benefit_id.value) {
+        const form_id = this.state.form.benefit_id.value ? parseInt(this.state.form.benefit_id.value) : NaN;
+        if (!isNaN(form_id)) {
             for (var b of this.state.all_benefits) {
-                if (b.id === this.state.form.benefit_id.value) {
+                if (b.id === form_id) {
                     info.benefit = { ...b };
                 }
             }

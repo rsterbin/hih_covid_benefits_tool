@@ -18,6 +18,9 @@ const iconButton = (props) => {
     } else if (props.icon_type === 'new') {
         title = 'new';
         icon = 'fas fa-plus-circle';
+    } else if (props.icon_type === 'close') {
+        title = 'close';
+        icon = 'fas fa-times';
     }
     if (props.title) {
         title = props.title;

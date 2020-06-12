@@ -22,3 +22,7 @@
     display: inline;
 }
 
+.Message .CloseButton {
+    float: right;
+}
+

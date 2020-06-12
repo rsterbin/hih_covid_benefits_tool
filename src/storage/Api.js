@@ -197,6 +197,10 @@ class Api {
         return this.getAxios().post('/admin/resources/save', data);
     }
 
+    deleteResource(data) {
+        return this.getAxios().post('/admin/resources/delete', data);
+    }
+
     getAllDeploys(data) {
         return this.getAxios().post('/admin/deploy', data);
     }

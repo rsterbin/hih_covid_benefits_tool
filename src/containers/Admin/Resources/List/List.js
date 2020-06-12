@@ -13,21 +13,26 @@ import Logger from '../../../../utils/Logger';
 
 const COMMON_CODE = 'common';
 
-// TODO: Actually delete a resource
-
 class AdminResourcesList extends Component {
 
     state = {
         loaded: false,
+        benefit: null,
+        resources: null,
+        error: null,
         confirming_delete: false,
         delete_candidate: null,
-        benefit: null,
-        error: null
+        processing_delete: false,
+        deleted: false
     };
 
     resources_clickable = {
-        edit: (row) => { this.editResource(row); },
-        delete: (row) => { this.deleteResource(row); },
+        edit: (row) => {
+            this.props.history.push('/admin/resources/edit/' + row.id);
+        },
+        delete: (row) => {
+            this.setState({ confirming_delete: true, delete_candidate: row });
+        },
     };
 
     resources_snip = {
@@ -49,6 +54,14 @@ class AdminResourcesList extends Component {
 
     cancelDelete = () => {
         this.setState({ confirming_delete: false, delete_candidate: null });
+    };
+
+    confirmDelete = () => {
+        this.deleteResource();
+    };
+
+    closeDeleteMessage = () => {
+        this.setState({ deleted: false });
     };
 
     componentDidMount() {
@@ -102,12 +115,24 @@ class AdminResourcesList extends Component {
         }
     }
 
-    editResource(row) {
-        this.props.history.push('/admin/resources/edit/' + row.id);
-    }
-
-    deleteResource(row) {
-        this.setState({ confirming_delete: true, delete_candidate: row });
+    deleteResource() { 
+        this.setState({ processing_delete: true, deleted: false });
+        const data = {
+            token: this.props.token,
+            id: this.state.delete_candidate.id
+        };
+        Api.deleteResource(data)
+            .then((response) => {
+                this.setState({ processing_delete: false, deleted: true, confirming_delete: false });
+                this.fetchResources();
+            })
+            .catch((error) => {
+                if (!error.isAxiosError) {
+                    throw error;
+                }
+                Logger.alert('Could not delete resource', { api_error: Api.parseAxiosError(error) });
+                this.setState({ error: 'Could not delete resource', processing_delete: false });
+            });
     }
 
     getBenefitCode() {
@@ -156,8 +181,13 @@ class AdminResourcesList extends Component {
             resources_cols.push({ key: 'delete', title: 'Delete' });
             body = (
                 <Aux>
+                    {this.state.deleted ?
+                        <Message type="success" text="The resource was deleted" closed={this.closeDeleteMessage} />
+                    : null}
                     <ConfirmDeleteResource
                         confirming={this.state.confirming_delete}
+                        working={this.state.processing_delete}
+                        confirm={this.confirmDelete}
                         cancel={this.cancelDelete}
                         candidate={this.state.delete_candidate} />
                     <ActionButtons buttons={[{icon: "fas fa-plus-circle",
