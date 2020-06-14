@@ -15,11 +15,6 @@ import Logger from '../../utils/Logger';
 
 import './Admin.css';
 
-// TODO: Use context to pass the token to children?
-// const TokenContext = React.createContext(null);
-// TODO: Use react-idle-timer to trigger token updates?
-// https://github.com/SupremeTechnopriest/react-idle-timer
-
 class Admin extends Component {
 
     state = {

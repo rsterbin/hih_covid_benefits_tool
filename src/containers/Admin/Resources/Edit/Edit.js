@@ -12,8 +12,6 @@ import Api from '../../../../storage/Api';
 import Language from '../../../../utils/Language';
 import Logger from '../../../../utils/Logger';
 
-// TODO: new resource button on the resources list page that respects the current benefit
-
 class AdminResourcesEdit extends Component {
 
     state = {

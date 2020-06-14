@@ -6,8 +6,6 @@ import PreLaunch from './containers/PreLaunch/PreLaunch';
 
 import './App.css';
 
-// TODO: Tests
-
 class App extends Component {
 
     render() {
