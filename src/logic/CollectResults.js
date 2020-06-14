@@ -82,14 +82,21 @@ class CollectResults {
                 const result = ProcessText.process(eligibility[benefit].lang_key_result);
                 const expanded = ProcessText.process(eligibility[benefit].lang_key_expanded);
                 const resources = Resources.getBenefitResources(eligibility, benefit);
-                benefitSections.push({
+                let section = {
                     type: 'benefit',
                     header: header,
                     text: result,
                     read_more: expanded,
                     resources_header: Language.get('results_section_resources_header'),
-                    resources: resources
-                });
+                    resources: []
+                };
+                for (const r of resources) {
+                    section.resources.push({
+                        text: ProcessText.process(r.text),
+                        link: r.link
+                    });
+                }
+                benefitSections.push(section);
             }
         }
         return benefitSections;

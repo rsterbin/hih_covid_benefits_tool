@@ -69,7 +69,7 @@ class AdminResultsList extends Component {
     }
 
     editResources(row) {
-        this.props.history.push('/admin/resources/filter/' + row.code);
+        this.props.history.push('/admin/resources/' + row.code);
     }
 
     render() {
