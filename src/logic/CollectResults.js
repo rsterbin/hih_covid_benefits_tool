@@ -41,6 +41,7 @@ class CollectResults {
         // If we found nothing, add the no-results text
         if (benefitSections.length < 1) {
             sections.push({
+                type: 'no_benefits',
                 header: null,
                 text: ProcessText.process('results_no_benefits')
             });
@@ -65,6 +66,7 @@ class CollectResults {
 
         // Always add the retaliation warning section
         sections.push({
+            type: 'warning',
             header: ProcessText.process('results_retaliation_warning_header'),
             text: ProcessText.process('results_retaliation_warning_text')
         });
@@ -81,6 +83,7 @@ class CollectResults {
                 const expanded = ProcessText.process(eligibility[benefit].lang_key_expanded);
                 const resources = Resources.getBenefitResources(eligibility, benefit);
                 benefitSections.push({
+                    type: 'benefit',
                     header: header,
                     text: result,
                     read_more: expanded,
@@ -108,6 +111,7 @@ class CollectResults {
 
         // no to on the books: message about getting on
         return {
+            type: 'books',
             header: ProcessText.process('results_off_the_books_header'),
             text: ProcessText.process('results_off_the_books_text')
         };

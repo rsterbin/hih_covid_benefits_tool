@@ -9,7 +9,10 @@ const response = (props) => {
     let i = 0;
     let answer = props.answerSections.map((section) => {
         ++i;
-        return <ExpandedSection key={i} lang={props.lang} {...section} />;
+        return <ExpandedSection key={i}
+            add_class={section.type === 'benefit' ? 'Benefit' : ''}
+            lang={props.lang}
+            {...section} />;
     });
     let resourceBlock = null;
     if (props.resources.length > 0) {

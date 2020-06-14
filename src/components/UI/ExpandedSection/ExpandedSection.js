@@ -1,45 +1,78 @@
 import React, { useState } from 'react';
 
-import Aux from '../../../hoc/Aux/Aux';
 import LinkList from '../LinkList/LinkList';
+import IconButton from '../IconButton/IconButton';
 
 import './ExpandedSection.css';
 
 const ExpandedSection = (props) => {
     const [expanded, setExpanded] = useState(false);
-    let readmore = null;
+    let readmore_link = null;
+    let expanded_block = null;
+    let classes = [ 'ExpandedSection' ];
+
     if (props.read_more) {
-        let link = null;
-        let classes = [ 'MoreBlock' ];
+        classes.push('ReadMore');
+        let more_classes = [ 'MoreBlock' ];
+
+        const doExpand = (e) => {
+            e.preventDefault();
+            setExpanded(true);
+        };
+
+        const doCollapse = (e) => {
+            e.preventDefault();
+            setExpanded(false);
+        };
+
         if (expanded) {
-            classes.push('ExpandedMore');
-            link = <div className="ReadLessLink" onClick={() => setExpanded(false)}>{props.lang.read_less}</div>;
+            more_classes.push('ExpandedMore');
+            readmore_link = (
+                <div className="ReadLessLink">
+                    <IconButton
+                        icon="fas fa-arrow-circle-up"
+                        title={props.lang.read_less}
+                        append_text={props.lang.read_less}
+                        clicked={doCollapse} />
+                </div>
+            );
         } else {
-            classes.push('CollapsedMore');
-            link = <div className="ReadMoreLink" onClick={() => setExpanded(true)}>{props.lang.read_more}</div>;
+            more_classes.push('CollapsedMore');
+            readmore_link = (
+                <div className="ReadMoreLink">
+                    <IconButton
+                        icon="fas fa-arrow-circle-down"
+                        title={props.lang.read_more}
+                        append_text={props.lang.read_more}
+                        clicked={doExpand} />
+                </div>
+            );
         }
-        const expBlock = (
-            <div className={classes.join(' ')}>
-                <div className="ReadMore" dangerouslySetInnerHTML={{__html: props.read_more}}></div>
+
+        expanded_block = (
+            <div className={more_classes.join(' ')}>
+                <div dangerouslySetInnerHTML={{__html: props.read_more}}></div>
                 {props.resources ?
                     <LinkList header={props.resources_header} links={props.resources} />
                 : null}
             </div>
         );
-        readmore = (
-            <Aux>
-                {link}
-                {expBlock}
-            </Aux>
-        );
     }
+
+    if (props.add_class) {
+        classes.push(props.add_class);
+    }
+
     return (
-        <div className="ExpandedSection">
+        <div className={classes.join(' ')}>
             {props.header ?
                 <h3 className="SectionHeader">{props.header}</h3>
             : null}
-            <div className="ResponseSection" dangerouslySetInnerHTML={{__html: props.text}}></div>
-            {readmore}
+            <div className="MainBlock">
+                <div dangerouslySetInnerHTML={{__html: props.text}}></div>
+                {readmore_link}
+            </div>
+            {expanded_block}
         </div>
     );
 };

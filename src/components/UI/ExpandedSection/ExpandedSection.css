@@ -1,9 +1,65 @@
 
-.CollapsedMore {
+.ExpandedSection.ReadMore {
+    margin-bottom: 1rem;
+}
+
+.ExpandedSection.ReadMore .SectionHeader {
+    margin: 0;
+    padding: 0.75em 0;
+}
+
+.ExpandedSection.ReadMore .MainBlock,
+.ExpandedSection.ReadMore .MoreBlock.ExpandedMore {
+    padding: 0.5rem 0;
+}
+
+.ExpandedSection.ReadMore .ReadMoreLink,
+.ExpandedSection.ReadMore .ReadLessLink {
+    text-align: center;
+}
+
+.ExpandedSection.ReadMore .ReadMoreLink .IconButton,
+.ExpandedSection.ReadMore .ReadLessLink .IconButton {
+    text-decoration: none;
+}
+
+.ExpandedSection.ReadMore .CollapsedMore {
     display: none;
 }
 
-.ExpandedMore {
+.ExpandedSection.ReadMore .ExpandedMore {
     display: block;
 }
+
+/* Benefits Colors */
+
+.ExpandedSection.ReadMore.Benefit {
+    border: 0.05rem solid #01BF90;
+}
+
+.ExpandedSection.ReadMore.Benefit .SectionHeader {
+    background: #01BF90;
+    color: #fff;
+    padding: 0.75em;
+}
+
+.ExpandedSection.ReadMore.Benefit .MainBlock {
+    background-color: #EDFFFA;
+}
+
+.ExpandedSection.ReadMore.Benefit .MainBlock,
+.ExpandedSection.ReadMore.Benefit .MoreBlock.ExpandedMore {
+    padding: 0.5rem;
+}
+
+.ExpandedSection.ReadMore.Benefit .ReadMoreLink,
+.ExpandedSection.ReadMore.Benefit .ReadLessLink {
+    color: #008C69;
+}
+
+.ExpandedSection.ReadMore.Benefit .ExpandedMore {
+    border-top: 0.05rem solid #01BF90;
+    background-color: #F7FFFC;
+}
+
 
