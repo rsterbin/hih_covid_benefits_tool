@@ -14,6 +14,12 @@ const message = (props) => {
     let tryagain_text = props.tryagain_text ? props.tryagain_text : 'Try Again?';
     return (
         <div className={classes.join(' ')}>
+            {props.closed ?
+                <div className="CloseButton">
+                    <IconButton icon_type="close"
+                        clicked={props.closed} />
+                </div>
+            : null}
             <p>{props.text}</p>
             {props.tryagain ?
                 <IconButton icon_type="refresh"

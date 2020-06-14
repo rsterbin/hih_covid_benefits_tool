@@ -1,32 +1,94 @@
-.PreviewMarkdown, .EditMarkdown {
-    overflow: auto;
-    margin-bottom: 2em;
+.EditMarkdown textarea {
+    width: 97%;
+    padding: 0.5em;
 }
 
-.PreviewMarkdown h5 {
+.EditMarkdown h5 {
     color: #01bf90;
     font-size: 0.9em;
     margin: 0;
 }
 
-.PreviewMarkdown .View {
+.SplitWrapper {
+    display: table;
+    border: 0.05em solid #080808;
+}
+
+.SplitContainer {
+    display: table-row;
+    padding: 0;
+    margin: 0;
+}
+
+.SplitContainer .SplitInternal {
+    display: table-cell;
+    padding: 0.75em;
+    width: 50%;
+    margin: 0;
+}
+
+.SplitContainer .SplitInternal:first-child {
+    border-right: 0.05em solid #080808;
+}
+
+.ViewReplacement {
+    border: 0.05em solid #01bf90;
+    border-bottom: none;
+    padding: 0.75em;
+}
+
+.ViewReplacement .ReplacementToken {
+    font-family: "Lucida Console", Courier, monospace;
+    padding: 0 0.25em;
+}
+
+.ViewReplacement .ExplainReplacement,
+.ViewReplacement .ReplacementOptions {
+    display: inline-block;
+}
+
+.ViewReplacement .ReplacementOptions {
+    margin-left: 0.75em;
+}
+
+.SplitEditor .ViewReplacement {
+    border-color: #080808;
+}
+
+.PreviewOnly .PreviewBox .View {
     border: 0.05em solid #01bf90;
     padding: 0.75em;
 }
 
-.PreviewMarkdown .View a {
-    color: #01bf90;
+
+.SplitEditor .EditorBox textarea {
+    border: none;
 }
 
-.PreviewMarkdown button,
-.EditMarkdown button {
-    display: block;
-    float: right;
-    color: #01bf90;
-}
-
-.EditMarkdown textarea {
-    width: 97%;
+.SplitEditor .PreviewBox .View {
     padding: 0.5em;
+}
+
+.SplitEditor .PreviewBox .View p:first-child {
+    margin-top: 0;
+}
+
+.PreviewBox .View a {
+    color: #01bf90;
+}
+
+.ViewToggle {
+    display: block;
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+.ViewToggle button {
+    display: inline-block;
+    color: #01bf90;
+}
+
+.ViewToggle button.Active {
+    color: #080808;
 }
 

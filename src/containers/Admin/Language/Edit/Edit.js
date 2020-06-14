@@ -6,11 +6,11 @@ import Aux from '../../../../hoc/Aux/Aux';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from '../../../../components/UI/Message/Message';
 import EditMarkdown from '../../../../components/Admin/EditMarkdown/EditMarkdown';
-import ProcessingButton from '../../../../components/UI/ProcessingButton/ProcessingButton';
+import Form from '../../../../components/Admin/Form/Form';
+import Element from '../../../../components/Admin/Form/Element/Element';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
-
-import './Edit.css';
+import Language from '../../../../utils/Language';
 
 class AdminLanguageEdit extends Component {
 
@@ -19,7 +19,6 @@ class AdminLanguageEdit extends Component {
         error: null,
         language_info: null,
         original_english: null,
-        preview: false,
         english: null,
         processing: false,
         processing_error: null,
@@ -35,14 +34,6 @@ class AdminLanguageEdit extends Component {
     changeEnglish = (e) => {
         let val = e.target.value;
         this.setState({ english: val });
-    };
-
-    doPreview = () => {
-        this.setState({ preview: true });
-    };
-
-    doEdit = () => {
-        this.setState({ preview: false });
     };
 
     submitEdit = () => {
@@ -124,45 +115,45 @@ class AdminLanguageEdit extends Component {
             );
 
         } else {
-            let help = this.md.render(this.state.language_info.help);
-            body = (
-                <div className="EditLanguage">
-                    <h4>Editing: {this.getKey()}</h4>
+            let helptext = this.md.render(this.state.language_info.help);
+            let helpbox = (
+                <Aux>
                     <p><i>Appears in: <strong>{this.state.language_info.section}</strong></i></p>
-                    {help ?
-                        <div className="HelpBox" dangerouslySetInnerHTML={{__html: help}} />
+                    {helptext ?
+                        <div dangerouslySetInnerHTML={{__html: helptext}} />
                     : null}
-                    <form method="post" onSubmit={this.submitEdit}>
-                        {this.state.language_info.markdown_allowed ?
-                            <EditMarkdown
-                                name="english"
-                                previewing={this.state.preview}
-                                value={this.state.english}
-                                clickedEdit={this.doEdit}
-                                clickedPreview={this.doPreview}
-                                changed={this.changeEnglish} />
-                        :
-                            <input type="text"
-                                name="english"
-                                value={this.state.english}
-                                onChange={this.changeEnglish} />
-                        }
-                        {this.state.preview ? null :
-                            <div className="ButtonHolder">
-                                <ProcessingButton
-                                    working={this.state.processing}
-                                    clicked={this.submitEdit}
-                                    text="Submit" />
-                            </div>
-                        }
-                        {this.state.saved ?
-                            <Message type="success" text="The new language has been saved" />
-                        : null}
-                        {this.state.processing_error ?
-                            <Message type="error" text={this.state.processing_error} />
-                        : null}
-                    </form>
-                </div>
+                </Aux>
+            );
+            let label = 'English text for: ' + this.getKey();
+            let input = null;
+            let elem_class = null;
+            if (this.state.language_info.markdown_allowed) {
+                elem_class = 'Markdown';
+                input = <EditMarkdown
+                    name="english"
+                    value={this.state.english}
+                    changed={this.changeEnglish}
+                    replace_token={this.state.language_info.token_replace}
+                    replace_options={Language.get_token_options(this.state.language_info.token_replace)} />
+            } else {
+                elem_class = 'PlainText';
+                input = <input type="text"
+                    size="50"
+                    name="english"
+                    value={this.state.english}
+                    onChange={this.changeEnglish} />
+            }
+            body = (
+                <Form help={helpbox}
+                    success={this.state.saved ? 'The new language has been saved' : null}
+                    error={this.state.processing_error}
+                    valid={true}
+                    processing={this.state.processing}
+                    submitted={this.submitEdit}>
+                    <Element add_class={elem_class} label={label}>
+                        {input}
+                    </Element>
+                </Form>
             );
         }
 

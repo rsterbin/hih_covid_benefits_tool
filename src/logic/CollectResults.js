@@ -5,9 +5,11 @@ import ProcessText from './results/ProcessText';
 import Resources from './results/Resources';
 import Language from '../utils/Language';
 
+import BenefitsData from '../data/benefits.json';
+
 class CollectResults {
 
-    benefits_order = [ 'ffcra', 'nys', 'pssl', 'dwbor', 'cares' ];
+    benefits = BenefitsData;
 
     compile(answerKey) {
 
@@ -24,7 +26,7 @@ class CollectResults {
             sections: this.getAllSections(eligibility, answerKey),
             resources_header: ProcessText.process('results_resources_header'),
             resources_intro: ProcessText.process('results_resources_intro'),
-            resources: this.getAllResources(eligibility)
+            resources: this.getOtherResources(eligibility)
         };
 
         return results;
@@ -39,6 +41,7 @@ class CollectResults {
         // If we found nothing, add the no-results text
         if (benefitSections.length < 1) {
             sections.push({
+                type: 'no_benefits',
                 header: null,
                 text: ProcessText.process('results_no_benefits')
             });
@@ -63,6 +66,7 @@ class CollectResults {
 
         // Always add the retaliation warning section
         sections.push({
+            type: 'warning',
             header: ProcessText.process('results_retaliation_warning_header'),
             text: ProcessText.process('results_retaliation_warning_text')
         });
@@ -72,14 +76,27 @@ class CollectResults {
 
     getBenefitSections(eligibility) {
         const benefitSections = [];
-        for (let benefit of this.benefits_order) {
-            let header = Language.get('results_section_header_' + benefit);
+        for (const benefit of this.benefits.order) {
+            const header = Language.get('results_section_header_' + benefit);
             if (benefit in eligibility) {
-                let text = ProcessText.process(eligibility[benefit]);
-                benefitSections.push({
+                const result = ProcessText.process(eligibility[benefit].lang_key_result);
+                const expanded = ProcessText.process(eligibility[benefit].lang_key_expanded);
+                const resources = Resources.getBenefitResources(eligibility, benefit);
+                let section = {
+                    type: 'benefit',
                     header: header,
-                    text: text
-                });
+                    text: result,
+                    read_more: expanded,
+                    resources_header: Language.get('results_section_resources_header'),
+                    resources: []
+                };
+                for (const r of resources) {
+                    section.resources.push({
+                        text: ProcessText.process(r.text),
+                        link: r.link
+                    });
+                }
+                benefitSections.push(section);
             }
         }
         return benefitSections;
@@ -101,52 +118,22 @@ class CollectResults {
 
         // no to on the books: message about getting on
         return {
+            type: 'books',
             header: ProcessText.process('results_off_the_books_header'),
             text: ProcessText.process('results_off_the_books_text')
         };
     }
 
-    getAllResources(eligibility) {
-        const b_resources = Resources.getBenefitResources(eligibility);
-        const o_resources = Resources.getOtherResources();
-
-        let all = [];
-
-        // Add the benefit resources
-        for (let benefit of this.benefits_order) {
-            if (benefit in b_resources) {
-                let section = {
-                    header: Language.get('results_resources_' + benefit + '_header'),
-                    links: []
-                };
-                for (let r of b_resources[benefit]) {
-                    section.links.push({
-                        text: ProcessText.process(r.text),
-                        link: r.link
-                    });
-                }
-                all.push(section);
-            }
+    getOtherResources(eligibility) {
+        let links = [];
+        const resources = Resources.getOtherResources();
+        for (let r of resources) {
+            links.push({
+                text: ProcessText.process(r.text),
+                link: r.link
+            });
         }
-
-        // Add the always-include resources
-        if (o_resources.length > 0) {
-            let section = {
-                links: []
-            };
-            if (all.length > 0) {
-                section.header = Language.get('results_resources_other_header');
-            }
-            for (let r of o_resources) {
-                section.links.push({
-                    text: ProcessText.process(r.text),
-                    link: r.link
-                });
-            }
-            all.push(section);
-        }
-
-        return all;
+        return links;
     }
 
 }

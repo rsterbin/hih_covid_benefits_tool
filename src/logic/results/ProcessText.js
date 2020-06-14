@@ -24,16 +24,12 @@ class ProcessText {
         this.type_replacement = r;
     }
 
-    replaceEmployeeType(text) {
+    process(result_key) {
         if (this.type_replacement === null) {
             this.findTypeReplacement();
         }
-        return text.replace(/\{\{employee_type\}\}/g, this.type_replacement);
-    }
-
-    process(result_key) {
-        return Language.get(result_key, t => {
-            return this.replaceEmployeeType(t);
+        return Language.get(result_key, {
+            employee_type: this.type_replacement
         });
     }
 

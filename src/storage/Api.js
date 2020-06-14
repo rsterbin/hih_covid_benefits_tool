@@ -15,6 +15,9 @@ class Api {
         if (this.axiosInstance === null) {
             this.axiosInstance = axios.create({
                 baseURL: BASE_URL,
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                }
             });
         }
         return this.axiosInstance;
@@ -146,6 +149,10 @@ class Api {
         return this.getAxios().post('/admin/language', data);
     }
 
+    getLanguageForSection(data) {
+        return this.getAxios().post('/admin/language/section', data);
+    }
+
     getLanguageInfo(data) {
         return this.getAxios().post('/admin/language/info', data);
     }
@@ -154,20 +161,64 @@ class Api {
         return this.getAxios().post('/admin/language/save', data);
     }
 
+    getBenefits(data) {
+        return this.getAxios().post('/admin/benefits', data);
+    }
+
+    getBenefitInfo(code, data) {
+        return this.getAxios().post('/admin/benefits/' + code, data);
+    }
+
+    getScenarios(code, data) {
+        return this.getAxios().post('/admin/benefits/' + code + '/scenarios', data);
+    }
+
+    getScenario(code, id, data) {
+        return this.getAxios().post('/admin/benefits/' + code + '/scenario/' + id, data);
+    }
+
+    saveScenario(code, id, data) {
+        return this.getAxios().post('/admin/benefits/' + code + '/scenario/' + id + '/save', data);
+    }
+
+    getResources(data, which) {
+        if (which) {
+            return this.getAxios().post('/admin/resources/' + which, data);
+        } else {
+            return this.getAxios().post('/admin/resources', data);
+        }
+    }
+
+    getResource(id, data) {
+        return this.getAxios().post('/admin/resources/info/' + id, data);
+    }
+
+    saveResource(data) {
+        return this.getAxios().post('/admin/resources/save', data);
+    }
+
+    deleteResource(data) {
+        return this.getAxios().post('/admin/resources/delete', data);
+    }
+
     getAllDeploys(data) {
         return this.getAxios().post('/admin/deploy', data);
     }
 
-    initializeAdmin(data) {
-        return this.getAxios().post('/admin/deploy/init', data);
+    getDeploymentInfo(data) {
+        return this.getAxios().post('/admin/deploy/info', data);
+    }
+
+    revertAdmin(data) {
+        return this.getAxios().post('/admin/deploy/revert', data);
     }
 
     deployAdmin(data) {
         return this.getAxios().post('/admin/deploy/save', data);
     }
 
-    getDownloadUrl(version, hash, token) {
-        return BASE_BACKEND + '/download/' + version + '/' + hash + '/' + token;
+    getDownloadUrl(version, uuid, token) {
+        return BASE_BACKEND + '/download/' + version + '/' + uuid + '/' + token;
     }
 
     // Prelaunch

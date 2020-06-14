@@ -11,7 +11,8 @@
     line-height: 1.5em;
 }
 
-.ProcessingButton.Working {
+.ProcessingButton.Working,
+.ProcessingButton.Disabled {
     border-color: #aaa;
     background-color: #ACBFBA;
     cursor: not-allowed;

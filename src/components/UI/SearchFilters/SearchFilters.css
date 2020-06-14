@@ -1,0 +1,21 @@
+
+.SearchFilters {
+    margin-bottom: 1em;
+}
+
+.SearchFilters .Filter {
+    margin-bottom: 1em;
+}
+
+.SearchFilters .Filter label {
+    display: block;
+    font-weight: bold;
+}
+
+.SearchFilters input[type="text"] {
+    border: 0.05em solid #808080;
+    padding: 0.5rem;
+    font-size: 1rem;
+    max-width: 97%;
+}
+

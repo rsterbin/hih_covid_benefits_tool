@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Advanced from './Advanced/Advanced';
+import Results from './Results/Results';
+import Resources from './Resources/Resources';
 import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
 import AdminLayout from '../../hoc/AdminLayout/AdminLayout';
@@ -12,11 +14,6 @@ import Api from '../../storage/Api';
 import Logger from '../../utils/Logger';
 
 import './Admin.css';
-
-// TODO: Use context to pass the token to children?
-// const TokenContext = React.createContext(null);
-// TODO: Use react-idle-timer to trigger token updates?
-// https://github.com/SupremeTechnopriest/react-idle-timer
 
 class Admin extends Component {
 
@@ -60,12 +57,16 @@ class Admin extends Component {
 
         if (this.state.loggedIn) {
             const doAdvanced = () => <Advanced token={this.state.token} />;
+            const doResources = () => <Resources token={this.state.token} />;
+            const doResults = () => <Results token={this.state.token} />;
             const doLanguage = () => <Language token={this.state.token} />;
             const doDashboard = () => <Dashboard token={this.state.token} />;
             return (
                 <AdminLayout>
                     <Switch>
                         <Route path="/admin/advanced" render={doAdvanced} />
+                        <Route path="/admin/resources" render={doResources} />
+                        <Route path="/admin/results" render={doResults} />
                         <Route path="/admin/language" render={doLanguage} />
                         <Route path="/admin" render={doDashboard} />
                     </Switch>

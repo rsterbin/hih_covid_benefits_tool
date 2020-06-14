@@ -1,0 +1,14 @@
+
+.ConfirmDeleteResource .CloseButton {
+    float: right;
+    margin-top: -1.25rem;
+}
+
+.ConfirmDeleteResource .DeleteButton {
+    text-align: center;
+}
+
+.ConfirmDeleteResource .DeleteButton .ProcessingButton {
+    display: inline-block;
+}
+

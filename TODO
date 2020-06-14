@@ -1,0 +1,13 @@
+Need before launch:
+* Better sessions + redux
+    * Use context to pass the token to children?
+        // const TokenContext = React.createContext(null);
+    * Use react-idle-timer to trigger token updates?
+        // https://github.com/SupremeTechnopriest/react-idle-timer
+
+Nice to have:
+* New resource button on the resources list page that respects the current benefit
+* Add a component for the language plain text editor so it can have token replacement too
+* Tests
+
+

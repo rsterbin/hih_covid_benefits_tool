@@ -15,7 +15,8 @@ class AdminLanguage extends Component {
         };
         return (
             <Switch>
-                <Route path="/admin/language/:key" render={doEdit} />
+                <Route path="/admin/language/edit/:key" render={doEdit} />
+                <Route path="/admin/language/:section" render={doList} />
                 <Route path="/" render={doList} />
             </Switch>
         );

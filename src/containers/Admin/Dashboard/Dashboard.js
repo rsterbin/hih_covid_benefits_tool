@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DateTime } from 'luxon';
 
 import Block from '../../../components/Admin/DashboardBlock/DashboardBlock';
-import Message from '../../../components/UI/Message/Message';
 
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
@@ -110,7 +109,6 @@ class AdminDashboard extends Component {
                     refresh={this.refreshContacts}
                     rows={this.state.contacts}
                     cols={this.contacts_headers} />
-                <Message type="error" text="Generic error is generic" tryagain={this.refreshContacts} />
             </div>
         );
     }

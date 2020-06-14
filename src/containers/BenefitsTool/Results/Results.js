@@ -25,7 +25,9 @@ class Results extends Component {
 
     componentDidMount() {
         this.lang = {
-            restart_link_text: Language.get('util_restart_link_text')
+            restart_link_text: Language.get('util_restart_link_text'),
+            read_less: Language.get('util_read_less_link_text'),
+            read_more: Language.get('util_read_more_link_text')
         };
         this.setState({ loaded_lang: true });
     }
