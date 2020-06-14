@@ -25,7 +25,7 @@ class Language {
             r = null;
         }
         if (r === null) {
-            this.reportError();
+            Logger.alert('No such language', { lang: code });
             return false;
         }
         this.translations = r;
