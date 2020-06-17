@@ -3,6 +3,12 @@ import LanguageCookie from '../storage/cookies/LanguageCookie';
 
 import Keys from '../data/lang_keys.json';
 
+import English from '../data/lang_en.json';
+
+const TRANSLATIONS = {
+    en: English
+};
+
 const TOKEN_OPTIONS = {
     employee_type: [ 'nanny', 'house cleaner', 'home attendant', 'home health care worker' ],
 };
@@ -19,12 +25,9 @@ class Language {
 
     load(code) {
         let r = null;
-        try {
-            r = require('../data/lang_' + code + '.json');
-        } catch {
-            r = null;
-        }
-        if (r === null) {
+        if (code in TRANSLATIONS) {
+            r = TRANSLATIONS[code];
+        } else {
             Logger.alert('No such language', { lang: code });
             return false;
         }
