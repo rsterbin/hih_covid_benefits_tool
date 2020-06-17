@@ -17,6 +17,7 @@ const EditMarkdown = (props) => {
     // Toggle buttons
     const doChange = (e, choice) => {
         e.preventDefault();
+        console.log('choice is ' + choice);
         setViewType(choice);
     };
     const doHelp = (e) => {
@@ -49,6 +50,8 @@ const EditMarkdown = (props) => {
     let replacementButtons = null;
     let doValueChange = (e) => {
         props.changed(e);
+        let newtext = e.target.value;
+        setPreviewText(newtext);
     };
     if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
         const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
