@@ -256,7 +256,9 @@ class AdminResultsEdit extends Component {
                         <EditMarkdown
                             name="en_expanded"
                             value={this.state.form.en_expanded.value}
-                            changed={this.changedExpanded} />
+                            changed={this.changedExpanded}
+                            replace_token="employee_type"
+                            replace_options={Language.get_token_options('employee_type')} />
                     </Element>
                 );
             }
