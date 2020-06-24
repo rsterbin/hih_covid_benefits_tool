@@ -1,111 +1,69 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
 
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Landing from './Landing/Landing';
 import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
-import AnswersCookie from '../../storage/cookies/AnswersCookie';
-import VisitorCookie from '../../storage/cookies/VisitorCookie';
-import Logger from '../../utils/Logger';
 import Questions from '../../logic/Questions';
+import * as actions from '../../storage/redux/actions/index';
 
 class BenefitsTool extends Component {
 
-    state = {
-        visitor_id: null,
-        answers: {},
-        loaded: false
-    };
-
     componentDidMount() {
-        let newstate = {};
-        // Fetch visitor ID from the cookie
-        let visitor_id = VisitorCookie.get();
-        if (!visitor_id) {
-            visitor_id = uuidv4();
-            VisitorCookie.set(visitor_id);
-        }
-        newstate.visitor_id = visitor_id;
-        // Fetch answers from the cookie
-        newstate.answers = AnswersCookie.get() || {};
-        // Mark this component loaded
-        newstate.loaded = true;
-        this.setState(newstate);
+        this.props.fetchVisitor();
+        this.props.fetchAnswers();
     }
 
+    // TODO: Remove
     clearAnswers = () => {
-        AnswersCookie.set({});
-        this.setState({ answers: {} });
+        this.props.clearAnswers();
     }
 
-    saveAnswer = (qcode, letter, completed) => {
-        if (!Questions.validAnswer(qcode, letter)) {
-            Logger.warn('Request to save unknown question/answer pair ' + qcode + '/' + letter);
-            return false;
-        }
-        let newAnswers = { ...this.state.answers };
-        newAnswers[qcode] = letter;
-        AnswersCookie.set(newAnswers);
-        this.setState({ answers: newAnswers });
+    // TODO: Remove
+    saveAnswer = (qcode, letter) => {
+        this.props.saveAnswer(qcode, letter);
         return true;
     };
 
+    // TODO: Remove
     needsRedirect = () => {
-        let ready = true;
-        let started = false;
-        let step = 0;
-        for (const qcode of Questions.question_order) {
-            if (typeof this.state.answers[qcode] === 'undefined') {
-                Logger.debug('Needs redirect because of undefined question code ' + qcode, { answers: this.state.answers });
-                ready = false;
-                break;
-            } else {
-                started = true;
-            }
-            const letter = this.state.answers[qcode];
-            if (!Questions.validAnswer(qcode, letter)) {
-                Logger.warn('Needs redirect because of undefined answer letter ' + letter, { q_code: qcode, answers: this.state.answers });
-                ready = false;
-                break;
-            }
-            ++step;
+        const step = Questions.firstMissingStep(this.props.answers);
+        if (step === null) {
+            return false;
         }
-        if (!ready) {
-            if (started) {
-                return '/quiz/' + step;
-            } else {
-                return '/';
-            }
+        if (step < 1) {
+            return '/';
+        } else {
+            return '/quiz/' + step;
         }
-        return false;
     };
 
     render() {
 
-        if (!this.state.loaded) {
+        if (!this.props.loaded) {
             return <Spinner />;
         }
 
         const doQuiz = () => <Quiz
-            visitor_id={this.state.visitor_id}
-            answers={this.state.answers}
+            visitor_id={this.props.visitor_id}
+            answers={this.props.answers}
             saveAnswer={this.saveAnswer} />;
 
         const doConfirmation = () => <Confirmation
-            visitor_id={this.state.visitor_id}
-            answers={this.state.answers}
+            visitor_id={this.props.visitor_id}
+            answers={this.props.answers}
             needsRedirect={this.needsRedirect}
             saveAnswer={this.saveAnswer} />;
 
         const doResults = () => <Results
-            answers={this.state.answers}
+            answers={this.props.answers}
             needsRedirect={this.needsRedirect} />;
 
         const doLanding = () => <Landing
-            visitor_id={this.state.visitor_id}
+            visitor_id={this.props.visitor_id}
             clearAnswers={this.clearAnswers} />;
 
         return (
@@ -123,4 +81,21 @@ class BenefitsTool extends Component {
 
 }
 
-export default BenefitsTool;
+const mapStateToProps = state => {
+    return {
+        loaded: state.loaded,
+        visitor_id: state.visitor_id,
+        answers: state.answers
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchVisitor: () => dispatch(actions.visitorFetch()),
+        fetchAnswers: () => dispatch(actions.answersFetch()),
+        clearAnswers: () => dispatch(actions.answersClear()),
+        saveAnswer: (qcode, letter) => dispatch(actions.answerSave(qcode, letter)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BenefitsTool);

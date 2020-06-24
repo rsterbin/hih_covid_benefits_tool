@@ -1,5 +1,6 @@
 
 import Local, { Language } from '../utils/Language';
+import Logger from '../utils/Logger';
 
 const ASCII_CODE_FOR_CAPITAL_A = 65;
 
@@ -219,6 +220,36 @@ class Questions {
 
     lang_key(name, which) {
         return 'quiz_' + name.replace(/[^a-z]/g, '_') + '_' + which;
+    }
+
+    firstMissingStep(answers) {
+        let ready = true;
+        let started = false;
+        let step = 0;
+        for (const qcode of this.question_order) {
+            if (typeof answers[qcode] === 'undefined') {
+                Logger.debug('Missing step: undefined question code ' + qcode, { answers: answers });
+                ready = false;
+                break;
+            } else {
+                started = true;
+            }
+            const letter = answers[qcode];
+            if (!this.validAnswer(qcode, letter)) {
+                Logger.warn('Missing step: undefined answer letter ' + letter, { q_code: qcode, answers: answers });
+                ready = false;
+                break;
+            }
+            ++step;
+        }
+        if (!ready) {
+            if (started) {
+                return step;
+            } else {
+                return 0;
+            }
+        }
+        return null;
     }
 
 }
