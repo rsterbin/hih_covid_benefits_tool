@@ -81,6 +81,47 @@ export const answersClear = () => {
     };
 };
 
+export const questionInit = (step) => {
+    return {
+        type: actionTypes.QUESTION_INIT,
+        step: step
+    };
+};
+
+export const answersPushStarted = () => {
+    return {
+        type: actionTypes.ANSWERS_PUSH_STARTED
+    };
+};
+
+export const answersPushCompleted = (answers) => {
+    return {
+        type: actionTypes.ANSWERS_PUSH_COMPLETED,
+        answers: answers
+    };
+};
+
+export const answersPushFailed = () => {
+    return {
+        type: actionTypes.ANSWERS_PUSH_FAILED
+    };
+};
+
+export const answerPush = (qcode, letter) => {
+    if (!Questions.validAnswer(qcode, letter)) {
+        Logger.warn('Request to push unknown question/answer pair ' + qcode + '/' + letter);
+        return (dispatch, getState) => {
+            dispatch(answersPushFailed());
+        };
+    }
+    return (dispatch, getState) => {
+        dispatch(answersPushStarted());
+        let newAnswers = updateObject(getState().answers, { [qcode]: letter });
+        AnswersCookie.set(newAnswers);
+        dispatch(answersPushCompleted(newAnswers));
+    };
+};
+
 export const answersUpdateStarted = () => {
     return {
         type: actionTypes.ANSWERS_UPDATE_STARTED
@@ -94,10 +135,18 @@ export const answersUpdateCompleted = (answers) => {
     };
 };
 
+export const answersUpdateFailed = () => {
+    return {
+        type: actionTypes.ANSWERS_UPDATE_FAILED
+    };
+};
+
 export const answerSave = (qcode, letter) => {
     if (!Questions.validAnswer(qcode, letter)) {
         Logger.warn('Request to save unknown question/answer pair ' + qcode + '/' + letter);
-        return (dispatch, getState) => {};
+        return (dispatch, getState) => {
+            dispatch(answersUpdateFailed());
+        };
     }
     return (dispatch, getState) => {
         dispatch(answersUpdateStarted());

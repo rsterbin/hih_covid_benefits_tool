@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Spinner from '../../../components/UI/Spinner/Spinner';
 import Intro from '../../../components/BenefitsTool/Intro/Intro';
 import Language from '../../../utils/Language';
 import Api from '../../../storage/Api';
+import * as actions from '../../../storage/redux/actions/index';
 
 class Landing extends Component {
 
     state = {
-        loaded_lang: false,
         error: false
     };
-
-    lang = null;
 
     startQuiz = () => {
         this.setState({ error: false });
@@ -47,24 +45,31 @@ class Landing extends Component {
         });
     }
 
-    componentDidMount() {
-        this.lang = {
+    render() {
+        const lang = {
             header: Language.get('landing_header'),
             message: Language.get('landing_message'),
             error_msg: Language.get('landing_error')
         };
-        this.setState({ loaded_lang: true });
-    }
 
-    render() {
-        if (!this.state.loaded_lang) {
-            return <Spinner />;
-        }
         return <Intro
-            error={this.state.error ? this.lang.error_msg : null}
+            error={this.state.error ? lang.error_msg : null}
             clicked={this.startQuiz}
-            lang={this.lang} />;
+            lang={lang} />;
     }
 }
 
-export default withRouter(Landing);
+const mapStateToProps = state => {
+    return {
+        visitor_id: state.visitor_id
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        clearAnswers: () => dispatch(actions.answersClear())
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Landing));

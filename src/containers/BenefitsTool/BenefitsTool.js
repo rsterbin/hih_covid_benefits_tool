@@ -47,11 +47,6 @@ class BenefitsTool extends Component {
             return <Spinner />;
         }
 
-        const doQuiz = () => <Quiz
-            visitor_id={this.props.visitor_id}
-            answers={this.props.answers}
-            saveAnswer={this.saveAnswer} />;
-
         const doConfirmation = () => <Confirmation
             visitor_id={this.props.visitor_id}
             answers={this.props.answers}
@@ -62,18 +57,14 @@ class BenefitsTool extends Component {
             answers={this.props.answers}
             needsRedirect={this.needsRedirect} />;
 
-        const doLanding = () => <Landing
-            visitor_id={this.props.visitor_id}
-            clearAnswers={this.clearAnswers} />;
-
         return (
             <div className="BenefitsTool">
                 <Switch>
-                    <Route path="/quiz/:step" render={doQuiz} />
-                    <Route path="/quiz" render={doQuiz} />
+                    <Route path="/quiz/:step" component={Quiz} />
+                    <Route path="/quiz" component={Quiz} />
                     <Route path="/confirm" render={doConfirmation} />
                     <Route path="/results" render={doResults} />
-                    <Route path="/" render={doLanding} />
+                    <Route path="/" component={Landing} />
                 </Switch>
             </div>
         );

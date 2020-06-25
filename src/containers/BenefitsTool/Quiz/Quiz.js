@@ -1,37 +1,22 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import StepCounter from '../../../components/BenefitsTool/StepCounter/StepCounter';
 import Question from '../../../components/BenefitsTool/Question/Question';
 import Controls from '../../../components/UI/Controls/Controls';
-import Spinner from '../../../components/UI/Spinner/Spinner';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
 import Api from '../../../storage/Api';
+import * as actions from '../../../storage/redux/actions/index';
 
 import Questions from '../../../logic/Questions';
 
 class Quiz extends Component {
 
-    state = {
-        loaded_lang: false,
-        hasError: false
-    };
-
     clickAnswer = (letter) => {
         const qcode = Questions.getCodeByStep(this.currentStep());
-        const ok = this.props.saveAnswer(qcode, letter);
-        if (ok) {
-            if (this.currentStep() + 1 >= Questions.count()) {
-                this.props.history.push('/confirm');
-            } else {
-                const newStep = this.currentUrlStep() + 1;
-                this.props.history.push('/quiz/' + newStep);
-            }
-        } else {
-            Logger.alert('Could not save answer', { qcode: qcode, letter: letter });
-            this.setState({ hasError: true });
-        }
+        this.props.saveAnswer(qcode, letter);
     };
 
     goBack = () => {
@@ -62,13 +47,6 @@ class Quiz extends Component {
     };
 
     componentDidMount() {
-        this.lang = {
-            error_message: Language.get('quiz_save_failed_error'),
-            back_link_text: Language.get('quiz_back_link_text'),
-            restart_link_text: Language.get('util_restart_link_text'),
-            cancel_link_text: Language.get('quiz_cancel_link_text'),
-        };
-        this.setState({ loaded_lang: true });
         Api.bumpSession(this.props.visitor_id);
     }
 
@@ -91,9 +69,12 @@ class Quiz extends Component {
 
     render() {
 
-        if (!this.state.loaded_lang) {
-            return <Spinner />;
-        }
+        const lang = {
+            error_message: Language.get('quiz_save_failed_error'),
+            back_link_text: Language.get('quiz_back_link_text'),
+            restart_link_text: Language.get('util_restart_link_text'),
+            cancel_link_text: Language.get('quiz_cancel_link_text'),
+        };
 
         // Steps
         let steps = [];
@@ -141,28 +122,41 @@ class Quiz extends Component {
             links.push({
                 classNames: [ 'BackLink' ],
                 clicked: this.goBack,
-                text: this.lang.back_link_text
+                text: lang.back_link_text
             });
             links.push({
                 classNames: [ 'RestartLink' ],
                 clicked: this.restartQuiz,
-                text: this.lang.restart_link_text
+                text: lang.restart_link_text
             });
         } else {
             links.push({
                 classNames: [ 'CancelLink' ],
                 clicked: this.cancelQuiz,
-                text: this.lang.cancel_link_text
+                text: lang.cancel_link_text
             });
         }
 
         let message = null;
-        if (this.state.hasError) {
-            message = this.lang.error_message;
+        if (this.props.has_error) {
+            message = lang.error_message;
+        }
+
+        let redirect = null;
+        if (this.props.step_saved) {
+            if (this.currentStep() + 1 >= Questions.count()) {
+                redirect = <Redirect push to="/confirm" />;
+            } else {
+                const newStep = this.currentUrlStep() + 1;
+                const newPath = '/quiz/' + newStep;
+                redirect = <Redirect push to={newPath} />;
+            }
+            this.props.initQuestion();
         }
 
         return (
             <div className="Quiz">
+                {redirect}
                 <StepCounter
                     steps={steps}
                     currentStep={this.currentStep()} />
@@ -180,4 +174,20 @@ class Quiz extends Component {
 
 }
 
-export default withRouter(Quiz);
+const mapStateToProps = state => {
+    return {
+        visitor_id: state.visitor_id,
+        answers: state.answers,
+        has_error: state.answers_push_error,
+        step_saved: state.step_saved
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        initQuestion: (step) => dispatch(actions.questionInit(step)),
+        saveAnswer: (qcode, letter) => dispatch(actions.answerPush(qcode, letter))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Quiz));
