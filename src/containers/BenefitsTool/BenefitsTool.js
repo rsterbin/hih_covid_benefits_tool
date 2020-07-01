@@ -18,11 +18,6 @@ class BenefitsTool extends Component {
     }
 
     // TODO: Remove
-    clearAnswers = () => {
-        this.props.clearAnswers();
-    }
-
-    // TODO: Remove
     saveAnswer = (qcode, letter) => {
         this.props.saveAnswer(qcode, letter);
         return true;
@@ -47,12 +42,6 @@ class BenefitsTool extends Component {
             return <Spinner />;
         }
 
-        const doConfirmation = () => <Confirmation
-            visitor_id={this.props.visitor_id}
-            answers={this.props.answers}
-            needsRedirect={this.needsRedirect}
-            saveAnswer={this.saveAnswer} />;
-
         const doResults = () => <Results
             answers={this.props.answers}
             needsRedirect={this.needsRedirect} />;
@@ -62,7 +51,7 @@ class BenefitsTool extends Component {
                 <Switch>
                     <Route path="/quiz/:step" component={Quiz} />
                     <Route path="/quiz" component={Quiz} />
-                    <Route path="/confirm" render={doConfirmation} />
+                    <Route path="/confirm" component={Confirmation} />
                     <Route path="/results" render={doResults} />
                     <Route path="/" component={Landing} />
                 </Switch>
@@ -84,7 +73,6 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchVisitor: () => dispatch(actions.visitorFetch()),
         fetchAnswers: () => dispatch(actions.answersFetch()),
-        clearAnswers: () => dispatch(actions.answersClear()),
         saveAnswer: (qcode, letter) => dispatch(actions.answerSave(qcode, letter)),
     };
 };

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import AnswerList from '../../../../components/BenefitsTool/AnswerList/AnswerList';
+import * as actions from '../../../../storage/redux/actions/index';
 
 import Questions from '../../../../logic/Questions';
 
@@ -19,7 +21,7 @@ class EditAnswers extends Component {
     }
 
     saveEdit(question, letter) {
-        this.props.edited(question, letter);
+        this.props.saveAnswer(question, letter);
         this.setState({ editingAnswer: null });
     }
 
@@ -42,4 +44,16 @@ class EditAnswers extends Component {
     };
 }
 
-export default EditAnswers;
+const mapStateToProps = state => {
+    return {
+        answers: state.answers
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveAnswer: (qcode, letter) => dispatch(actions.answerPush(qcode, letter))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditAnswers);

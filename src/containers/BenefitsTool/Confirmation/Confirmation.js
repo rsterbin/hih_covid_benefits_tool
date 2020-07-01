@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import * as EmailValidator from 'email-validator';
+import { connect } from 'react-redux';
 
 import EditAnswers from './EditAnswers/EditAnswers';
 import ContactInfo from '../../../components/BenefitsTool/ContactInfo/ContactInfo';
 import Controls from '../../../components/UI/Controls/Controls';
-import Spinner from '../../../components/UI/Spinner/Spinner';
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
 import Language from '../../../utils/Language';
@@ -16,7 +16,6 @@ import Questions from '../../../logic/Questions';
 class Confirmation extends Component {
 
     state = {
-        loaded_lang: false,
         loading: false,
         email: '',
         zip: '',
@@ -111,29 +110,6 @@ class Confirmation extends Component {
     };
 
     componentDidMount() {
-        this.lang = {
-            edit_answers: {
-                header: Language.get('confirm_answerlist_header'),
-                cancel_title: Language.get('confirm_answerlist_cancel_edit_link_title'),
-                cancel_alt: Language.get('util_cancel_alt_text'),
-                edit_title: Language.get('confirm_answerlist_edit_link_title'),
-                edit_alt: Language.get('confirm_answerlist_edit_link_title'),
-            },
-            contact: {
-                header: Language.get('confirm_contact_header'),
-                invitation: Language.get('confirm_contact_invitation'),
-                email_label: Language.get('confirm_contact_email_label'),
-                email_error: Language.get('confirm_contact_email_error'),
-                zip_label: Language.get('confirm_contact_zip_label'),
-                zip_error: Language.get('confirm_contact_zip_error')
-            },
-            controls: {
-                confirm_button: Language.get('confirm_button_text'),
-                restart_link: Language.get('confirm_restart_link_text'),
-                recording_error: Language.get('confirm_recording_error')
-            }
-        };
-        this.setState({ loaded_lang: true });
         Api.bumpSession(this.props.visitor_id);
     }
 
@@ -155,12 +131,32 @@ class Confirmation extends Component {
 
     render() {
 
-        if (!this.state.loaded_lang) {
-            return <Spinner />;
-        }
+        const lang = {
+            edit_answers: {
+                header: Language.get('confirm_answerlist_header'),
+                cancel_title: Language.get('confirm_answerlist_cancel_edit_link_title'),
+                cancel_alt: Language.get('util_cancel_alt_text'),
+                edit_title: Language.get('confirm_answerlist_edit_link_title'),
+                edit_alt: Language.get('confirm_answerlist_edit_link_title'),
+            },
+            contact: {
+                header: Language.get('confirm_contact_header'),
+                invitation: Language.get('confirm_contact_invitation'),
+                email_label: Language.get('confirm_contact_email_label'),
+                email_error: Language.get('confirm_contact_email_error'),
+                zip_label: Language.get('confirm_contact_zip_label'),
+                zip_error: Language.get('confirm_contact_zip_error')
+            },
+            controls: {
+                confirm_button: Language.get('confirm_button_text'),
+                restart_link: Language.get('confirm_restart_link_text'),
+                recording_error: Language.get('confirm_recording_error')
+            }
+        };
 
-        const goto = this.props.needsRedirect();
-        if (goto) {
+        const step = Questions.firstMissingStep(this.props.answers);
+        if (step !== null) {
+            const goto = step < 1 ? '/' : '/quiz/' + step;
             return <Redirect to={goto} />;
         }
 
@@ -168,7 +164,7 @@ class Confirmation extends Component {
             {
                 classNames: [ 'ConfirmButton' ],
                 clicked: this.confirmAnswers,
-                text: this.lang.controls.confirm_button
+                text: lang.controls.confirm_button
             }
         ];
         if (this.state.loading || !this.state.contactValidOrEmpty) {
@@ -178,16 +174,13 @@ class Confirmation extends Component {
             {
                 classNames: [ 'RestartLink' ],
                 clicked: () => { this.props.history.push('/') },
-                text: this.lang.controls.restart_link
+                text: lang.controls.restart_link
             }
         ];
 
         return (
             <div className="Confirmation">
-                <EditAnswers
-                    answers={this.props.answers}
-                    edited={(q, a) => this.props.saveAnswer(q, a)}
-                    lang={this.lang.edit_answers} />
+                <EditAnswers lang={lang.edit_answers} />
                 <ContactInfo
                     emailError={this.state.emailError}
                     zipError={this.state.zipError}
@@ -195,9 +188,9 @@ class Confirmation extends Component {
                     zip={this.state.zip}
                     emailChanged={this.changeEmail}
                     zipChanged={this.changeZip}
-                    lang={this.lang.contact} />
+                    lang={lang.contact} />
                 <Controls
-                    errorMessage={this.state.hasRecordingError ? this.lang.controls.recording_error : null}
+                    errorMessage={this.state.hasRecordingError ? lang.controls.recording_error : null}
                     buttons={buttons}
                     links={links} />
             </div>
@@ -206,4 +199,11 @@ class Confirmation extends Component {
 
 }
 
-export default withRouter(Confirmation);
+const mapStateToProps = state => {
+    return {
+        visitor_id: state.visitor_id,
+        answers: state.answers
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Confirmation));
