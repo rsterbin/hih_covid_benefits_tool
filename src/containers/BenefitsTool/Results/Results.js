@@ -1,47 +1,41 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Spinner from '../../../components/UI/Spinner/Spinner';
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
 import Language from '../../../utils/Language';
 import CollectResults from '../../../logic/CollectResults';
 
+import Questions from '../../../logic/Questions';
 import CtaData from '../../../data/cta.json';
 
 const CTA_TRACKING_CODE = '?utm_source=hih-covid-quiz';
 
 class Results extends Component {
 
-    state = {
-        loaded_lang: false
-    };
-
-    lang = null;
-
     clickCTAButton = (link) => {
         window.open(link + CTA_TRACKING_CODE, '_blank');
     };
 
     componentDidMount() {
-        this.lang = {
-            restart_link_text: Language.get('util_restart_link_text'),
-            read_less: Language.get('util_read_less_link_text'),
-            read_more: Language.get('util_read_more_link_text')
-        };
         this.setState({ loaded_lang: true });
     }
 
     render() {
 
-        if (!this.state.loaded_lang) {
-            return <Spinner />;
-        }
+        const lang = {
+            restart_link_text: Language.get('util_restart_link_text'),
+            read_less: Language.get('util_read_less_link_text'),
+            read_more: Language.get('util_read_more_link_text')
+        };
 
-        const goto = this.props.needsRedirect();
-        if (goto) {
+        const step = Questions.firstMissingStep(this.props.answers);
+        if (step !== null) {
+            const goto = step < 1 ? '/' : '/quiz/' + step;
             return <Redirect to={goto} />;
         }
+
 
         const results = CollectResults.compile(this.props.answers);
 
@@ -67,7 +61,7 @@ class Results extends Component {
             {
                 classNames: [ 'RestartLink' ],
                 clicked: () => { this.props.history.push('/') },
-                text: this.lang.restart_link_text
+                text: lang.restart_link_text
             }
         ];
 
@@ -79,7 +73,7 @@ class Results extends Component {
                     resources_header={results.resources_header}
                     resources_intro={results.resources_intro}
                     resources={results.resources}
-                    lang={this.lang} />
+                    lang={lang} />
                 <Controls
                     buttons={buttons}
                     links={links} />
@@ -89,4 +83,10 @@ class Results extends Component {
 
 }
 
-export default withRouter(Results);
+const mapStateToProps = state => {
+    return {
+        answers: state.answers
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Results));

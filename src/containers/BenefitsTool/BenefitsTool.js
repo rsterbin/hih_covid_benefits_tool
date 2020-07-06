@@ -7,7 +7,6 @@ import Landing from './Landing/Landing';
 import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
-import Questions from '../../logic/Questions';
 import * as actions from '../../storage/redux/actions/index';
 
 class BenefitsTool extends Component {
@@ -17,34 +16,11 @@ class BenefitsTool extends Component {
         this.props.fetchAnswers();
     }
 
-    // TODO: Remove
-    saveAnswer = (qcode, letter) => {
-        this.props.saveAnswer(qcode, letter);
-        return true;
-    };
-
-    // TODO: Remove
-    needsRedirect = () => {
-        const step = Questions.firstMissingStep(this.props.answers);
-        if (step === null) {
-            return false;
-        }
-        if (step < 1) {
-            return '/';
-        } else {
-            return '/quiz/' + step;
-        }
-    };
-
     render() {
 
         if (!this.props.loaded) {
             return <Spinner />;
         }
-
-        const doResults = () => <Results
-            answers={this.props.answers}
-            needsRedirect={this.needsRedirect} />;
 
         return (
             <div className="BenefitsTool">
@@ -52,7 +28,7 @@ class BenefitsTool extends Component {
                     <Route path="/quiz/:step" component={Quiz} />
                     <Route path="/quiz" component={Quiz} />
                     <Route path="/confirm" component={Confirmation} />
-                    <Route path="/results" render={doResults} />
+                    <Route path="/results" component={Results} />
                     <Route path="/" component={Landing} />
                 </Switch>
             </div>
