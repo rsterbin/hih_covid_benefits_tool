@@ -43,7 +43,8 @@
 }
 
 .ViewReplacement .ExplainReplacement,
-.ViewReplacement .ReplacementOptions {
+.ViewReplacement .ReplacementOptions,
+.ViewReplacement .ReplacementHighlight {
     display: inline-block;
 }
 
@@ -75,6 +76,10 @@
 
 .PreviewBox .View a {
     color: #01bf90;
+}
+
+.PreviewBox .View .PreviewToken.Active {
+    background-color: yellow;
 }
 
 .ViewToggle {

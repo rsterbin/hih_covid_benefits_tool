@@ -8,11 +8,17 @@ import { TOKEN_REGEX_TAG_OPEN, TOKEN_REGEX_TAG_CLOSE } from '../../../utils/Lang
 import './EditMarkdown.css';
 
 const MARKDOWN_HELP_LINK = 'https://www.markdownguide.org/basic-syntax';
+const HIGHLIGHT_OPEN = 'BEGIN_HIGHLIGHT';
+const HIGHLIGHT_CLOSE = 'END_HIGHLIGHT';
+const HIGHLIGHT_TOKEN_OPEN = '{{' + HIGHLIGHT_OPEN + '}}';
+const HIGHLIGHT_TOKEN_CLOSE = '{{' + HIGHLIGHT_CLOSE + '}}';
 
 const EditMarkdown = (props) => {
     const [viewtype, setViewType] = useState('split');
     const [replacement, setReplacement] = useState('');
     const [previewText, setPreviewText] = useState(props.value || '');
+    const [wrapped, setWrapped] = useState(false);
+    const [highlighted, setHighlighted] = useState(false);
 
     // Toggle buttons
     const doChange = (e, choice) => {
@@ -56,6 +62,7 @@ const EditMarkdown = (props) => {
     if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
         const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
             props.replace_token + TOKEN_REGEX_TAG_CLOSE, 'g');
+
         const doReplacement = (e) => {
             if (e) {
                 e.preventDefault();
@@ -64,24 +71,35 @@ const EditMarkdown = (props) => {
             setReplacement(choice);
             let newtext = props.value || '';
             if (choice) {
-                newtext = newtext.replace(regexp, choice);
+                const elem = HIGHLIGHT_TOKEN_OPEN + choice + HIGHLIGHT_TOKEN_CLOSE;
+                newtext = newtext.replace(regexp, elem);
+                setWrapped(true);
             }
             setPreviewText(newtext);
         };
+
         doValueChange = (e) => {
             props.changed(e);
             if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
                 let newtext = e.target.value;
                 if (replacement) {
-                    newtext = newtext.replace(regexp, replacement);
+                    const elem = HIGHLIGHT_TOKEN_OPEN + replacement + HIGHLIGHT_TOKEN_CLOSE;
+                    newtext = newtext.replace(regexp, elem);
+                    setWrapped(true);
                 }
                 setPreviewText(newtext);
             }
         }
+
+        let doHighlight = (e) => {
+            setHighlighted(!highlighted);
+        };
+
         let token = '{{' + props.replace_token + '}}';
         let options = props.replace_options.map(option => {
             return <option key={option} value={option}>{option}</option>;
         });
+
         replacementButtons = (
             <div className="ViewReplacement">
                 <div className="ExplainReplacement">
@@ -95,12 +113,35 @@ const EditMarkdown = (props) => {
                         {options}
                     </select>
                 </div>
+                <div className="ReplacementHighlight">
+                    <label>
+                        <input type="checkbox" onChange={doHighlight} />
+                        Highlight
+                    </label>
+                </div>
             </div>
         );
     }
 
     // Preview window
-    const preview = Markdown.render(previewText);
+    let preview = Markdown.render(previewText);
+    if (props.replace_token && (viewtype === 'split' || viewtype === 'preview')) {
+        let hlclasses = [ 'PreviewToken' ];
+        if (highlighted) {
+            hlclasses.push('Active');
+        }
+        if (wrapped) {
+            const regexp1 = new RegExp(TOKEN_REGEX_TAG_OPEN + HIGHLIGHT_OPEN + TOKEN_REGEX_TAG_CLOSE, 'g');
+            const regexp2 = new RegExp(TOKEN_REGEX_TAG_OPEN + HIGHLIGHT_CLOSE + TOKEN_REGEX_TAG_CLOSE, 'g');
+            console.log(regexp1);
+            preview = preview.replace(regexp1, '<span class="' + hlclasses.join(' ') + '">');
+            preview = preview.replace(regexp2, '</span>');
+        } else {
+            const regexp = new RegExp(TOKEN_REGEX_TAG_OPEN +
+                props.replace_token + TOKEN_REGEX_TAG_CLOSE, 'g');
+            preview = preview.replace(regexp, '<span class="' + hlclasses.join(' ') + '">{{' + props.replace_token + '}}</span>');
+        }
+    }
     const previewBox = (
         <div className="PreviewBox">
             <div className="View" dangerouslySetInnerHTML={{__html: preview}} />
