@@ -213,6 +213,10 @@ class Api {
         return this.getAxios().post('/admin/deploy/revert', data);
     }
 
+    replaceAdmin(data) {
+        return this.getAxios().post('/admin/deploy/replace', data);
+    }
+
     deployAdmin(data) {
         return this.getAxios().post('/admin/deploy/save', data);
     }
