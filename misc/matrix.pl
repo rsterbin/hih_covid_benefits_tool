@@ -73,6 +73,26 @@ if ($view eq 'options') {
         }
         print '"', join('XXX', @visible), '","{', join(',', @invisible), '}",""', "\n"; 
     }
+} elsif ($view eq 'inserts') {
+    my $combos = all_combinations($options);
+    my $number = 0;
+    foreach my $scenario (@$combos) {
+        my @help = ();
+        my @json = ();
+        my @key = ();
+        foreach my $item (@$scenario) {
+            next if $item->{answer_code} eq '*';
+            push @help, "[$item->{question}] $item->{answer_text}";
+            push @json, '"' . $item->{question} . '":"' . $item->{answer_code} . '"';
+            push @key, lc($item->{question} . '_' . $item->{answer_code});
+        }
+        my $json_string = '{' . join(',', @json) . '}';
+        my $help_string = join("\n", @help);
+        my $key_string = $list . '_' . join('_', @key);
+        print qq{INSERT INTO scenarios (benefit_id, condition_map, help, enabled, lang_key_result, lang_key_expanded, sort_order) SELECT benefit_id, '$json_string', '$help_string', TODO_ELIGIBILITY_BOOLEAN, 'results_benefit_short_$key_string', 'results_benefit_long_$key_string', $number FROM benefits WHERE code = 'nys';};
+        ++$number;
+        print "\n\n";
+    }
 } else {
     usage();
     exit;
@@ -169,34 +189,36 @@ sub get_ffcra_options {
 
 # NYS Sick Days / PFL and DB
 sub get_nys_options {
+
     return [
         {
-            q => 'agency',
+            q => 'work',
             a => [
-                { t => 'YES', c => 'A' },
-                { t => 'NO', c => 'B' },
+                { t => 'AGENCY', c => 'A' },
+                { t => 'YES', c => 'Y' },
+                { t => 'NO', c => 'N' },
             ],
         },
         {
             q => 'books',
             a => [
                 { t => 'YES, IN COMPLIANCE', c => 'C' },
-                { t => 'PARTIALLY OR NO', c => 'N' },
-            ],
-        },
-        {
-            q => 'hours per week',
-            a => [
-                { t => 'UNDER 40', c => 'A' },
-                { t => '40 OR MORE', c => 'B' },
+                { t => 'PARTIALLY or NO', c => 'N' },
             ],
         },
         {
             q => 'reason',
             a => [
-                { t => 'SELF-QUARANTINE OR FAMILY QUARANTINE', c => 'Q' },
-                { t => 'SCHOOL CLOSED', c => 'S' },
+                { t => 'SELF-QUARANTINE', c => 'Q' },
+                { t => 'FAMILY QUARANTINE', c => 'F' },
                 { t => 'NONE', c => 'N' },
+            ],
+        },
+        {
+            q => 'ffcra',
+            a => [
+                { t => 'YES', c => 'Y' },
+                { t => 'NO', c => 'N' },
             ],
         },
     ];
@@ -266,7 +288,7 @@ sub usage {
     print "matrix.pl <list> <view>\n";
     print "\n";
     print "  <list> can be one of: 'ffcra', 'nys', 'pssl', 'dwbor', or 'cares'\n";
-    print "  <view> can be one of: 'options', 'codes', 'combos', or 'csv'\n";
+    print "  <view> can be one of: 'options', 'codes', 'combos', 'csv', or 'inserts'\n";
 }
 
 =pod ALL POSSIBLE ANSWERS
