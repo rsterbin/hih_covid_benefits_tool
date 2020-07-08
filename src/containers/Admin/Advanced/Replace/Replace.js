@@ -7,6 +7,7 @@ import DeployMessage from '../../../../components/Admin/DeployMessage/DeployMess
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
 
+import DeployData from '../../../../data/deployment.json';
 import BenefitsData from '../../../../data/benefits.json';
 import ConditionsData from '../../../../data/conditions.json';
 import CtaData from '../../../../data/cta.json';
@@ -32,6 +33,7 @@ class AdminAdvancedReplace extends Component {
         });
         const data = {
             token: this.props.token,
+            deployment: DeployData,
             alldata: {
                 benefits: BenefitsData,
                 conditions: ConditionsData,
