@@ -32,3 +32,11 @@
     color: #818181;
 }
 
+.GenericSuccess {
+    color: green;
+}
+
+.GenericError {
+    color: darkred;
+}
+

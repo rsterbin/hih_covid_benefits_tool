@@ -1,0 +1,20 @@
+
+.LayoutToggle {
+    display: block;
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+.LayoutToggle button {
+    display: inline-block;
+    color: #01bf90;
+}
+
+.LayoutToggle button.Active {
+    color: #080808;
+}
+
+.CompareLayout td {
+    vertical-align: top;
+}
+

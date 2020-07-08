@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
 import SelectFilters from '../../../../components/UI/SelectFilters/SelectFilters';
-import Table from '../../../../components/UI/Table/Table';
+import CompareTable from '../../../../components/Admin/CompareTable/CompareTable';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from '../../../../components/UI/Message/Message';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import Markdown from '../../../../utils/Markdown';
 
 class AdminResultsFilter extends Component {
 
@@ -18,25 +20,18 @@ class AdminResultsFilter extends Component {
         conditions: null,
         scenarios: null,
         error: null,
-        filters: {}
+        filters: {},
+        layout: 'list'
     };
 
-    cols = [
+    list_cols = [
         { key: 'help', title: 'Scenario' },
         { key: 'enabled', title: 'Eligible?' },
-        { key: 'en_result', title: 'Response (Short)' }
+        { key: 'result', title: 'Response' }
     ];
 
-    snip = {
-        en_result: 120
-    };
-
-    clickable = {
-        help: (row) => { this.editScenario(row); }
-    };
-
-    editScenario = (row) => {
-        this.props.history.push('/admin/results/' + this.state.benefit.code + '/edit/' + row.id);
+    list_snip = {
+        result: 120
     };
 
     filterResponses = (e) => {
@@ -61,6 +56,10 @@ class AdminResultsFilter extends Component {
         });
     };
 
+    setLayout = (newLayout) => {
+        this.setState({ layout: newLayout });
+    };
+
     refresh = () => {
         this.fetchBenefit();
     };
@@ -79,7 +78,6 @@ class AdminResultsFilter extends Component {
             filters: null
         });
         const data = { token: this.props.token };
-        console.log(this.props.match.params.benefit);
         Api.getScenarios(this.props.match.params.benefit, data)
             .then((response) => {
                 if (!response.data.benefit) {
@@ -110,6 +108,20 @@ class AdminResultsFilter extends Component {
             });
     }
 
+    helpToElem(help) {
+        const markup = help.split(/\n/).join('<br />\n');
+        return <p dangerouslySetInnerHTML={{__html: markup}}></p>
+    }
+
+    markdownToElem(markdown) {
+        const markup = Markdown.render(markdown || '');
+        return <div dangerouslySetInnerHTML={{__html: markup}}></div>
+    }
+
+    getEditLink(id) {
+        return '/admin/results/' + this.state.benefit.code + '/edit/' + id;
+    }
+
     filter() {
         return this.state.scenarios.filter(scenario => {
             for (const key in this.state.filters) {
@@ -132,6 +144,8 @@ class AdminResultsFilter extends Component {
             title += this.state.benefit.abbreviation + ': Filter Responses';
             crumbs.push(this.state.benefit.abbreviation);
             crumbs.push('Filter');
+
+            // Filtering
             const selectProps = this.state.conditions.map(condition => {
                 const options = condition.options.map(option => {
                     return {
@@ -152,28 +166,87 @@ class AdminResultsFilter extends Component {
                     changed={this.filterResponses} />
             );
 
-            const rows = this.filter().map(scenario => {
-                let i = 0;
-                const lines = scenario.help.split(/\n/).map(line => {
-                    ++i;
-                    return <p key={i} className="LineBreak">{line}</p>
+            // Table
+            let rows = [];
+            let cols = [];
+            let snip = {};
+            if (this.state.layout === 'compare') {
+                cols = this.filter().map(scenario => {
+                    return {
+                        key: scenario.lang_key_result,
+                        title: this.helpToElem(scenario.help)
+                    };
                 });
-                return {
-                    id: scenario.id,
-                    help: lines,
-                    enabled: scenario.enabled ? 'Yes' : 'No',
-                    en_result: scenario.en_result
-                };
-            });
+                let enabled_row = {};
+                let short_row = {};
+                let long_row = {};
+                let edit_row = {};
+                for (const scenario of this.filter()) {
+                    const code = scenario.lang_key_result;
+                    let eligibleFlag = null;
+                    if (scenario.enabled) {
+                        eligibleFlag = (
+                            <span className="EligibleFlag GenericSuccess">
+                                <i class="fas fa-check-square"></i>
+                                &nbsp;
+                                Eligible
+                            </span>
+                        );
+                    } else {
+                        eligibleFlag = (
+                            <span className="EligibleFlag GenericError">
+                                <i class="fas fa-times"></i>
+                                &nbsp;
+                                Not Eligible
+                            </span>
+                        );
+                    }
+                    enabled_row[code] = eligibleFlag;
+                    short_row[code] = this.markdownToElem(scenario.en_result);
+                    long_row[code] = this.markdownToElem(scenario.en_expanded);
+                    edit_row[code] = (
+                        <Link to={this.getEditLink(scenario.id)}>
+                            <i className="fas fa-pencil-alt"></i> Edit
+                        </Link>
+                    );
+                }
+                rows.push(enabled_row);
+                rows.push(short_row);
+                rows.push(long_row);
+                rows.push(edit_row);
+            } else {
+                rows = this.filter().map(scenario => {
+                    const link = (
+                        <Link to={this.getEditLink(scenario.id)}>
+                            {this.helpToElem(scenario.help)}
+                        </Link>
+                    );
+                    let combined = '';
+                    if (scenario.en_result || scenario.en_expanded) {
+                        combined += scenario.en_result || '';
+                        combined += "\n\n---\n\n";
+                        combined += scenario.en_expanded || '';
+                    }
+                    return {
+                        id: scenario.id,
+                        help: link,
+                        enabled: scenario.enabled ? 'Yes' : 'No',
+                        result: combined
+                    };
+                });
+                cols = this.list_cols;
+                snip = this.list_snip;
+            }
 
             body = (
                 <Aux>
                     {selects}
-                    <Table
+                    <CompareTable
+                        current={this.state.layout}
+                        changed={this.setLayout}
                         rows={rows}
-                        cols={this.cols}
-                        snip={this.snip}
-                        clickable={this.clickable} />
+                        cols={cols}
+                        other={{snip: snip}} />
                 </Aux>
             );
         } else {

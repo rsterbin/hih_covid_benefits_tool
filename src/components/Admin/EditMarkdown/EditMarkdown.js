@@ -23,7 +23,6 @@ const EditMarkdown = (props) => {
     // Toggle buttons
     const doChange = (e, choice) => {
         e.preventDefault();
-        console.log('choice is ' + choice);
         setViewType(choice);
     };
     const doHelp = (e) => {

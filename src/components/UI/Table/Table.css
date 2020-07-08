@@ -31,7 +31,8 @@
     background-color: #f2fcf9;
 }
 
-.AdminTable td.Clickable {
+.AdminTable td.Clickable,
+.AdminTable td a {
     cursor: pointer;
     text-decoration: underline;
     color: #01BF90;
