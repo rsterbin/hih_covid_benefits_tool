@@ -54,9 +54,9 @@ class Screening {
         employedByYearAndHours: (answers, key) => {
             if (answers['length of employment'] === 'C'
                 && answers['hours per year'] === 'B') {
-                return 'U';
-            } else {
                 return 'O';
+            } else {
+                return 'U';
             }
         },
 
