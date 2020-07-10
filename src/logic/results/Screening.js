@@ -19,14 +19,6 @@ class Screening {
             }
         },
 
-        splitTypeByHomeCare: (answers, key) => {
-            if (answers.type === 'C' || answers.type === 'D') {
-                return 'H';
-            } else {
-                return 'N';
-            }
-        },
-
         splitBooksByTaxes: (answers, key) => {
             if (answers.books === 'A' || answers.books === 'B') {
                 return 'Y';
