@@ -6,19 +6,19 @@ use JSON;
 
 my $JSON = JSON->new->allow_nonref->utf8;;
 
-my $list = "$ARGV[0]" || '';
+my $benefit = "$ARGV[0]" || '';
 my $view = "$ARGV[1]" || '';
 
 my $options;
-if ($list eq 'ffcra') {
+if ($benefit eq 'ffcra') {
     $options = get_ffcra_options();
-} elsif ($list eq 'nys') {
+} elsif ($benefit eq 'nys') {
     $options = get_nys_options();
-} elsif ($list eq 'pssl') {
+} elsif ($benefit eq 'pssl') {
     $options = get_pssl_options();
-} elsif ($list eq 'dwbor') {
+} elsif ($benefit eq 'dwbor') {
     $options = get_dwbor_options();
-} elsif ($list eq 'cares') {
+} elsif ($benefit eq 'cares') {
     $options = get_cares_options();
 } else {
     usage();
@@ -45,7 +45,7 @@ if ($view eq 'options') {
         }
         push @$eligibility, {
             conditions => $conditions,
-            lang_lookup_key => "results_benefit_$list" . join('_', @pairs),
+            lang_lookup_key => "results_benefit_$benefit" . join('_', @pairs),
         };
     }
     print $JSON->encode($eligibility);
@@ -88,8 +88,8 @@ if ($view eq 'options') {
         }
         my $json_string = '{' . join(',', @json) . '}';
         my $help_string = join("\n", @help);
-        my $key_string = $list . '_' . join('_', @key);
-        print qq{INSERT INTO scenarios (benefit_id, condition_map, help, enabled, lang_key_result, lang_key_expanded, sort_order) SELECT benefit_id, '$json_string', '$help_string', TODO_ELIGIBILITY_BOOLEAN, 'results_benefit_short_$key_string', 'results_benefit_long_$key_string', $number FROM benefits WHERE code = 'nys';};
+        my $key_string = $benefit . '_' . join('_', @key);
+        print qq{INSERT INTO scenarios (benefit_id, condition_map, help, enabled, lang_key_result, lang_key_expanded, sort_order) SELECT benefit_id, '$json_string', '$help_string', TODO_ELIGIBILITY_BOOLEAN, 'results_benefit_short_$key_string', 'results_benefit_long_$key_string', $number FROM benefits WHERE code = '$benefit';};
         ++$number;
         print "\n\n";
     }
@@ -227,13 +227,6 @@ sub get_nys_options {
 # NYC PSSL
 sub get_pssl_options {
     return [
-        {
-            q => 'type',
-            a => [
-                { t => 'NANNY or HOUSE CLEANER', c => 'N' },
-                { t => 'HOME ATTENDANT or HOME HEALTH CARE WORKER', c => 'H' },
-            ],
-        },
         {
             q => 'agency',
             a => [
