@@ -261,6 +261,13 @@ sub get_dwbor_options {
 sub get_cares_options {
     return [
         {
+            q => 'agency',
+            a => [
+                { t => 'YES', c => 'A' },
+                { t => 'NO', c => 'B' },
+            ],
+        },
+        {
             q => 'books',
             a => [
                 { t => 'YES, IN COMPLIANCE', c => 'C' },
@@ -270,8 +277,8 @@ sub get_cares_options {
         {
             q => 'length of employment',
             a => [
-                { t => 'LESS THAN SIX MONTHS', c => 'A' },
-                { t => 'SIX MONTHS OR MORE', c => 'B|C' },
+                { t => 'LESS THAN SIX MONTHS', c => 'U' },
+                { t => 'SIX MONTHS OR MORE', c => 'O' },
             ],
         },
     ];
