@@ -98,7 +98,7 @@ class AdminResultsList extends Component {
                         <p><IconButton icon="fas fa-align-justify"
                             title="Language"
                             append_text="Common Language"
-                            clicked={this.editCommonResources} /></p>
+                            clicked={this.editCommonLanguage} /></p>
                         <p><IconButton icon="fas fa-link"
                             title="Resources"
                             append_text="Common Resources"
