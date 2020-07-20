@@ -30,6 +30,7 @@ class Results extends Component {
             read_more: Language.get('util_read_more_link_text')
         };
         this.setState({ loaded_lang: true });
+        window.scrollTo(0, 0);
     }
 
     render() {
