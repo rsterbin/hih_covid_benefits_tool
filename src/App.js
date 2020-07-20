@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-// After launch, load Main directly instead
-import PreLaunch from './containers/PreLaunch/PreLaunch';
+// Before launch, we loaded the PreLaunch container to wrap everything in a global access login
+import Main from './containers/Main/Main';
 
 import './App.css';
 
@@ -12,7 +12,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="App">
-                    <PreLaunch />
+                    <Main />
                 </div>
             </BrowserRouter>
         );
