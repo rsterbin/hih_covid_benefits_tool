@@ -14,8 +14,10 @@ class CollectResults {
     compile(answerKey) {
 
         // Calculate benefits
-        const scenarios = Screening.getScenarios(answerKey);
-        const eligibility = Eligibility.screen(scenarios);
+        let scenarios = Screening.runFirstPass(answerKey);
+        let eligibility = Eligibility.screen(scenarios);
+        scenarios = Screening.runSecondPass(answerKey, scenarios, eligibility);
+        eligibility = Eligibility.screen(scenarios);
 
         // Switch on employee type replacement
         ProcessText.setEmployeeType(answerKey.type);

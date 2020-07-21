@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
@@ -27,9 +28,6 @@ class AdminResourcesList extends Component {
     };
 
     resources_clickable = {
-        edit: (row) => {
-            this.props.history.push('/admin/resources/edit/' + row.id);
-        },
         delete: (row) => {
             this.setState({ confirming_delete: true, delete_candidate: row });
         },
@@ -157,13 +155,18 @@ class AdminResourcesList extends Component {
             }
             let resources_rows = this.state.resources
                 .map(resource => {
+                    let edit_link = (
+                        <Link to={'/admin/resources/edit/' + resource.id}>
+                            <i className="fas fa-pencil-alt" title="Edit Resource"></i>
+                        </Link>
+                    );
                     let row = {
                         id: resource.id,
                         code: resource.code,
                         text: resource.en_text,
                         desc: resource.en_desc,
                         link: resource.links.en,
-                        edit: <i className="fas fa-pencil-alt" title="Edit Resource"></i>,
+                        edit: edit_link,
                         delete: <i className="fas fa-trash-alt" title="Delete Resource"></i>
                     };
                     if (!this.state.benefit) {

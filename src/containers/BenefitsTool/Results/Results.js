@@ -20,6 +20,7 @@ class Results extends Component {
 
     componentDidMount() {
         this.setState({ loaded_lang: true });
+        window.scrollTo(0, 0);
     }
 
     render() {
