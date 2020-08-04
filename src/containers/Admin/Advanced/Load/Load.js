@@ -54,6 +54,7 @@ class AdminAdvancedLoad extends Component {
     }
 
     componentDidMount() {
+        Logger.setComponent('Admin/Advanced/Load');
         const id = this.getId();
         if (!id) {
             this.setState({ loaded: true, deployment: DeployData });
@@ -89,6 +90,7 @@ class AdminAdvancedLoad extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Advanced/Load');
         let body = null;
         if (!this.state.loaded) {
             body = (

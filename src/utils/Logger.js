@@ -20,6 +20,7 @@ class Logger {
     cutoffLevelApi = 0;
     cutoffLevelDatabase = 0;
     rollbar = null;
+    request = {};
 
     constructor(level, options) {
         this.cutoffLevel = this.getLevelRank(level ? level : 'WARN');
@@ -42,7 +43,21 @@ class Logger {
             accessToken: '3c1d54fceb0e496d9170a7100d56a69f',
             captureUncaught: true,
             captureUnhandledRejections: true,
+            payload: {
+                environment: process.env.NODE_ENV
+            }
         });
+        this.request = {
+            url: window.location.pathname + window.location.search,
+            method: 'GET',
+            route: {
+                path: 'No Component Loaded'
+            }
+        };
+    }
+
+    setComponent(component) {
+        this.request.route.path = component;
     }
 
     getLevelRank(level) {
@@ -63,6 +78,7 @@ class Logger {
     debug(message, context) { this.log('DEBUG', message, context); }
 
     log(level, message, context) {
+        console.log('Logging!', this.request);
         if (this.getLevelRank(level) > this.cutoffLevel) {
             return;
         }
@@ -94,6 +110,7 @@ class Logger {
         if (this.getLevelRank(level) <= this.cutoffLevelDatabase) {
             data.store = true;
         }
+        this.writeToRollbar(level, message, context); // TODO: Remove once we're confident local tracking is okay
         Api.trackError(data)
             .then(response => {
                 // All is well; ignore
@@ -109,19 +126,19 @@ class Logger {
     writeToRollbar(level, message, context) {
         // debug: DEBUG
         if (this.getLevelRank(level) > this.getLevelRank('NOTICE')) {
-            this.rollbar.debug(message, null, context);
+            this.rollbar.debug(message, this.request, context);
         // info: INFO, NOTICE
         } else if (this.getLevelRank(level) > this.getLevelRank('WARN')) {
-            this.rollbar.info(message, null, context);
+            this.rollbar.info(message, this.request, context);
         // warning: WARN
         } else if (this.getLevelRank(level) > this.getLevelRank('ERR')) {
-            this.rollbar.warning(message, null, context);
+            this.rollbar.warning(message, this.request, context);
         // error: ERR
         } else if (this.getLevelRank(level) > this.getLevelRank('CRIT')) {
-            this.rollbar.error(message, null, context);
+            this.rollbar.error(message, this.request, context);
         // critical: CRIT, ALERT, EMERG
         } else {
-            this.rollbar.critical(message, null, context);
+            this.rollbar.critical(message, this.request, context);
         }
     }
 

@@ -65,7 +65,12 @@ class AdminAdvancedReplace extends Component {
             });
     }
 
+    componentDidMount() {
+        Logger.setComponent('Admin/Advanced/Replace');
+    }
+
     render() {
+        Logger.setComponent('Admin/Advanced/Replace');
         return (
             <AdminPage
                 title="Advanced Functions: Replace Database"

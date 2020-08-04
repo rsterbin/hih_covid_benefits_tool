@@ -5,6 +5,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Intro from '../../../components/BenefitsTool/Intro/Intro';
 import Language from '../../../utils/Language';
 import Api from '../../../storage/Api';
+import Logger from '../../../utils/Logger';
 
 class Landing extends Component {
 
@@ -48,6 +49,7 @@ class Landing extends Component {
     }
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Landing');
         this.lang = {
             header: Language.get('landing_header'),
             message: Language.get('landing_message'),
@@ -59,6 +61,7 @@ class Landing extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Landing');
         if (!this.state.loaded_lang) {
             return <Spinner />;
         }

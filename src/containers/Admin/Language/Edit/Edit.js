@@ -70,6 +70,7 @@ class AdminLanguageEdit extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Language/Edit');
         this.md = require('markdown-it')();
         this.fetchInfo();
     }
@@ -103,6 +104,7 @@ class AdminLanguageEdit extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Language/Edit');
         let body = null;
         if (!this.state.loaded) {
             body = (

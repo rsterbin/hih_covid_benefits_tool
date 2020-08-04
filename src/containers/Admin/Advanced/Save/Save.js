@@ -49,7 +49,12 @@ class AdminAdvancedSave extends Component {
             });
     }
 
+    componentDidMount() {
+        Logger.setComponent('Admin/Advanced/Save');
+    }
+
     render() {
+        Logger.setComponent('Admin/Advanced/Save');
         let successBox = null;
         if (this.state.download_info) {
             const vnum = this.state.download_info.version;

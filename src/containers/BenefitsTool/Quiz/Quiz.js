@@ -62,6 +62,7 @@ class Quiz extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Quiz');
         this.lang = {
             error_message: Language.get('quiz_save_failed_error'),
             back_link_text: Language.get('quiz_back_link_text'),
@@ -90,6 +91,7 @@ class Quiz extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Quiz');
 
         if (!this.state.loaded_lang) {
             return <Spinner />;

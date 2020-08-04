@@ -111,6 +111,7 @@ class Confirmation extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Confirmation');
         this.lang = {
             edit_answers: {
                 header: Language.get('confirm_answerlist_header'),
@@ -154,6 +155,7 @@ class Confirmation extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Confirmation');
 
         if (!this.state.loaded_lang) {
             return <Spinner />;

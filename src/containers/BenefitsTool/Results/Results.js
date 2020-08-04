@@ -4,8 +4,9 @@ import { Redirect, withRouter } from 'react-router-dom';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
-import Language from '../../../utils/Language';
 import CollectResults from '../../../logic/CollectResults';
+import Language from '../../../utils/Language';
+import Logger from '../../../utils/Logger';
 
 import CtaData from '../../../data/cta.json';
 
@@ -24,6 +25,7 @@ class Results extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Results');
         this.lang = {
             restart_link_text: Language.get('util_restart_link_text'),
             read_less: Language.get('util_read_less_link_text'),
@@ -34,6 +36,7 @@ class Results extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Results');
 
         if (!this.state.loaded_lang) {
             return <Spinner />;

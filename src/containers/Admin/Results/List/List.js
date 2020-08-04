@@ -44,6 +44,7 @@ class AdminResultsList extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Results/List');
         this.fetchBenefits();
     }
 
@@ -73,6 +74,7 @@ class AdminResultsList extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Results/List');
         let body = null;
         if (this.state.loaded) {
             let rows = this.state.benefits

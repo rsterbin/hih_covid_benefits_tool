@@ -38,6 +38,7 @@ class AdminAdvancedList extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Advanced/List');
         this.fetchDeploys();
     }
 
@@ -63,6 +64,7 @@ class AdminAdvancedList extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Advanced/List');
         let body = null;
         if (this.state.loaded) {
             const rows = this.state.deploys.map(item => {

@@ -65,6 +65,7 @@ class AdminResultsFilter extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Results/Filter');
         this.fetchBenefit();
     }
 
@@ -137,6 +138,7 @@ class AdminResultsFilter extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Results/Filter');
         let body = null;
         let title = 'Results: ';
         let crumbs = ['Admin', 'Results'];

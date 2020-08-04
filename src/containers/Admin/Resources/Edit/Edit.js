@@ -142,6 +142,7 @@ class AdminResourcesEdit extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Resources/Edit');
         if (this.getId()) {
             this.fetchResource(true);
         } else {
@@ -259,6 +260,7 @@ class AdminResourcesEdit extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Resources/Edit');
 
         let body = null;
         let title = 'Resources: Edit';

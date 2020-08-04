@@ -63,6 +63,7 @@ class AdminResourcesList extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Resources/List');
         this.fetchResources(true);
     }
 
@@ -138,6 +139,7 @@ class AdminResourcesList extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Resources/List');
         let body = null;
         let title = 'Results: ';
         let crumbs = ['Admin' ];
