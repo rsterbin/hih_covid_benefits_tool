@@ -51,7 +51,9 @@ class Landing extends Component {
         this.lang = {
             header: Language.get('landing_header'),
             message: Language.get('landing_message'),
-            error_msg: Language.get('landing_error')
+            error_msg: Language.get('landing_error'),
+            disclaimer_link: Language.get('landing_disclaimer_link'),
+            disclaimer_title: Language.get('landing_disclaimer_title')
         };
         this.setState({ loaded_lang: true });
     }

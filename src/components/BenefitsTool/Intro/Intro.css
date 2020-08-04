@@ -1,0 +1,23 @@
+.DisclaimerLink {
+    color: #01bf90;
+    text-align: right;
+    font-style: italic;
+    margin: 0 0 2em 0;
+}
+
+.DisclaimerLink a,
+.DisclaimerLink a:visited,
+.DisclaimerLink a:active,
+.DisclaimerLink a:hover {
+    color: #01bf90;
+    text-decoration: none;
+}
+
+.DisclaimerLink a:hover {
+    text-decoration: underline;
+}
+
+.DisclaimerLink:before {
+    content: '* ';
+}
+
