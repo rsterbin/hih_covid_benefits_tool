@@ -7,6 +7,7 @@ import Landing from './Landing/Landing';
 import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
+import Disclaimer from './Disclaimer/Disclaimer';
 import AnswersCookie from '../../storage/cookies/AnswersCookie';
 import VisitorCookie from '../../storage/cookies/VisitorCookie';
 import Logger from '../../utils/Logger';
@@ -115,6 +116,7 @@ class BenefitsTool extends Component {
                     <Route path="/quiz" render={doQuiz} />
                     <Route path="/confirm" render={doConfirmation} />
                     <Route path="/results" render={doResults} />
+                    <Route path="/disclaimer" component={Disclaimer} />
                     <Route path="/" render={doLanding} />
                 </Switch>
             </div>
