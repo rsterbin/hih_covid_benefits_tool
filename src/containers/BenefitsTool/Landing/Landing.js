@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Intro from '../../../components/BenefitsTool/Intro/Intro';
 import Language from '../../../utils/Language';
 import Api from '../../../storage/Api';
+import Logger from '../../../utils/Logger';
 import * as actions from '../../../storage/redux/actions/index';
 
 class Landing extends Component {
@@ -45,11 +46,18 @@ class Landing extends Component {
         });
     }
 
+    componentDidMount() {
+        Logger.setComponent('BenefitsTool/Landing');
+    }
+
     render() {
+        Logger.setComponent('BenefitsTool/Landing');
         const lang = {
             header: Language.get('landing_header'),
             message: Language.get('landing_message'),
-            error_msg: Language.get('landing_error')
+            error_msg: Language.get('landing_error'),
+            disclaimer_link: Language.get('landing_disclaimer_link'),
+            disclaimer_title: Language.get('landing_disclaimer_title')
         };
 
         return <Intro

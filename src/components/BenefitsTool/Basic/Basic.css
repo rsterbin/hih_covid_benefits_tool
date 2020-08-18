@@ -1,0 +1,19 @@
+.BackLink {
+    color: #01bf90;
+    text-align: center;
+    font-style: italic;
+    margin: 0 0 2em 0;
+}
+
+.BackLink a,
+.BackLink a:visited,
+.BackLink a:active,
+.BackLink a:hover {
+    color: #01bf90;
+    text-decoration: none;
+}
+
+.BackLink a:hover {
+    text-decoration: underline;
+}
+

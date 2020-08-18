@@ -47,6 +47,7 @@ class Quiz extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Quiz');
         Api.bumpSession(this.props.visitor_id);
     }
 
@@ -68,6 +69,7 @@ class Quiz extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Quiz');
 
         const lang = {
             error_message: Language.get('quiz_save_failed_error'),

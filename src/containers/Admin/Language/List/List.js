@@ -64,6 +64,7 @@ class AdminLanguageList extends Component {
     }
 
     componentDidMount() {
+        Logger.setComponent('Admin/Language/List');
         this.fetchLanguage();
     }
 
@@ -124,6 +125,7 @@ class AdminLanguageList extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Language/List');
         let body = null;
         if (this.state.loaded) {
             let cols = [

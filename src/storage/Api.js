@@ -76,7 +76,7 @@ class Api {
                     }
                     const parsed = this.parseAxiosError(error);
                     if (parsed.code !== 'TOKEN_INVALID') {
-                        Logger.alert('Session check failed', { api_error: parsed });
+                        Logger.err('Session check failed', { api_error: parsed });
                         if (typeof on_error === 'function') {
                             on_error();
                         }
@@ -108,7 +108,7 @@ class Api {
                     throw error;
                 }
                 const parsed = this.parseAxiosError(error);
-                Logger.alert('Session init failed', { api_error: parsed });
+                Logger.err('Session init failed', { api_error: parsed });
                 if (typeof on_error === 'function') {
                     on_error();
                 }
@@ -125,6 +125,10 @@ class Api {
 
     recordResponse(data) {
         return this.getAxios().post('/response', data);
+    }
+
+    trackError(data) {
+        return this.getAxios().post('/error', data);
     }
 
     // Admin

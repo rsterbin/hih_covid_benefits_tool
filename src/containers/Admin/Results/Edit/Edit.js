@@ -103,6 +103,7 @@ class AdminResultsEdit extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('Admin/Results/Edit');
         this.fetchScenario();
     }
 
@@ -200,6 +201,7 @@ class AdminResultsEdit extends Component {
     }
 
     render() {
+        Logger.setComponent('Admin/Results/Edit');
         let body = null;
         let title = 'Results: ';
         let crumbs = ['Admin', 'Results'];

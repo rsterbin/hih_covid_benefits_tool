@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 import Response from '../../../components/BenefitsTool/Response/Response';
 import Controls from '../../../components/UI/Controls/Controls';
-import Language from '../../../utils/Language';
 import CollectResults from '../../../logic/CollectResults';
+import Language from '../../../utils/Language';
+import Logger from '../../../utils/Logger';
 
 import Questions from '../../../logic/Questions';
 import CtaData from '../../../data/cta.json';
@@ -19,11 +20,12 @@ class Results extends Component {
     };
 
     componentDidMount() {
-        this.setState({ loaded_lang: true });
+        Logger.setComponent('BenefitsTool/Results');
         window.scrollTo(0, 0);
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Results');
 
         const lang = {
             restart_link_text: Language.get('util_restart_link_text'),

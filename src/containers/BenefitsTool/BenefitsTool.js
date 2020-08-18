@@ -7,6 +7,7 @@ import Landing from './Landing/Landing';
 import Quiz from './Quiz/Quiz';
 import Confirmation from './Confirmation/Confirmation';
 import Results from './Results/Results';
+import Disclaimer from './Disclaimer/Disclaimer';
 import * as actions from '../../storage/redux/actions/index';
 
 class BenefitsTool extends Component {
@@ -29,6 +30,7 @@ class BenefitsTool extends Component {
                     <Route path="/quiz" component={Quiz} />
                     <Route path="/confirm" component={Confirmation} />
                     <Route path="/results" component={Results} />
+                    <Route path="/disclaimer" component={Disclaimer} />
                     <Route path="/" component={Landing} />
                 </Switch>
             </div>

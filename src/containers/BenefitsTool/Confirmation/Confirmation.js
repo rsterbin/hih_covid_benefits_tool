@@ -110,6 +110,7 @@ class Confirmation extends Component {
     };
 
     componentDidMount() {
+        Logger.setComponent('BenefitsTool/Confirmation');
         Api.bumpSession(this.props.visitor_id);
     }
 
@@ -130,6 +131,7 @@ class Confirmation extends Component {
     }
 
     render() {
+        Logger.setComponent('BenefitsTool/Confirmation');
 
         const lang = {
             edit_answers: {
