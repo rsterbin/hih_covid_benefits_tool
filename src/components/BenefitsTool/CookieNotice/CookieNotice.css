@@ -1,10 +1,10 @@
-.Notice {
+.CookieNotice {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 9999;
-    background-color: #01BF90;
+    background-color: #EDFFFA;
     border: none;
     border-top: 0.025em solid #212529;
     padding: 1em 1em 2em 1em;
@@ -19,7 +19,7 @@ button.CloseNotice {
     font-size: 1em;
     border: none;
     background: transparent;
-    color: white;
+    color: #080808;
 }
 
 .NoticeContent {
@@ -34,22 +34,61 @@ button.CloseNotice {
 .NoticeMessage h6 {
     margin: 0 0 0.5em 0;
     font-weight: bold;
-    color: white;
+    color: #080808;
     font-size: 1em;
 }
 
-.AcceptButton {
+.OptControl {
+    float: right;
+}
+
+.CookieSetting {
+    margin-bottom: 1em;
+    clear: right;
+}
+
+.CookieSetting label {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    display: block;
+}
+
+.OptDescription {
+    margin-bottom: 0.5em;
+}
+
+.NoticeButtons {
+    clear: right;
+}
+
+.NoticeButtons button {
     border: 0.025em solid #212529;
     outline: none;
     cursor: pointer;
     font: inherit;
     padding: 0.5em;
     margin: 1em 0 0 1.5em;
-    background-color: #F85846;
+    background-color: #CCCCCC;
     font-weight: bold;
     color: white;
-    display: block;
+    display: inline-block;
     float: right;
     box-shadow: 1px 1px 1px 0px rgba(33,37,41,0.5);
+}
+
+.NoticeButtons button.SaveButton {
+    background-color: #F85846;
+}
+
+.NoticeButtons button.ConfigureButton {
+    background-color: #CCCCCC;
+}
+
+.NoticeButtons button.RejectButton {
+    background-color: #080808;
+}
+
+.NoticeButtons button.AcceptButton {
+    background-color: #01BF90;
 }
 

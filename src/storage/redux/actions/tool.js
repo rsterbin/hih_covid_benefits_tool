@@ -1,21 +1,19 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import * as actionTypes from './actionTypes';
 import { updateObject} from '../utility';
-import VisitorCookie from '../../cookies/VisitorCookie';
 import AnswersCookie from '../../cookies/AnswersCookie';
 import Questions from '../../../logic/Questions';
+import VisitorPrefs from '../../../logic/VisitorPrefs';
 import Logger from '../../../utils/Logger';
 
 export const visitorFetchStarted = () => {
     return { type: actionTypes.VISITOR_FETCH_STARTED };
 };
 
-export const visitorFetchComplete = (visitor_id) => {
-    console.log('in visitorFetchComplete', visitor_id);
+export const visitorFetchComplete = (visitor_id, prefs) => {
     return {
         type: actionTypes.VISITOR_FETCH_COMPLETE,
-        visitor_id: visitor_id
+        visitor_id: visitor_id,
+        visitor_prefs: prefs
     };
 };
 
@@ -29,17 +27,11 @@ export const visitorFetchFailed = (error) => {
 export const visitorFetch = () => {
     return dispatch => {
         dispatch(visitorFetchStarted());
-        let visitor_id = VisitorCookie.get();
-        if (visitor_id) {
-            dispatch(visitorFetchComplete(visitor_id));
+        const found = VisitorPrefs.fetchFromCookie();
+        if (found.error) {
+            dispatch(visitorFetchFailed(found.error));
         } else {
-            visitor_id = uuidv4();
-            if (visitor_id) {
-                VisitorCookie.set(visitor_id);
-                dispatch(visitorFetchComplete(visitor_id));
-            } else {
-                dispatch(visitorFetchFailed('Could not create a visitor ID'));
-            }
+            dispatch(visitorFetchComplete(found.id, found.prefs));
         }
     };
 };
@@ -153,6 +145,20 @@ export const answerSave = (qcode, letter) => {
         let newAnswers = updateObject(getState().answers, { [qcode]: letter });
         AnswersCookie.set(newAnswers);
         dispatch(answersUpdateCompleted(newAnswers));
+    };
+};
+
+export const visitorPrefsStored = (prefs) => {
+    return {
+        type: actionTypes.VISITOR_PREFS_STORED,
+        prefs: prefs
+    };
+};
+
+export const cookiePrefsSave = (prefs) => {
+    return dispatch => {
+        let stored = VisitorPrefs.save(prefs);
+        dispatch(visitorPrefsStored(stored));
     };
 };
 

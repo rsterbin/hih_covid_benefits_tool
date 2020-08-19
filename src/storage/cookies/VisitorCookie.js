@@ -6,7 +6,8 @@ const visitorCookie = new CookieBase(
         path: '/',
         maxAge: 60 * 60 * 24 * 365,
         sameSite: 'Strict'
-    } // spec
+    }, // spec
+    true // compressed
 );
 
 export default visitorCookie;

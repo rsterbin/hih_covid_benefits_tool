@@ -3,6 +3,7 @@ import { updateObject} from '../utility';
 
 const initialState = {
     visitor_id: null,
+    visitor_prefs: null,
     answers: null,
     visitor_id_loaded: false,
     visitor_fetch_error: null,
@@ -32,7 +33,8 @@ const visitorFetchStarted = (state, action) => {
 const visitorFetchComplete = (state, action) => {
     let newState = updateObject(state, {
         visitor_id_loaded: true,
-        visitor_id: action.visitor_id
+        visitor_id: action.visitor_id,
+        visitor_prefs: action.visitor_prefs
     });
     return setLoaded(newState);
 };
@@ -124,6 +126,12 @@ const answersUpdateFailed = (state, action) => {
     }));
 };
 
+const visitorPrefsStored = (state, action) => {
+    return updateObject(state, {
+        visitor_prefs: action.visitor_prefs
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.VISITOR_FETCH_STARTED: return visitorFetchStarted(state, action);
@@ -140,6 +148,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ANSWERS_UPDATE_STARTED: return answersUpdateStarted(state, action);
         case actionTypes.ANSWERS_UPDATE_COMPLETED: return answersUpdateCompleted(state, action);
         case actionTypes.ANSWERS_UPDATE_FAILED: return answersUpdateFailed(state, action);
+        case actionTypes.VISITOR_PREFS_STORED: return visitorPrefsStored(state, action);
         default: return state;
     }
 };

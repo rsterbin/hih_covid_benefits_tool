@@ -4,6 +4,7 @@ export {
     answersClear,
     questionInit,
     answerPush,
-    answerSave
+    answerSave,
+    cookiePrefsSave
 } from './tool';
 
