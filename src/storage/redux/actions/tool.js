@@ -151,7 +151,7 @@ export const answerSave = (qcode, letter) => {
 export const visitorPrefsStored = (prefs) => {
     return {
         type: actionTypes.VISITOR_PREFS_STORED,
-        prefs: prefs
+        visitor_prefs: prefs
     };
 };
 

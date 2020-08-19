@@ -12,6 +12,7 @@ import Disclaimer from './Disclaimer/Disclaimer';
 import PrivacyPolicy from './PrivacyPolicy/PrivacyPolicy';
 import Language from '../../utils/Language';
 import VisitorPrefs from '../../logic/VisitorPrefs';
+import Pixels from '../../utils/Pixels';
 import * as actions from '../../storage/redux/actions/index';
 
 class BenefitsTool extends Component {
@@ -46,6 +47,8 @@ class BenefitsTool extends Component {
                 description: Language.get(opt.desc_lang_key)
             };
         });
+
+        Pixels.invoke(this.props.visitor_prefs);
 
         return (
             <div className="BenefitsTool">
