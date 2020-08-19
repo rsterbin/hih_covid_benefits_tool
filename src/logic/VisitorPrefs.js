@@ -82,10 +82,13 @@ class VisitorPrefs {
         let visitor_data = VisitorCookie.get() || COOKIE_BLANK;
 
         // Clean prefs
-        let clean = REJECT_ALL;
-        for (var k in REJECT_ALL) {
-            if (prefs[k]) {
-                clean[k] = true;
+        let clean = null;
+        if (prefs !== null) {
+            clean = REJECT_ALL;
+            for (var k in REJECT_ALL) {
+                if (prefs[k]) {
+                    clean[k] = true;
+                }
             }
         }
         visitor_data.prefs = clean;

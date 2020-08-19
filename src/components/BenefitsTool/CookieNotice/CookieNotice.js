@@ -18,7 +18,7 @@ const CookieNotice = (props) => {
 
     if (simpleView) {
 
-        const doConfigure = (e) => { e.preventDefault(); setSimpleView(false); };
+        const doConfigure = (e) => { e.preventDefault(); setCurrent(REJECT_ALL); setSimpleView(false); };
         const doReject = () => { props.saved(REJECT_ALL); };
         const doAccept = () => { props.saved(ACCEPT_ALL); };
 
@@ -42,6 +42,13 @@ const CookieNotice = (props) => {
 
     } else {
 
+        const doSave = () => { props.saved(current); };
+        const swapToggle = (key) => {
+            let newVals = { ...current };
+            newVals[key] = !newVals[key];
+            setCurrent(newVals);
+        };
+
         const controls = props.settings.map(opt => {
             let control = null;
             if (opt.input === 'toggle') {
@@ -50,7 +57,7 @@ const CookieNotice = (props) => {
                     value="1"
                     id={opt.key}
                     aria-labelledby={opt.key + '_label'}
-                    onChange={() => setCurrent({...current, [opt.key]: current ? !current[opt.key] : true })}
+                    onChange={() => swapToggle(opt.key) }
                     checked={current ? current[opt.key] : false} />;
             } else if (opt.input === 'always') {
                 control = <Toggle
@@ -79,7 +86,7 @@ const CookieNotice = (props) => {
                     {controls}
                 </div>
                 <div className="NoticeButtons">
-                    <button className="SaveButton" onClick={() => { props.saved(current); }}>{props.lang.save_button_text}</button>
+                    <button className="SaveButton" onClick={doSave}>{props.lang.save_button_text}</button>
                 </div>
             </div>
         );
