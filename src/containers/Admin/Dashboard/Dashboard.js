@@ -5,6 +5,7 @@ import Block from '../../../components/Admin/DashboardBlock/DashboardBlock';
 
 import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
+import { shuffle } from '../../../utils/utils';
 
 class AdminDashboard extends Component {
 
@@ -20,13 +21,13 @@ class AdminDashboard extends Component {
     responses_headers = [
         { key: 'date', title: 'Date' },
         { key: 'type', title: 'Employee Type' },
+        { key: 'agency', title: 'Agency?' },
         { key: 'books', title: 'On the Books?' },
     ];
 
     contacts_headers = [
-        { key: 'date', title: 'Date' },
         { key: 'email', title: 'Email' },
-        { key: 'ZIP', title: 'ZIP Code' },
+        { key: 'zip', title: 'ZIP Code' },
     ];
 
     componentDidMount() {
@@ -76,11 +77,15 @@ class AdminDashboard extends Component {
         Api.getRecentContacts(data)
             .then((response) => {
                 const found = response.data.recent ? response.data.recent : [];
-                const recent = found.map((row) => {
-                    let dt = DateTime.fromISO(row.submitted);
-                    let formatted = dt.toFormat('LLL dd');
-                    return { ...row, date: formatted };
-                });
+                // I promised not to associate contact info with response data,
+                // but at low volume and in order, it's fairly obvious, so
+                // shuffle before displaying
+                const recent = shuffle(found.map(row => {
+                    return {
+                        email: row.email,
+                        zip: row.zip_code
+                    };
+                }));
                 this.setState({ contacts_loaded: true, contacts: recent });
             })
             .catch((error) => {

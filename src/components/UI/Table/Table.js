@@ -13,7 +13,7 @@ const table = (props) => {
         let clickable = props.clickable || {};
         let snip = props.snip || {};
         for (const h of props.cols) {
-            let classes = [];
+            let classes = [ 'col-' + h.key ];
             let clicked = null;
             let value = r[h.key];
             let title = null;

@@ -32,3 +32,7 @@
     margin-top: 0.5em;
 }
 
+.DashboardBlockBody table td.col-date {
+    white-space: nowrap;
+}
+
