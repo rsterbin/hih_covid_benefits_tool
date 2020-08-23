@@ -47,3 +47,24 @@
     font-size: 0.85em;
 }
 
+.AdminTable.ToggleCols th.ToggleHidden,
+.AdminTable.ToggleCols td.ToggleHidden {
+    display: none;
+}
+
+.AdminTable.ToggleCols th.ToggleShown,
+.AdminTable.ToggleCols td.ToggleShown {
+    display: table-cell;
+}
+
+.AdminTable.ToggleCols .ViewToggle {
+    display: block;
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+.AdminTable.ToggleCols .ViewToggle button {
+    display: inline-block;
+    color: #01bf90;
+}
+

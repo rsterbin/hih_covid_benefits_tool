@@ -6,6 +6,7 @@ import Results from './Results/Results';
 import Resources from './Resources/Resources';
 import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
+import Responses from './Responses/Responses';
 import AdminLayout from '../../hoc/AdminLayout/AdminLayout';
 import Login from '../Login/Login';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -60,6 +61,7 @@ class Admin extends Component {
             const doResources = () => <Resources token={this.state.token} />;
             const doResults = () => <Results token={this.state.token} />;
             const doLanguage = () => <Language token={this.state.token} />;
+            const doResponses = () => <Responses token={this.state.token} />;
             const doDashboard = () => <Dashboard token={this.state.token} />;
             return (
                 <AdminLayout>
@@ -68,6 +70,7 @@ class Admin extends Component {
                         <Route path="/admin/resources" render={doResources} />
                         <Route path="/admin/results" render={doResults} />
                         <Route path="/admin/language" render={doLanguage} />
+                        <Route path="/admin/responses" render={doResponses} />
                         <Route path="/admin" render={doDashboard} />
                     </Switch>
                 </AdminLayout>

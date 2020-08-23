@@ -149,6 +149,10 @@ class Api {
         return this.getAxios().post('/admin/contacts/recent', data);
     }
 
+    getAllResponses(data) {
+        return this.getAxios().post('/admin/responses/all', data);
+    }
+
     getAllLanguage(data) {
         return this.getAxios().post('/admin/language', data);
     }
