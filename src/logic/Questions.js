@@ -2,97 +2,35 @@
 import Local, { Language } from '../utils/Language';
 import Logger from '../utils/Logger';
 
-const ASCII_CODE_FOR_CAPITAL_A = 65;
+import Data from '../data/questions.json';
 
 class Questions {
-    question_order = [
-        'type', 'agency', 'books', 'hours per week',
-        'length of employment', 'hours per year', 'self-quarantine',
-        'family quarantine', 'stay at home', 'school closed'
-    ];
-
-    question_spec = {
-        type: {
-            answer_count: 4,
-            layout: 'vert',
-            help: true
-        },
-        agency: {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        },
-        books: {
-            answer_count: 3,
-            layout: 'horiz',
-            help: true
-        },
-        'hours per week': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        },
-        'length of employment': {
-            answer_count: 3,
-            layout: 'horiz',
-            help: false
-        },
-        'hours per year': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        },
-        'self-quarantine': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        },
-        'family quarantine': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: true
-        },
-        'stay at home': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        },
-        'school closed': {
-            answer_count: 2,
-            layout: 'horiz',
-            help: false
-        }
-    };
+    question_order = Data.order;
 
     localized_data = null;
     english_data = null;
 
     validAnswer(qcode, letter) {
-        if (!letter || letter.length > 1) {
+        if (!(qcode in Data.spec)) {
             return false;
         }
-        if (qcode in this.question_spec) {
-            const ascii = letter.charCodeAt(0);
-            if (ascii < ASCII_CODE_FOR_CAPITAL_A) {
-                return false;
+        for (const answer of Data.spec[qcode].answers) {
+            if (answer.letter === letter) {
+                return true;
             }
-            if (ascii > ASCII_CODE_FOR_CAPITAL_A + this.question_spec[qcode].answer_count - 1) {
-                return false;
-            }
-            return true;
         }
         return false;
     }
 
     getAnswerLetters(qcode) {
-        if (qcode in this.question_spec) {
-            let letters = [];
-            for (let i = 0; i < this.question_spec[qcode].answer_count; ++i) {
-                letters.push(String.fromCharCode(ASCII_CODE_FOR_CAPITAL_A + i));
-            }
-            return letters;
+        if (!(qcode in Data.spec)) {
+            return [];
         }
-        return [];
+        let letters = [];
+        for (const answer of Data.spec[qcode].answers) {
+            letters.push(answer.letter);
+        }
+        return letters;
     }
 
     filterAnswers(answerKey) {
@@ -201,25 +139,19 @@ class Questions {
         let data = {};
         for (let name of this.question_order) {
             data[name] = {
-                question: LangObj.get(this.lang_key(name, 'question')),
-                title: LangObj.get(this.lang_key(name, 'short')),
-                layout: this.question_spec[name].layout,
+                question: LangObj.get(Data.spec[name].full_lang_key),
+                title: LangObj.get(Data.spec[name].title_lang_key),
+                layout: Data.spec[name].layout,
                 answers: {}
             }
-            for (let i = 0; i < this.question_spec[name].answer_count; ++i) {
-                const lc = String.fromCharCode(97 + i);
-                const uc = String.fromCharCode(65 + i);
-                data[name].answers[uc] = LangObj.get(this.lang_key(name, 'answer_' + lc));
+            for (const answer of Data.spec[name].answers) {
+                data[name].answers[answer.letter] = LangObj.get(answer.lang_key);
             }
-            if (this.question_spec[name].help) {
-                data[name].help = LangObj.get(this.lang_key(name, 'help'));
+            if (Data.spec[name].help) {
+                data[name].help = LangObj.get(Data.spec[name].help_lang_key);
             }
         }
         return data;
-    }
-
-    lang_key(name, which) {
-        return 'quiz_' + name.replace(/[^a-z]/g, '_') + '_' + which;
     }
 
     firstMissingStep(answers) {

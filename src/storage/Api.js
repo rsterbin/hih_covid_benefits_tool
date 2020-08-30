@@ -229,8 +229,8 @@ class Api {
         return this.getAxios().post('/admin/deploy/save', data);
     }
 
-    getDownloadUrl(version, uuid, token) {
-        return BASE_BACKEND + '/download/' + version + '/' + uuid + '/' + token;
+    getDeployDownloadUrl(version, uuid, token) {
+        return BASE_BACKEND + '/download/deploy/' + version + '/' + uuid + '/' + token;
     }
 
     // Prelaunch

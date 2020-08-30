@@ -59,7 +59,7 @@ class AdminAdvancedSave extends Component {
         if (this.state.download_info) {
             const vnum = this.state.download_info.version;
             const uuid = this.state.download_info.uuid;
-            const url = Api.getDownloadUrl(vnum, uuid, this.props.token);
+            const url = Api.getDeployDownloadUrl(vnum, uuid, this.props.token);
             const fname = 'hnct-' + vnum + '.zip';
             const downloadLink = (
                 <a className="DownloadDeploy" download={fname} href={url}>

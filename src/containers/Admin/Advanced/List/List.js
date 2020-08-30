@@ -70,7 +70,7 @@ class AdminAdvancedList extends Component {
             const rows = this.state.deploys.map(item => {
                 const dt = DateTime.fromISO(item.date_deployed);
                 const formatted = dt.toLocaleString(DateTime.DATETIME_SHORT);
-                const url = Api.getDownloadUrl(
+                const url = Api.getDeployDownloadUrl(
                     item.version_num,
                     item.uuid,
                     this.props.token);
