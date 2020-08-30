@@ -6,9 +6,8 @@ const initialState = {
     visitor_prefs: null,
     answers: null,
     visitor_id_loaded: false,
-    visitor_fetch_error: null,
+    cookies_fetch_error: null,
     answers_loaded: false,
-    answers_fetch_error: null,
     answers_push_error: false,
     step_saved: false,
     answers_update_error: false,
@@ -26,41 +25,21 @@ const setLoaded = (state) => {
     return newState;
 };
 
-const visitorFetchStarted = (state, action) => {
-    return setLoaded(updateObject(state, { visitor_id_loaded: false }));
+const toolCookiesLoadFailed = (state, action) => {
+    return setLoaded(updateObject(state, {
+        visitor_id_loaded: true,
+        answers_loaded: true,
+        cookies_fetch_error: action.error
+    }));
 };
 
-const visitorFetchComplete = (state, action) => {
-    let newState = updateObject(state, {
+const toolCookiesLoaded = (state, action) => {
+    return setLoaded(updateObject(state, {
         visitor_id_loaded: true,
+        answers_loaded: true,
         visitor_id: action.visitor_id,
-        visitor_prefs: action.visitor_prefs
-    });
-    return setLoaded(newState);
-};
-
-const visitorFetchFailed = (state, action) => {
-    return setLoaded(updateObject(state, {
-        visitor_id_loaded: true,
-        visitor_fetch_error: action.error
-    }));
-};
-
-const answersFetchStarted = (state, action) => {
-    return setLoaded(updateObject(state, { answers_loaded: false }));
-};
-
-const answersFetchComplete = (state, action) => {
-    return setLoaded(updateObject(state, {
-        answers_loaded: true,
+        visitor_prefs: action.visitor_prefs,
         answers: action.answers
-    }));
-};
-
-const answersFetchFailed = (state, action) => {
-    return setLoaded(updateObject(state, {
-        answers_loaded: true,
-        answers_fetch_error: action.error
     }));
 };
 
@@ -134,12 +113,8 @@ const visitorPrefsStored = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.VISITOR_FETCH_STARTED: return visitorFetchStarted(state, action);
-        case actionTypes.VISITOR_FETCH_COMPLETE: return visitorFetchComplete(state, action);
-        case actionTypes.VISITOR_FETCH_FAILED: return visitorFetchFailed(state, action);
-        case actionTypes.ANSWERS_FETCH_STARTED: return answersFetchStarted(state, action);
-        case actionTypes.ANSWERS_FETCH_COMPLETE: return answersFetchComplete(state, action);
-        case actionTypes.ANSWERS_FETCH_FAILED: return answersFetchFailed(state, action);
+        case actionTypes.TOOL_COOKIES_LOAD_FAILED: return toolCookiesLoadFailed(state, action);
+        case actionTypes.TOOL_COOKIES_LOADED: return toolCookiesLoaded(state, action);
         case actionTypes.ANSWERS_CLEAR: return answersClear(state, action);
         case actionTypes.QUESTION_INIT: return questionInit(state, action);
         case actionTypes.ANSWERS_PUSH_STARTED: return answersPushStarted(state, action);

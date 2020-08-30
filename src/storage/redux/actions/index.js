@@ -1,6 +1,5 @@
 export {
-    visitorFetch,
-    answersFetch,
+    loadToolData,
     answersClear,
     questionInit,
     answerPush,

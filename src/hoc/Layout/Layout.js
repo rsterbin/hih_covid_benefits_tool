@@ -5,7 +5,6 @@ import './Layout.css';
 const layout = (props) => {
 
     const copyrightDate = (new Date()).getFullYear();
-
     return (
         <div className="BenefitsTool">
             <div className="Logo">

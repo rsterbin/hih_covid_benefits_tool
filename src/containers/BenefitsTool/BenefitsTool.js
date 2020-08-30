@@ -18,8 +18,7 @@ import * as actions from '../../storage/redux/actions/index';
 class BenefitsTool extends Component {
 
     componentDidMount() {
-        this.props.fetchVisitor();
-        this.props.fetchAnswers();
+        this.props.onToolLoaded();
     }
 
     render() {
@@ -76,18 +75,15 @@ class BenefitsTool extends Component {
 const mapStateToProps = state => {
     return {
         loaded: state.loaded,
-        visitor_id: state.visitor_id,
         visitor_prefs: state.visitor_prefs,
-        show_cookie_notice: state.visitor_prefs === null ? true : false,
-        answers: state.answers
+        show_cookie_notice: state.visitor_prefs === null ? true : false
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchVisitor: () => dispatch(actions.visitorFetch()),
-        fetchAnswers: () => dispatch(actions.answersFetch()),
         saveCookiePrefs: (prefs) => dispatch(actions.cookiePrefsSave(prefs)),
+        onToolLoaded: () => dispatch(actions.loadToolData())
     };
 };
 

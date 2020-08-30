@@ -5,63 +5,33 @@ import Questions from '../../../logic/Questions';
 import VisitorPrefs from '../../../logic/VisitorPrefs';
 import Logger from '../../../utils/Logger';
 
-export const visitorFetchStarted = () => {
-    return { type: actionTypes.VISITOR_FETCH_STARTED };
-};
-
-export const visitorFetchComplete = (visitor_id, prefs) => {
+export const toolCookiesLoaded = (visitorId, prefs, answers) => {
     return {
-        type: actionTypes.VISITOR_FETCH_COMPLETE,
-        visitor_id: visitor_id,
-        visitor_prefs: prefs
-    };
-};
-
-export const visitorFetchFailed = (error) => {
-    return {
-        type: actionTypes.VISITOR_FETCH_FAILED,
-        error: error
-    };
-};
-
-export const visitorFetch = () => {
-    return dispatch => {
-        dispatch(visitorFetchStarted());
-        const found = VisitorPrefs.fetchFromCookie();
-        if (found.error) {
-            dispatch(visitorFetchFailed(found.error));
-        } else {
-            dispatch(visitorFetchComplete(found.id, found.prefs));
-        }
-    };
-};
-
-export const answersFetchStarted = () => {
-    return { type: actionTypes.ANSWERS_FETCH_STARTED };
-};
-
-export const answersFetchComplete = (answers) => {
-    return {
-        type: actionTypes.ANSWERS_FETCH_COMPLETE,
+        type: actionTypes.TOOL_COOKIES_LOADED,
+        visitor_id: visitorId,
+        visitor_prefs: prefs,
         answers: answers
     };
 };
 
-export const answersFetchFailed = (error) => {
+export const toolCookiesLoadFailed = (error) => {
     return {
-        type: actionTypes.ANSWERS_FETCH_FAILED,
+        type: actionTypes.TOOL_COOKIES_LOAD_FAILED,
         error: error
     };
 };
 
-export const answersFetch = () => {
+export const loadToolData = () => {
     return dispatch => {
-        dispatch(answersFetchStarted());
-        let answers = AnswersCookie.get();
-        if (answers) {
-            dispatch(answersFetchComplete(answers));
+        let found = VisitorPrefs.fetchFromCookie();
+        if (found.error) {
+            dispatch(toolCookiesLoadFailed(found.error));
         } else {
-            dispatch(answersFetchComplete({}));
+            let answers = AnswersCookie.get();
+            if (!answers) {
+                answers = {};
+            }
+            dispatch(toolCookiesLoaded(found.id, found.prefs, answers));
         }
     };
 };
