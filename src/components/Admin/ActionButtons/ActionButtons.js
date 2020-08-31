@@ -8,17 +8,28 @@ const actionButtons = (props) => {
     let i = 0;
     const buttons = props.buttons.map(button => {
         ++i;
-        const action = (e) => {
-            e.preventDefault();
-            button.clicked(e);
+        if (button.clicked) {
+            const action = (e) => {
+                e.preventDefault();
+                button.clicked(e);
+            }
+            return (
+                <IconButton key={i}
+                    icon={button.icon}
+                    title={button.title}
+                    append_text={button.title}
+                    clicked={action} />
+            );
+        } else if (button.link) {
+            return (
+                <a href={button.link} className="ActionLink">
+                    <i className={button.icon} title={button.title}></i>
+                    <span>{button.title}</span>
+                </a>
+            );
+        } else {
+            return null;
         }
-        return (
-            <IconButton key={i}
-                icon={button.icon}
-                title={button.title}
-                append_text={button.title}
-                clicked={action} />
-        );
     });
     return (
         <div className="ActionButtons">

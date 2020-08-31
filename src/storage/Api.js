@@ -233,6 +233,10 @@ class Api {
         return BASE_BACKEND + '/download/deploy/' + version + '/' + uuid + '/' + token;
     }
 
+    getResponsesDownloadUrl(token) {
+        return BASE_BACKEND + '/download/responses/all/' + token;
+    }
+
     // Prelaunch
 
     checkPrelaunchLogin(data) {

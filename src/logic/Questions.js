@@ -75,6 +75,16 @@ class Questions {
         return this.localized_data[qcode];
     }
 
+    getEnglishSpec(qcode) {
+        if (this.english_data === null) {
+            this.loadEnglishData();
+        }
+        if (typeof this.english_data[qcode] === 'undefined') {
+            return null;
+        }
+        return this.english_data[qcode];
+    }
+
     getEnglishAnswers(answerKey) {
         if (this.english_data === null) {
             this.loadEnglishData();

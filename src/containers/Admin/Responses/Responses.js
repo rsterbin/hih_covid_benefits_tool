@@ -8,7 +8,6 @@ import Table from '../../../components/UI/Table/Table';
 import Message from '../../../components/UI/Message/Message';
 import ActionButtons from '../../../components/Admin/ActionButtons/ActionButtons';
 import Api from '../../../storage/Api';
-import Language from '../../../utils/Language';
 import Questions from '../../../logic/Questions';
 import Logger from '../../../utils/Logger';
 
@@ -33,10 +32,6 @@ class AdminResponses extends Component {
 
     refresh = () => {
         this.fetchResponses();
-    };
-
-    downloadResponses = () => {
-        alert('downloading I guess');
     };
 
     componentDidMount() {
@@ -74,10 +69,11 @@ class AdminResponses extends Component {
                 };
                 const do_cols = cols.length < 2;
                 for (var qcode of Questions.question_order) {
+                    const spec = Questions.getEnglishSpec(qcode);
                     if (do_cols) {
                         cols.push({
                             key: qcode,
-                            title: Language.get(Questions.lang_key(qcode, 'short'))
+                            title: spec.title
                         });
                     }
                     tablerow[qcode] = row[qcode];
@@ -91,7 +87,7 @@ class AdminResponses extends Component {
                 <Aux>
                     <ActionButtons buttons={[{icon: "fas fa-download",
                         title: "Download",
-                        clicked: this.downloadResponses}]} />
+                        link: Api.getResponsesDownloadUrl(this.props.token) }]} />
                     <Table rows={rows} cols={cols}
                         toggle_cols={this.toggle_cols}
                         toggle_expand_title="show all answers"
