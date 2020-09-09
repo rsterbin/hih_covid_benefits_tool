@@ -74,9 +74,9 @@ class BenefitsTool extends Component {
 
 const mapStateToProps = state => {
     return {
-        loaded: state.loaded,
-        visitor_prefs: state.visitor_prefs,
-        show_cookie_notice: state.visitor_prefs === null ? true : false
+        loaded: state.tool.loaded,
+        visitor_prefs: state.tool.visitor_prefs,
+        show_cookie_notice: state.tool.visitor_prefs === null ? true : false
     };
 };
 

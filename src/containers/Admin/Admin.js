@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Advanced from './Advanced/Advanced';
 import Results from './Results/Results';
@@ -7,62 +8,28 @@ import Resources from './Resources/Resources';
 import Language from './Language/Language';
 import Dashboard from './Dashboard/Dashboard';
 import Responses from './Responses/Responses';
+import Contacts from './Contacts/Contacts';
 import AdminLayout from '../../hoc/AdminLayout/AdminLayout';
 import Login from '../Login/Login';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import LoginCookie from '../../storage/cookies/LoginCookie';
-import Api from '../../storage/Api';
-import Logger from '../../utils/Logger';
+import * as actions from '../../storage/redux/actions/index';
 
 import './Admin.css';
 
 class Admin extends Component {
 
-    state = {
-        loggedIn: false,
-        loaded: false,
-        token: null
-    };
-
-    updateLogin = (token) => {
-        this.setState({ loggedIn: true, loaded: true, token: token });
-        LoginCookie.set(token);
-    };
-
     componentDidMount() {
-        let token = LoginCookie.get();
-        if (token) {
-            Api.checkAdminToken({ token: token })
-                .then(response => {
-                    this.setState({ loggedIn: true, loaded: true, token: token });
-                })
-                .catch(error => {
-                    if (!error.isAxiosError) {
-                        throw error;
-                    }
-                    const parsed = Api.parseAxiosError(error);
-                    if (parsed.code !== 'TOKEN_INVALID') {
-                        Logger.alert('Admin session check failed', { api_error: parsed });
-                    }
-                    this.setState({ loaded: true });
-                });
-        } else {
-            this.setState({ loaded: true });
-        }
+        this.props.checkAuthState();
     }
 
     render() {
-        if (!this.state.loaded) {
-            return <Spinner />;
-        }
-
-        if (this.state.loggedIn) {
-            const doAdvanced = () => <Advanced token={this.state.token} />;
-            const doResources = () => <Resources token={this.state.token} />;
-            const doResults = () => <Results token={this.state.token} />;
-            const doLanguage = () => <Language token={this.state.token} />;
-            const doResponses = () => <Responses token={this.state.token} />;
-            const doDashboard = () => <Dashboard token={this.state.token} />;
+        if (this.props.authenticated) {
+            const doAdvanced = () => <Advanced token={this.props.token} />;
+            const doResources = () => <Resources token={this.props.token} />;
+            const doResults = () => <Results token={this.props.token} />;
+            const doLanguage = () => <Language token={this.props.token} />;
+            const doResponses = () => <Responses token={this.props.token} />;
+            const doContacts = () => <Contacts token={this.props.token} />;
+            const doDashboard = () => <Dashboard token={this.props.token} />;
             return (
                 <AdminLayout>
                     <Switch>
@@ -71,6 +38,7 @@ class Admin extends Component {
                         <Route path="/admin/results" render={doResults} />
                         <Route path="/admin/language" render={doLanguage} />
                         <Route path="/admin/responses" render={doResponses} />
+                        <Route path="/admin/contacts" render={doContacts} />
                         <Route path="/admin" render={doDashboard} />
                     </Switch>
                 </AdminLayout>
@@ -80,7 +48,7 @@ class Admin extends Component {
             const header = 'Admin Login';
             return (
                 <div className="AdminLogin">
-                    <Login header={header} updateLoginState={this.updateLogin} />
+                    <Login header={header} />
                 </div>
             );
         }
@@ -88,4 +56,17 @@ class Admin extends Component {
 
 }
 
-export default Admin;
+const mapStateToProps = state => {
+    return {
+        authenticated: state.admin.auth.username === null ? false : true,
+        token: state.admin.auth.token
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        checkAuthState: () => dispatch(actions.checkAdminAuthState())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

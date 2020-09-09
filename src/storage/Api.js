@@ -141,6 +141,10 @@ class Api {
         return this.getAxios().post('/admin/session/check', data);
     }
 
+    adminLogout(data) {
+        return this.getAxios().post('/admin/session/logout', data);
+    }
+
     getRecentResponses(data) {
         return this.getAxios().post('/admin/responses/recent', data);
     }

@@ -178,10 +178,10 @@ class Quiz extends Component {
 
 const mapStateToProps = state => {
     return {
-        visitor_id: state.visitor_id,
-        answers: state.answers,
-        has_error: state.answers_push_error,
-        step_saved: state.step_saved
+        visitor_id: state.tool.visitor_id,
+        answers: state.tool.answers,
+        has_error: state.tool.answers_push_error,
+        step_saved: state.tool.step_saved
     };
 };
 

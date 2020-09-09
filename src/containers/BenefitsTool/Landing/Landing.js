@@ -69,7 +69,7 @@ class Landing extends Component {
 
 const mapStateToProps = state => {
     return {
-        visitor_id: state.visitor_id
+        visitor_id: state.tool.visitor_id
     };
 };
 

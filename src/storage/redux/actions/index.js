@@ -7,3 +7,15 @@ export {
     cookiePrefsSave
 } from './tool';
 
+export {
+    checkAdminAuthState,
+    authenticateAdmin,
+    manualAdminLogout
+} from './admin';
+
+export {
+    checkPrelaunchAuthState,
+    authenticatePrelaunch,
+    manualPrelaunchLogout
+} from './prelaunch';
+

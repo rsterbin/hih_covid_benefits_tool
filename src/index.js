@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
@@ -8,11 +8,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import toolReducer from './storage/redux/reducers/tool';
+import adminReducer from './storage/redux/reducers/admin';
+import prelaunchReducer from './storage/redux/reducers/prelaunch';
 
 import './index.css';
 
+const rootReducer = combineReducers({
+    tool: toolReducer,
+    admin: adminReducer,
+    prelaunch: prelaunchReducer
+});
+
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(toolReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>
