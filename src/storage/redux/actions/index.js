@@ -10,7 +10,9 @@ export {
 export {
     checkAdminAuthState,
     authenticateAdmin,
-    manualAdminLogout
+    manualAdminLogout,
+    loadDashboardResponses,
+    loadDashboardContacts
 } from './admin';
 
 export {

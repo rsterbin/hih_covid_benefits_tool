@@ -16,8 +16,7 @@ class AdminResponses extends Component {
     state = {
         loaded: false,
         error: null,
-        responses: null,
-        processing: false
+        responses: null
     };
 
     toggle_cols = {
