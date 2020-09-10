@@ -12,7 +12,8 @@ export {
     authenticateAdmin,
     manualAdminLogout,
     loadDashboardResponses,
-    loadDashboardContacts
+    loadDashboardContacts,
+    loadResponses
 } from './admin';
 
 export {

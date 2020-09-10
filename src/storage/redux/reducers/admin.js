@@ -1,10 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 import * as auth from './admin/auth';
 import * as dashboard from './admin/dashboard';
+import * as responses from './admin/responses';
 
 const initialState = {
     auth: auth.getInitialState(),
     dashboard: dashboard.getInitialState(),
+    responses: responses.getInitialState(),
     lastActive: null
 };
 
@@ -21,6 +23,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_DASH_CONTACTS_STARTED: return dashboard.adminDashContactsStarted(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_FAILED: return dashboard.adminDashContactsFailed(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_SUCCEEDED: return dashboard.adminDashContactsSucceeded(state, action);
+        case actionTypes.ADMIN_RESPONSES_STARTED: return responses.adminResponsesStarted(state, action);
+        case actionTypes.ADMIN_RESPONSES_FAILED: return responses.adminResponsesFailed(state, action);
+        case actionTypes.ADMIN_RESPONSES_SUCCEEDED: return responses.adminResponsesSucceeded(state, action);
         default: return state;
     }
 };

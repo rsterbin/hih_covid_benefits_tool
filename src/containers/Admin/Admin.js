@@ -27,9 +27,7 @@ class Admin extends Component {
             const doResources = () => <Resources token={this.props.token} />;
             const doResults = () => <Results token={this.props.token} />;
             const doLanguage = () => <Language token={this.props.token} />;
-            const doResponses = () => <Responses token={this.props.token} />;
             const doContacts = () => <Contacts token={this.props.token} />;
-            const doDashboard = () => <Dashboard token={this.props.token} />;
             return (
                 <AdminLayout>
                     <Switch>
@@ -37,9 +35,9 @@ class Admin extends Component {
                         <Route path="/admin/resources" render={doResources} />
                         <Route path="/admin/results" render={doResults} />
                         <Route path="/admin/language" render={doLanguage} />
-                        <Route path="/admin/responses" render={doResponses} />
+                        <Route path="/admin/responses" component={Responses} />
                         <Route path="/admin/contacts" render={doContacts} />
-                        <Route path="/admin" render={doDashboard} />
+                        <Route path="/admin" component={Dashboard} />
                     </Switch>
                 </AdminLayout>
             );
