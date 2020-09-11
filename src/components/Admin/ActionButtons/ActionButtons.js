@@ -22,7 +22,7 @@ const actionButtons = (props) => {
             );
         } else if (button.link) {
             return (
-                <a href={button.link} className="ActionLink">
+                <a href={button.link} className="ActionLink" key={i}>
                     <i className={button.icon} title={button.title}></i>
                     <span>{button.title}</span>
                 </a>
