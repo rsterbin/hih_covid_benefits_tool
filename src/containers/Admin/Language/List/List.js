@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
@@ -8,8 +9,8 @@ import SelectFilters from '../../../../components/UI/SelectFilters/SelectFilters
 import SearchFilters from '../../../../components/UI/SearchFilters/SearchFilters';
 import Table from '../../../../components/UI/Table/Table';
 import Message from '../../../../components/UI/Message/Message';
-import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import * as actions from '../../../../storage/redux/actions/index';
 
 const MAX_KEY_LENGTH = 50;
 const MAX_ENGLISH_LENGTH = 100;
@@ -18,13 +19,10 @@ const SKIP_SECTIONS = [ 'results_resources', 'results_processing' ];
 class AdminLanguageList extends Component {
     
     state = {
-        loaded: false,
-        sections: null,
         filter: {
             section: null,
             search: null
         },
-        error: null
     };
 
     snip = {
@@ -37,7 +35,7 @@ class AdminLanguageList extends Component {
     };
 
     refresh = () => {
-        this.fetchLanguage();
+        this.props.fetch();
     };
 
     setSectionFilter = (e) => {
@@ -65,36 +63,19 @@ class AdminLanguageList extends Component {
 
     componentDidMount() {
         Logger.setComponent('Admin/Language/List');
-        this.fetchLanguage();
-    }
-
-    fetchLanguage() {
-        this.setState({ loaded: false, sections: null, error: null });
-        const data = { token: this.props.token };
-        Api.getAllLanguage(data)
-            .then((response) => {
-                const all = response.data.all ? response.data.all : [];
-                this.setState({ loaded: true, sections: all });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch language keys', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not fetch language keys' });
-            });
+        this.props.fetch();
     }
 
     filterRows() {
         let base = [];
         const section = this.state.filter.section || this.getSection();
         if (section) {
-            for (const info of this.state.sections[section]) {
+            for (const info of this.props.data[section]) {
                 base.push({ ...info, section: section });
             }
         } else {
-            for (const s in this.state.sections) {
-                for (const info of this.state.sections[s]) {
+            for (const s in this.props.data) {
+                for (const info of this.props.data[s]) {
                     if (SKIP_SECTIONS.includes(s)) {
                         continue;
                     }
@@ -127,7 +108,7 @@ class AdminLanguageList extends Component {
     render() {
         Logger.setComponent('Admin/Language/List');
         let body = null;
-        if (this.state.loaded) {
+        if (this.props.loaded) {
             let cols = [
                 { key: 'key', title: 'Key' },
                 { key: 'english', title: 'English' },
@@ -136,7 +117,7 @@ class AdminLanguageList extends Component {
             let filterBySection = null;
             if (this.getSection() === null) {
                 cols.unshift({ key: 'section', title: 'Section' });
-                const options = Object.keys(this.state.sections)
+                const options = Object.keys(this.props.data)
                     .map(section => {
                         return { value: section, text: section };
                     });
@@ -185,8 +166,8 @@ class AdminLanguageList extends Component {
         } else {
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.error ?
+                        <Message type="error" text={this.props.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
@@ -214,4 +195,18 @@ class AdminLanguageList extends Component {
     }
 }
 
-export default withRouter(AdminLanguageList);
+const mapStateToProps = state => {
+    return {
+        loaded: state.admin.language.list.loaded,
+        error: state.admin.language.list.error,
+        data: state.admin.language.list.data
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetch: () => dispatch(actions.loadLangList()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminLanguageList));

@@ -188,7 +188,7 @@ export const manualAdminLogout = () => {
             })
             .catch(error => {
                 if (!error.isAxiosError) {
-                    const lcode = '2B25';
+                    const lcode = '860D';
                     Logger.alert('Unknown error', { location_code: lcode, error: error });
                 } else {
                     const parsed = Api.parseAxiosError(error);

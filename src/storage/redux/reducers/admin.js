@@ -2,11 +2,13 @@ import * as actionTypes from '../actions/actionTypes';
 import * as auth from './admin/auth';
 import * as dashboard from './admin/dashboard';
 import * as responses from './admin/responses';
+import * as language from './admin/language';
 
 const initialState = {
     auth: auth.getInitialState(),
     dashboard: dashboard.getInitialState(),
     responses: responses.getInitialState(),
+    language: language.getInitialState(),
     lastActive: null
 };
 
@@ -26,6 +28,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_RESPONSES_STARTED: return responses.adminResponsesStarted(state, action);
         case actionTypes.ADMIN_RESPONSES_FAILED: return responses.adminResponsesFailed(state, action);
         case actionTypes.ADMIN_RESPONSES_SUCCEEDED: return responses.adminResponsesSucceeded(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_LIST_STARTED: return language.adminFetchLangListStarted(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_LIST_FAILED: return language.adminFetchLangListFailed(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_LIST_SUCCEEDED: return language.adminFetchLangListSucceeded(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_INFO_STARTED: return language.adminFetchLangInfoStarted(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_INFO_FAILED: return language.adminFetchLangInfoFailed(state, action);
+        case actionTypes.ADMIN_FETCH_LANG_INFO_SUCCEEDED: return language.adminFetchLangInfoSucceeded(state, action);
+        case actionTypes.ADMIN_SAVE_LANG_INFO_STARTED: return language.adminSaveLangInfoStarted(state, action);
+        case actionTypes.ADMIN_SAVE_LANG_INFO_FAILED: return language.adminSaveLangInfoFailed(state, action);
+        case actionTypes.ADMIN_SAVE_LANG_INFO_SUCCEEDED: return language.adminSaveLangInfoSucceeded(state, action);
         default: return state;
     }
 };

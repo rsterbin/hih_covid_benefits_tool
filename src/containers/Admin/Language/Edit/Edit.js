@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
@@ -8,92 +9,30 @@ import Message from '../../../../components/UI/Message/Message';
 import EditMarkdown from '../../../../components/Admin/EditMarkdown/EditMarkdown';
 import Form from '../../../../components/Admin/Form/Form';
 import Element from '../../../../components/Admin/Form/Element/Element';
-import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
 import Language from '../../../../utils/Language';
+import * as actions from '../../../../storage/redux/actions/index';
 
 class AdminLanguageEdit extends Component {
-
-    state = {
-        loaded: false,
-        error: null,
-        language_info: null,
-        original_english: null,
-        english: null,
-        processing: false,
-        processing_error: null,
-        saved: false
-    };
 
     md = null;
 
     refresh = () => {
-        this.fetchInfo();
+        this.props.fetchInfo();
     };
 
     changeEnglish = (e) => {
-        let val = e.target.value;
-        this.setState({ english: val });
+        this.props.holdText(e.target.value);
     };
 
     submitEdit = () => {
-        this.setState({
-            processing: true,
-            saved: false,
-            processing_error: null
-        });
-        const data = {
-            token: this.props.token,
-            key: this.getKey(),
-            language: 'en',
-            translation: this.state.english
-        };
-        Api.saveTranslation(data)
-            .then((response) => {
-                console.log(response.data);
-                this.setState({
-                    processing: false,
-                    processing_error: false,
-                    saved: true
-                });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not save language', { api_error: Api.parseAxiosError(error), key: this.getKey() });
-                this.setState({
-                    processing: false,
-                    processing_error: 'Could not save language'
-                });
-            });
+        this.props.saveText();
     };
 
     componentDidMount() {
         Logger.setComponent('Admin/Language/Edit');
         this.md = require('markdown-it')();
-        this.fetchInfo();
-    }
-
-    fetchInfo() {
-        this.setState({ loaded: false, error: null });
-        const data = { token: this.props.token, key: this.getKey() };
-        Api.getLanguageInfo(data)
-            .then((response) => {
-                this.setState({
-                    loaded: true,
-                    language_info: response.data.info,
-                    original_english: response.data.en,
-                    english: response.data.en
-                });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch language info', { api_error: Api.parseAxiosError(error), key: this.getKey() });
-                this.setState({ error: 'Could not fetch language info' });
-            });
+        this.props.fetchInfo(this.getKey());
     }
 
     getKey() {
@@ -106,21 +45,21 @@ class AdminLanguageEdit extends Component {
     render() {
         Logger.setComponent('Admin/Language/Edit');
         let body = null;
-        if (!this.state.loaded) {
+        if (!this.props.info.loaded) {
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.info.error ?
+                        <Message type="error" text={this.props.info.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
             );
 
         } else {
-            let helptext = this.md.render(this.state.language_info.help);
+            let helptext = this.md.render(this.props.info.data.help);
             let helpbox = (
                 <Aux>
-                    <p><i>Appears in: <strong>{this.state.language_info.section}</strong></i></p>
+                    <p><i>Appears in: <strong>{this.props.info.data.section}</strong></i></p>
                     {helptext ?
                         <div dangerouslySetInnerHTML={{__html: helptext}} />
                     : null}
@@ -129,28 +68,28 @@ class AdminLanguageEdit extends Component {
             let label = 'English text for: ' + this.getKey();
             let input = null;
             let elem_class = null;
-            if (this.state.language_info.markdown_allowed) {
+            if (this.props.info.data.markdown_allowed) {
                 elem_class = 'Markdown';
                 input = <EditMarkdown
                     name="english"
-                    value={this.state.english}
+                    value={this.props.current.text}
                     changed={this.changeEnglish}
-                    replace_token={this.state.language_info.token_replace}
-                    replace_options={Language.get_token_options(this.state.language_info.token_replace)} />
+                    replace_token={this.props.language_info.token_replace}
+                    replace_options={Language.get_token_options(this.props.info.data.token_replace)} />
             } else {
                 elem_class = 'PlainText';
                 input = <input type="text"
                     size="50"
                     name="english"
-                    value={this.state.english}
+                    value={this.props.current.text}
                     onChange={this.changeEnglish} />
             }
             body = (
                 <Form help={helpbox}
-                    success={this.state.saved ? 'The new language has been saved' : null}
-                    error={this.state.processing_error}
+                    success={this.props.save.saved ? 'The new language has been saved' : null}
+                    error={this.props.save.error}
                     valid={true}
-                    processing={this.state.processing}
+                    processing={this.props.save.processing}
                     submitted={this.submitEdit}>
                     <Element add_class={elem_class} label={label}>
                         {input}
@@ -169,4 +108,32 @@ class AdminLanguageEdit extends Component {
     }
 }
 
-export default withRouter(AdminLanguageEdit);
+const mapStateToProps = state => {
+    return {
+        info: {
+            loaded: state.admin.language.info.loaded,
+            error: state.admin.language.info.error,
+            data: state.admin.language.info.data,
+        },
+        current: {
+            key: state.admin.language.current.key,
+            lang: state.admin.language.current.lang,
+            text: state.admin.language.current.text
+        },
+        save: {
+            processing: state.admin.language.save.processing,
+            error: state.admin.language.save.error,
+            saved: state.admin.language.save.saved
+        }
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchInfo: (key) => dispatch(actions.loadLangInfo(key)),
+        holdText: (text) => dispatch(actions.adminHoldLangEditingText(text)),
+        saveText: () => dispatch(actions.saveLangInfo()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminLanguageEdit));

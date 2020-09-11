@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import Api from '../../../Api';
-import Logger from '../../../../utils/Logger';
+import { handleAdminApiError } from '../../utility';
 
 export const adminResponsesStarted = () => {
     return {
@@ -32,14 +32,8 @@ export const loadResponses = () => {
                 dispatch(adminResponsesSucceeded(all));
             })
             .catch(error => {
-                const msg = 'Could not fetch recent responses';
-                if (!error.isAxiosError) {
-                    const lcode = 'AE50';
-                    Logger.alert('Unknown error', { location_code: lcode, error: error });
-                } else {
-                    Logger.alert(msg, { api_error: Api.parseAxiosError(error) });
-                }
-                dispatch(adminResponsesFailed(msg));
+                handleAdminApiError(dispatch, error, adminResponsesFailed, 'AE50',
+                    'Could not fetch responses');
             });
     };
 };

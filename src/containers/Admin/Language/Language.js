@@ -10,14 +10,11 @@ class AdminLanguage extends Component {
         const doEdit = () => {
             return <Edit token={this.props.token} />;
         };
-        const doList = () => {
-            return <List token={this.props.token} />;
-        };
         return (
             <Switch>
                 <Route path="/admin/language/edit/:key" render={doEdit} />
-                <Route path="/admin/language/:section" render={doList} />
-                <Route path="/" render={doList} />
+                <Route path="/admin/language/:section" component={List} />
+                <Route path="/" component={List} />
             </Switch>
         );
     }
