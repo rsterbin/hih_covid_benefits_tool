@@ -7,12 +7,9 @@ import Edit from './Edit/Edit';
 class AdminLanguage extends Component {
 
     render() {
-        const doEdit = () => {
-            return <Edit token={this.props.token} />;
-        };
         return (
             <Switch>
-                <Route path="/admin/language/edit/:key" render={doEdit} />
+                <Route path="/admin/language/edit/:key" component={Edit} />
                 <Route path="/admin/language/:section" component={List} />
                 <Route path="/" component={List} />
             </Switch>

@@ -13,11 +13,21 @@ export {
     manualAdminLogout,
     loadDashboardResponses,
     loadDashboardContacts,
-    loadResponses,
     loadLangList,
     loadLangInfo,
     adminHoldLangEditingText,
-    saveLangInfo
+    saveLangInfo,
+    loadResponses,
+    loadResourcesList,
+    saveResource,
+    adminSaveResourceMsgDismissed,
+    adminRequestResourceDelete,
+    adminCancelResourceDelete,
+    deleteResource,
+    loadResourceInfo,
+    adminDismissDeleteResourceMessage,
+    loadBenefit,
+    loadBenefitsList
 } from './admin';
 
 export {

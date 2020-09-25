@@ -15,10 +15,10 @@ const adminForm = (props) => {
     return (
         <div className="AdminForm">
             {props.success ?
-                <Message type="success" text={props.success} />
+                <Message type="success" text={props.success} closed={props.onCloseMsg} />
             : null}
             {props.error ?
-                <Message type="error" text={props.error} />
+                <Message type="error" text={props.error} closed={props.onCloseMsg} />
             : null}
 
             {props.help ?

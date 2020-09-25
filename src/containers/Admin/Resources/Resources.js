@@ -7,19 +7,13 @@ import Edit from './Edit/Edit';
 class AdminResources extends Component {
 
     render() {
-        const doEdit = () => {
-            return <Edit token={this.props.token} />;
-        };
-        const doList = () => {
-            return <List token={this.props.token} />;
-        };
         return (
             <Switch>
-                <Route path="/admin/resources/edit/:id" render={doEdit} />
-                <Route path="/admin/resources/new/:benefit" render={doEdit} />
-                <Route path="/admin/resources/new" render={doEdit} />
-                <Route path="/admin/resources/:benefit" render={doList} />
-                <Route path="/" render={doList} />
+                <Route path="/admin/resources/edit/:id" component={Edit} />
+                <Route path="/admin/resources/new/:benefit" component={Edit} />
+                <Route path="/admin/resources/new" component={Edit} />
+                <Route path="/admin/resources/:benefit" component={List} />
+                <Route path="/" component={List} />
             </Switch>
         );
     }
