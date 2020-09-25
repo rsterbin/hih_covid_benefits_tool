@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { withRouter, Link } from 'react-router-dom';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';

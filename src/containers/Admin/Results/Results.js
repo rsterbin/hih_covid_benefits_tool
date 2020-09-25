@@ -14,15 +14,11 @@ class AdminResults extends Component {
         const doFilter = () => {
             return <Filter token={this.props.token} />;
         };
-        const doList = () => {
-            return <List token={this.props.token} />;
-        };
-        // /admin/results/resources/edit/1
         return (
             <Switch>
                 <Route path="/admin/results/:benefit/edit/:id" render={doEdit} />
                 <Route path="/admin/results/:benefit" render={doFilter} />
-                <Route path="/" render={doList} />
+                <Route path="/" component={List} />
             </Switch>
         );
     }

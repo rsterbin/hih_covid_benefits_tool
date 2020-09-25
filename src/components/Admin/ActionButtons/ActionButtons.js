@@ -1,6 +1,7 @@
 import React from 'react';
 
 import IconButton from '../../UI/IconButton/IconButton';
+import IconLink from '../../UI/IconLink/IconLink';
 
 import './ActionButtons.css';
 
@@ -22,10 +23,11 @@ const actionButtons = (props) => {
             );
         } else if (button.link) {
             return (
-                <a href={button.link} className="ActionLink" key={i}>
-                    <i className={button.icon} title={button.title}></i>
-                    <span>{button.title}</span>
-                </a>
+                <IconLink key={i}
+                    icon={button.icon}
+                    title={button.title}
+                    append_text={button.title}
+                    to={button.link} />
             );
         } else {
             return null;

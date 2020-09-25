@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Message from '../../../../components/UI/Message/Message';
 import Table from '../../../../components/UI/Table/Table';
-import IconButton from '../../../../components/UI/IconButton/IconButton';
-import Api from '../../../../storage/Api';
+import IconLink from '../../../../components/UI/IconLink/IconLink';
 import Logger from '../../../../utils/Logger';
+import * as actions from '../../../../storage/redux/actions/index';
 
 class AdminResultsList extends Component {
-
-    state = {
-        loaded: false,
-        benefits: null,
-        language: null,
-        error: null
-    };
 
     cols = [
         { key: 'name', title: 'Name' },
@@ -26,13 +20,8 @@ class AdminResultsList extends Component {
         { key: 'resources', title: 'Resources' }
     ];
 
-    clickable = {
-        scenarios: (row) => { this.editScenarios(row); },
-        resources: (row) => { this.editResources(row); }
-    };
-
     refresh = () => {
-        this.fetchBenefits();
+        this.props.fetchBenefits();
     };
 
     editCommonResources = () => {
@@ -45,79 +34,59 @@ class AdminResultsList extends Component {
 
     componentDidMount() {
         Logger.setComponent('Admin/Results/List');
-        this.fetchBenefits();
-    }
-
-    fetchBenefits() {
-        this.setState({ loaded: false, benefits: null, error: null });
-        const data = { token: this.props.token };
-        Api.getBenefits(data)
-            .then((response) => {
-                const benefits = response.data.benefits ? response.data.benefits : [];
-                this.setState({ loaded: true, benefits: benefits });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch benefits', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not fetch benefits' });
-            });
-    }
-
-    editScenarios(row) {
-        this.props.history.push('/admin/results/' + row.code);
-    }
-
-    editResources(row) {
-        this.props.history.push('/admin/resources/' + row.code);
+        this.props.fetchBenefits();
     }
 
     render() {
         Logger.setComponent('Admin/Results/List');
         let body = null;
-        if (this.state.loaded) {
-            let rows = this.state.benefits
+
+        if (this.props.loaded) {
+            let rows = this.props.data
                 .sort()
                 .map(benefit => {
+                    const slink = '/admin/results/' + benefit.code;
+                    const rlink = '/admin/resources/' + benefit.code;
                     return {
                         code: benefit.code,
                         name: benefit.name,
                         abbreviation: benefit.abbreviation,
-                        scenarios: <i className="fas fa-align-justify" title="Edit Scenarios"></i>,
-                        resources: <i className="fas fa-link" title="Resources"></i>,
+                        scenarios: <Link to={slink}><i className="fas fa-align-justify" title="Edit Scenarios"></i></Link>,
+                        resources: <Link to={rlink}><i className="fas fa-link" title="Resources"></i></Link>,
                     };
                 });
+
             body = (
                 <Aux>
                     <h3>Results By Benefit</h3>
                     <Table
                         rows={rows}
-                        cols={this.cols}
-                        clickable={this.clickable} />
+                        cols={this.cols} />
                     <div className="Extras">
                         <h3>Non-Benefit Related Results</h3>
-                        <p><IconButton icon="fas fa-align-justify"
+                        <p><IconLink icon="fas fa-align-justify"
                             title="Language"
                             append_text="Common Language"
-                            clicked={this.editCommonLanguage} /></p>
-                        <p><IconButton icon="fas fa-link"
+                            to="/admin/language/results" /></p>
+                        <p><IconLink icon="fas fa-link"
                             title="Resources"
                             append_text="Common Resources"
-                            clicked={this.editCommonResources} /></p>
+                            to="/admin/resources/common" /></p>
                     </div>
                 </Aux>
             );
+
         } else {
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.error ?
+                        <Message type="error" text={this.props.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
             );
         }
+
         return (
             <AdminPage
                 title="Results: Manage the Results Page"
@@ -129,4 +98,18 @@ class AdminResultsList extends Component {
 
 }
 
-export default withRouter(AdminResultsList);
+const mapStateToProps = state => {
+    return {
+        loaded: state.admin.shared.benefits.loaded,
+        error: state.admin.shared.benefits.error,
+        data: state.admin.shared.benefits.data
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchBenefits: () => dispatch(actions.loadBenefitsList())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminResultsList));

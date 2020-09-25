@@ -12,16 +12,11 @@
     margin-left: 0.5rem;
 }
 
-.ActionLink {
+.ActionButtons .IconLink {
     background-color: #01BF90;
-    font-size: 0.9em;
     color: white;
+    text-decoration: none;
     padding: 0.5rem;
     margin-left: 0.5rem;
-    text-decoration: none;
-}
-
-.ActionLink span {
-    margin-left: 0.3em;
 }
 
