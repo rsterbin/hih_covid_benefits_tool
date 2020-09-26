@@ -5,6 +5,7 @@ import * as dashboard from './admin/dashboard';
 import * as language from './admin/language';
 import * as resources from './admin/resources';
 import * as responses from './admin/responses';
+import * as results from './admin/results';
 import * as shared from './admin/shared';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
     language: language.getInitialState(),
     resources: resources.getInitialState(),
     responses: responses.getInitialState(),
+    results: results.getInitialState(),
     shared: shared.getInitialState(),
     lastActive: null
 };
@@ -68,6 +70,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_SAVE_RESOURCE_FAILED: return resources.adminSaveResourceFailed(state, action);
         case actionTypes.ADMIN_SAVE_RESOURCE_SUCCEEDED: return resources.adminSaveResourceSucceeded(state, action);
         case actionTypes.ADMIN_SAVE_RESOURCE_MSG_DISMISSED: return resources.adminSaveResourceMsgDismissed(state, action);
+
+        // Results
+        case actionTypes.ADMIN_FETCH_RESULTS_LIST_STARTED: return results.adminFetchResultsListStarted(state, action);
+        case actionTypes.ADMIN_FETCH_RESULTS_LIST_FAILED: return results.adminFetchResultsListFailed(state, action);
+        case actionTypes.ADMIN_FETCH_RESULTS_LIST_SUCCEEDED: return results.adminFetchResultsListSucceeded(state, action);
+        case actionTypes.ADMIN_CHANGE_RESULTS_FILTER: return results.adminChangeResultsFilter(state, action);
 
         // Shared
         case actionTypes.ADMIN_FETCH_BENEFIT_STARTED: return shared.adminFetchBenefitStarted(state, action);

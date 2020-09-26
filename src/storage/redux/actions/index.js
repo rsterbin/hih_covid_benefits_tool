@@ -26,6 +26,8 @@ export {
     deleteResource,
     loadResourceInfo,
     adminDismissDeleteResourceMessage,
+    loadResults,
+    adminChangeResultsFilter,
     loadBenefit,
     loadBenefitsList
 } from './admin';
