@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Aux from '../../../hoc/Aux/Aux';
+
 import './IconLink.css';
 
 const iconLink = (props) => {
@@ -32,14 +34,27 @@ const iconLink = (props) => {
     if (props.add_class) {
         classes.push(props.add_class);
     }
-    return (
-        <Link className={classes.join(' ')} to={props.to}>
+    const contents = (
+        <Aux>
             <i className={icon} title={title}></i>
             {props.append_text ?
                 <span>{props.append_text}</span>
             : null}
-        </Link>
+        </Aux>
     );
+    if (props.to.match('^http')) {
+        return (
+            <a className={classes.join(' ')} download={props.download} href={props.to}>
+                {contents}
+            </a>
+        );
+    } else {
+        return (
+            <Link className={classes.join(' ')} to={props.to}>
+                {contents}
+            </Link>
+        );
+    }
 };
 
 export default iconLink;

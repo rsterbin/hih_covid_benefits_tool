@@ -157,8 +157,8 @@ class Api {
         return this.getAxios().post('/admin/responses/all', data);
     }
 
-    getAllContacts(data) {
-        return this.getAxios().post('/admin/contacts/all', data);
+    getRawContacts(data) {
+        return this.getAxios().post('/admin/contacts/raw', data);
     }
 
     getAllLanguage(data) {
@@ -245,8 +245,8 @@ class Api {
         return BASE_BACKEND + '/download/responses/all/' + token;
     }
 
-    getContactsDownloadUrl(token) {
-        return BASE_BACKEND + '/download/contacts/all/' + token;
+    getRawContactsDownloadUrl(token) {
+        return BASE_BACKEND + '/download/contacts/raw/' + token;
     }
 
     // Prelaunch

@@ -43,14 +43,16 @@ class AdminDashboard extends Component {
                     error={this.props.responses.error}
                     refresh={this.refreshResponses}
                     rows={this.props.responses.data}
-                    cols={this.responses_headers} />
+                    cols={this.responses_headers}
+                    more="/admin/responses" />
                 <Block
                     title="Recent Contacts"
                     loaded={this.props.contacts.loaded}
                     error={this.props.contacts.error}
                     refresh={this.refreshContacts}
                     rows={this.props.contacts.data}
-                    cols={this.contacts_headers} />
+                    cols={this.contacts_headers}
+                    more="/admin/contacts" />
             </div>
         );
     }

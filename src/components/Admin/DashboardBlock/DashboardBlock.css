@@ -36,3 +36,12 @@
     white-space: nowrap;
 }
 
+.DashboardBlockBody .MoreLink {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.DashboardBlockBody .MoreLink a {
+    color: #01bf90;
+    text-decoration: none;
+}

@@ -11,6 +11,7 @@ export {
     checkAdminAuthState,
     authenticateAdmin,
     manualAdminLogout,
+    loadContactsRaw,
     loadDashboardResponses,
     loadDashboardContacts,
     loadLangList,

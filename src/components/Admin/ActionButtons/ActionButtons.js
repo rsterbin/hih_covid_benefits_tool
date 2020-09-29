@@ -27,6 +27,7 @@ const actionButtons = (props) => {
                     icon={button.icon}
                     title={button.title}
                     append_text={button.title}
+                    download={button.download}
                     to={button.link} />
             );
         } else {

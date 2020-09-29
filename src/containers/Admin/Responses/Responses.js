@@ -61,11 +61,15 @@ class AdminResponses extends Component {
                 tablerow.date = formatted;
                 return tablerow;
             });
+            const url = Api.getResponsesDownloadUrl(this.props.token);
+            const now = DateTime.local();
+            const filename = 'hnct-' + now.toISODate() + '-responses.csv';
             body = (
                 <Aux>
                     <ActionButtons buttons={[{icon: "fas fa-download",
-                        title: "Download",
-                        link: Api.getResponsesDownloadUrl(this.props.token) }]} />
+                        title: 'Download',
+                        link: url,
+                        download: filename}]} />
                     <Table rows={rows} cols={cols}
                         toggle_cols={this.toggle_cols}
                         toggle_expand_title="show all answers"
@@ -96,6 +100,7 @@ class AdminResponses extends Component {
 
 const mapStateToProps = state => {
     return {
+        token: state.admin.auth.token,
         loaded: state.admin.responses.loaded,
         error: state.admin.responses.error,
         data: state.admin.responses.data

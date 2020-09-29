@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 import * as auth from './admin/auth';
 import * as dashboard from './admin/dashboard';
+import * as contacts from './admin/contacts';
 import * as language from './admin/language';
 import * as resources from './admin/resources';
 import * as responses from './admin/responses';
@@ -10,6 +11,7 @@ import * as shared from './admin/shared';
 
 const initialState = {
     auth: auth.getInitialState(),
+    contacts: contacts.getInitialState(),
     dashboard: dashboard.getInitialState(),
     language: language.getInitialState(),
     resources: resources.getInitialState(),
@@ -28,6 +30,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_LOGIN_FAILED: return auth.adminLoginFailed(state, action);
         case actionTypes.ADMIN_LOGIN_SUCCEEDED: return auth.adminLoginSucceeded(state, action);
         case actionTypes.ADMIN_LOGOUT: return auth.adminLogout(state, action);
+
+        // Contacts
+        case actionTypes.ADMIN_FETCH_CONTACTS_RAW_STARTED: return contacts.adminFetchContactsRawStarted(state, action);
+        case actionTypes.ADMIN_FETCH_CONTACTS_RAW_FAILED: return contacts.adminFetchContactsRawFailed(state, action);
+        case actionTypes.ADMIN_FETCH_CONTACTS_RAW_SUCCEEDED: return contacts.adminFetchContactsRawSucceeded(state, action);
 
         // Dashboard
         case actionTypes.ADMIN_DASH_RESPONSES_STARTED: return dashboard.adminDashResponsesStarted(state, action);
