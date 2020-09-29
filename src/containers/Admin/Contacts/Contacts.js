@@ -6,12 +6,9 @@ import ListRaw from './ListRaw/ListRaw';
 class AdminContacts extends Component {
 
     render() {
-        const doListRaw = () => {
-            return <ListRaw token={this.props.token} />;
-        };
         return (
             <Switch>
-                <Route path="/" render={doListRaw} />
+                <Route path="/" component={ListRaw} />
             </Switch>
         );
     }
