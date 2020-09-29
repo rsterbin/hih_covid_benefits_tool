@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 import * as auth from './admin/auth';
 import * as dashboard from './admin/dashboard';
+import * as deploys from './admin/deploys';
 import * as contacts from './admin/contacts';
 import * as language from './admin/language';
 import * as resources from './admin/resources';
@@ -13,6 +14,7 @@ const initialState = {
     auth: auth.getInitialState(),
     contacts: contacts.getInitialState(),
     dashboard: dashboard.getInitialState(),
+    deploys: deploys.getInitialState(),
     language: language.getInitialState(),
     resources: resources.getInitialState(),
     responses: responses.getInitialState(),
@@ -43,6 +45,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_DASH_CONTACTS_STARTED: return dashboard.adminDashContactsStarted(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_FAILED: return dashboard.adminDashContactsFailed(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_SUCCEEDED: return dashboard.adminDashContactsSucceeded(state, action);
+
+        // Deploys
+        case actionTypes.ADMIN_FETCH_DEPLOYMENTS_STARTED: return deploys.adminFetchDeploymentsStarted(state, action);
+        case actionTypes.ADMIN_FETCH_DEPLOYMENTS_FAILED: return deploys.adminFetchDeploymentsFailed(state, action);
+        case actionTypes.ADMIN_FETCH_DEPLOYMENTS_SUCCEEDED: return deploys.adminFetchDeploymentsSucceeded(state, action);
 
         // Language
         case actionTypes.ADMIN_FETCH_LANG_LIST_STARTED: return language.adminFetchLangListStarted(state, action);

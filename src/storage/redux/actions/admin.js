@@ -1,6 +1,7 @@
 export * from './admin/auth';
 export * from './admin/contacts';
 export * from './admin/dashboard';
+export * from './admin/deploys';
 export * from './admin/language';
 export * from './admin/resources';
 export * from './admin/responses';

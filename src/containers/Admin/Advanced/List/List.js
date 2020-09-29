@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import DeployMessage from '../../../../components/Admin/DeployMessage/DeployMessage';
@@ -11,16 +12,11 @@ import Message from '../../../../components/UI/Message/Message';
 import IconButton from '../../../../components/UI/IconButton/IconButton';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import * as actions from '../../../../storage/redux/actions/index';
 
 import './List.css';
 
 class AdminAdvancedList extends Component {
-
-    state = {
-        loaded: false,
-        deploys: null,
-        error: null
-    };
 
     cols = [
         { key: 'version_num', title: 'Version Number' },
@@ -34,29 +30,12 @@ class AdminAdvancedList extends Component {
     };
 
     refresh = () => {
-        this.fetchDeploys();
+        this.props.fetchDeploys();
     };
 
     componentDidMount() {
         Logger.setComponent('Admin/Advanced/List');
-        this.fetchDeploys();
-    }
-
-    fetchDeploys() {
-        this.setState({ loaded: false, deploys: null, error: null });
-        const data = { token: this.props.token };
-        Api.getAllDeploys(data)
-            .then((response) => {
-                const all = response.data.all ? response.data.all : [];
-                this.setState({ loaded: true, deploys: all });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch deployments', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not fetch deployments' });
-            });
+        this.props.fetchDeploys();
     }
 
     revertToRow(row) {
@@ -66,8 +45,8 @@ class AdminAdvancedList extends Component {
     render() {
         Logger.setComponent('Admin/Advanced/List');
         let body = null;
-        if (this.state.loaded) {
-            const rows = this.state.deploys.map(item => {
+        if (this.props.loaded) {
+            const rows = this.props.deploys.map(item => {
                 const dt = DateTime.fromISO(item.date_deployed);
                 const formatted = dt.toLocaleString(DateTime.DATETIME_SHORT);
                 const url = Api.getDeployDownloadUrl(
@@ -103,8 +82,8 @@ class AdminAdvancedList extends Component {
         } else {
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.error ?
+                        <Message type="error" text={this.props.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
@@ -123,4 +102,19 @@ class AdminAdvancedList extends Component {
 
 }
 
-export default withRouter(AdminAdvancedList);
+const mapStateToProps = state => {
+    return {
+        token: state.admin.auth.token,
+        loaded: state.admin.deploys.list.loaded,
+        error: state.admin.deploys.list.error,
+        deploys: state.admin.deploys.list.data,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchDeploys: () => dispatch(actions.loadDeployments())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminAdvancedList));

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, Link, withRouter } from 'react-router-dom';
 
 import List from './List/List';
 import Save from './Save/Save';
@@ -10,18 +10,6 @@ import Aux from '../../../hoc/Aux/Aux';
 import './Advanced.css';
 
 class AdminAdvanced extends Component {
-
-    goToSave = () => {
-        this.props.history.push('/admin/advanced/save');
-    }
-
-    goToList = () => {
-        this.props.history.push('/admin/advanced');
-    }
-
-    goToReplace = () => {
-        this.props.history.push('/admin/advanced/replace');
-    }
 
     render() {
         const doSave = () => {
@@ -48,9 +36,9 @@ class AdminAdvanced extends Component {
                 <div className="OtherFunctions">
                     <h4>Advanced Functions</h4>
                     <ul>
-                        <li><button onClick={this.goToSave}>Save Deploy</button></li>
-                        <li><button onClick={this.goToList}>List Deployments</button></li>
-                        <li><button onClick={this.goToReplace}>Replace Database</button></li>
+                        <li><Link to="/admin/advanced/save">Save Deploy</Link></li>
+                        <li><Link to="/admin/advanced">List Deployments</Link></li>
+                        <li><Link to="/admin/advanced/replace">Replace Database</Link></li>
                     </ul>
                 </div>
             </Aux>

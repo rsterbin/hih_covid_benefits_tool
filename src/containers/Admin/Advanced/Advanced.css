@@ -3,12 +3,9 @@
     margin-top: 5em;
 }
 
-.OtherFunctions button {
-    border: none;
-    background: transparent;
+.OtherFunctions a {
     font-size: 0.9em;
     text-decoration: underline;
     color: #01bf90;
-    cursor: pointer;
 }
 

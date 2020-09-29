@@ -14,6 +14,7 @@ export {
     loadContactsRaw,
     loadDashboardResponses,
     loadDashboardContacts,
+    loadDeployments,
     loadLangList,
     loadLangInfo,
     adminHoldLangEditingText,
