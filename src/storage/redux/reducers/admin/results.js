@@ -9,6 +9,17 @@ export const getInitialState = () => {
             conditions: null,
             scenarios: null,
             filters: null
+        },
+        info: {
+            loaded: false,
+            error: null,
+            benefit: null,
+            scenario: null
+        },
+        save: {
+            processing: false,
+            error: null,
+            saved: false
         }
     };
 };
@@ -68,5 +79,80 @@ export const adminChangeResultsFilter = (state, action) => {
             })
         })
     }), true);
+};
+
+export const adminFetchScenarioStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        results: updateObject(state.results, {
+            info: updateObject(state.results.info, {
+                loaded: false,
+                error: null,
+                benefit: null,
+                scenario: null
+            })
+        })
+    }), true);
+};
+
+export const adminFetchScenarioFailed = (state, action) => {
+    return updateObject(state, {
+        results: updateObject(state.results, {
+            info: updateObject(state.results.info, {
+                loaded: false,
+                error: action.error,
+                benefit: null,
+                scenario: null
+            })
+        })
+    });
+};
+
+export const adminFetchScenarioSucceeded = (state, action) => {
+    return updateObject(state, {
+        results: updateObject(state.results, {
+            info: updateObject(state.results.info, {
+                loaded: true,
+                error: null,
+                benefit: action.benefit,
+                scenario: action.scenario
+            })
+        })
+    });
+};
+
+export const adminSaveScenarioStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        results: updateObject(state.results, {
+            save: updateObject(state.results.save, {
+                processing: true,
+                error: null,
+                saved: false
+            })
+        })
+    }), true);
+};
+
+export const adminSaveScenarioFailed = (state, action) => {
+    return updateObject(state, {
+        results: updateObject(state.results, {
+            save: updateObject(state.results.save, {
+                processing: false,
+                error: action.error,
+                saved: false
+            })
+        })
+    });
+};
+
+export const adminSaveScenarioSucceeded = (state, action) => {
+    return updateObject(state, {
+        results: updateObject(state.results, {
+            save: updateObject(state.results.save, {
+                processing: false,
+                error: null,
+                saved: true
+            })
+        })
+    });
 };
 

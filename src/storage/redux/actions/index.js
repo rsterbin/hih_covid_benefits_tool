@@ -27,6 +27,8 @@ export {
     loadResourceInfo,
     adminDismissDeleteResourceMessage,
     loadResults,
+    loadScenario,
+    saveScenario,
     adminChangeResultsFilter,
     loadBenefit,
     loadBenefitsList

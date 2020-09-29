@@ -76,6 +76,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_FETCH_RESULTS_LIST_FAILED: return results.adminFetchResultsListFailed(state, action);
         case actionTypes.ADMIN_FETCH_RESULTS_LIST_SUCCEEDED: return results.adminFetchResultsListSucceeded(state, action);
         case actionTypes.ADMIN_CHANGE_RESULTS_FILTER: return results.adminChangeResultsFilter(state, action);
+        case actionTypes.ADMIN_FETCH_SCENARIO_STARTED: return results.adminFetchScenarioStarted(state, action);
+        case actionTypes.ADMIN_FETCH_SCENARIO_FAILED: return results.adminFetchScenarioFailed(state, action);
+        case actionTypes.ADMIN_FETCH_SCENARIO_SUCCEEDED: return results.adminFetchScenarioSucceeded(state, action);
+        case actionTypes.ADMIN_SAVE_SCENARIO_STARTED: return results.adminSaveScenarioStarted(state, action);
+        case actionTypes.ADMIN_SAVE_SCENARIO_FAILED: return results.adminSaveScenarioFailed(state, action);
+        case actionTypes.ADMIN_SAVE_SCENARIO_SUCCEEDED: return results.adminSaveScenarioSucceeded(state, action);
 
         // Shared
         case actionTypes.ADMIN_FETCH_BENEFIT_STARTED: return shared.adminFetchBenefitStarted(state, action);

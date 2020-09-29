@@ -132,7 +132,6 @@ const EditMarkdown = (props) => {
         if (wrapped) {
             const regexp1 = new RegExp(TOKEN_REGEX_TAG_OPEN + HIGHLIGHT_OPEN + TOKEN_REGEX_TAG_CLOSE, 'g');
             const regexp2 = new RegExp(TOKEN_REGEX_TAG_OPEN + HIGHLIGHT_CLOSE + TOKEN_REGEX_TAG_CLOSE, 'g');
-            console.log(regexp1);
             preview = preview.replace(regexp1, '<span class="' + hlclasses.join(' ') + '">');
             preview = preview.replace(regexp2, '</span>');
         } else {

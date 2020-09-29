@@ -13,7 +13,6 @@ const confirmDeleteResource = (props) => {
     let contents = null;
 
     if (props.candidate) {
-        console.log(props.candidate);
         contents = (
             <Aux>
                 <h4>Are you sure you want to delete this resource?</h4>

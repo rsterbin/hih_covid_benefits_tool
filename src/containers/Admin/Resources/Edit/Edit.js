@@ -83,8 +83,6 @@ class AdminResourcesEdit extends Component {
                 prefill.en_desc = this.props.resource.data.en_desc;
             }
 
-            console.log(this.props);
-
             body = (
                 <Aux>
                     {redirect}
