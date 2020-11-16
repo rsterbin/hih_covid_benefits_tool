@@ -15,23 +15,17 @@ class AdminAdvanced extends Component {
         const doSave = () => {
             return <Save token={this.props.token} />;
         };
-        const doLoad = () => {
-            return <Load token={this.props.token} />;
-        };
         const doReplace = () => {
             return <Replace token={this.props.token} />;
-        };
-        const doList = () => {
-            return <List token={this.props.token} />;
         };
         return (
             <Aux>
                 <Switch>
-                    <Route path="/admin/advanced/load/:id" render={doLoad} />
-                    <Route path="/admin/advanced/load" render={doLoad} />
+                    <Route path="/admin/advanced/load/:id" component={Load} />
+                    <Route path="/admin/advanced/load" component={Load} />
                     <Route path="/admin/advanced/replace" render={doReplace} />
                     <Route path="/admin/advanced/save" render={doSave} />
-                    <Route path="/" render={doList} />
+                    <Route path="/" component={List} />
                 </Switch>
                 <div className="OtherFunctions">
                     <h4>Advanced Functions</h4>

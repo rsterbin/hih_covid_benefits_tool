@@ -15,6 +15,8 @@ export {
     loadDashboardResponses,
     loadDashboardContacts,
     loadDeployments,
+    loadDeployment,
+    overloadDeployment,
     loadLangList,
     loadLangInfo,
     adminHoldLangEditingText,
