@@ -12,16 +12,13 @@ import './Advanced.css';
 class AdminAdvanced extends Component {
 
     render() {
-        const doSave = () => {
-            return <Save token={this.props.token} />;
-        };
         return (
             <Aux>
                 <Switch>
                     <Route path="/admin/advanced/load/:id" component={Load} />
                     <Route path="/admin/advanced/load" component={Load} />
                     <Route path="/admin/advanced/replace" component={Replace} />
-                    <Route path="/admin/advanced/save" render={doSave} />
+                    <Route path="/admin/advanced/save" component={Save} />
                     <Route path="/" component={List} />
                 </Switch>
                 <div className="OtherFunctions">

@@ -21,6 +21,12 @@ export const getInitialState = () => {
             processing: false,
             data: null,
             error: null
+        },
+        save: {
+            processing: false,
+            data: null,
+            info: null,
+            error: null
         }
     };
 };
@@ -164,6 +170,43 @@ export const adminReplaceWithDeploymentSucceeded = (state, action) => {
                 processing: false,
                 error: null,
                 data: action.data
+            })
+        })
+    });
+};
+
+export const adminSaveNewDeploymentStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            save: updateObject(state.deploys.save, {
+                processing: true,
+                error: null,
+                data: null
+            })
+        })
+    }), true);
+};
+
+export const adminSaveNewDeploymentFailed = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            save: updateObject(state.deploys.save, {
+                processing: false,
+                error: action.error,
+                data: null
+            })
+        })
+    });
+};
+
+export const adminSaveNewDeploymentSucceeded = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            save: updateObject(state.deploys.save, {
+                processing: false,
+                error: null,
+                data: action.data,
+                info: action.info
             })
         })
     });

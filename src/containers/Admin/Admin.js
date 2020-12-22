@@ -23,20 +23,15 @@ class Admin extends Component {
 
     render() {
         if (this.props.authenticated) {
-            const doAdvanced = () => <Advanced token={this.props.token} />;
-            const doResources = () => <Resources token={this.props.token} />;
-            const doResults = () => <Results token={this.props.token} />;
-            const doLanguage = () => <Language token={this.props.token} />;
-            const doContacts = () => <Contacts token={this.props.token} />;
             return (
                 <AdminLayout>
                     <Switch>
-                        <Route path="/admin/advanced" render={doAdvanced} />
-                        <Route path="/admin/resources" render={doResources} />
-                        <Route path="/admin/results" render={doResults} />
-                        <Route path="/admin/language" render={doLanguage} />
+                        <Route path="/admin/advanced" component={Advanced} />
+                        <Route path="/admin/resources" component={Resources} />
+                        <Route path="/admin/results" component={Results} />
+                        <Route path="/admin/language" component={Language} />
                         <Route path="/admin/responses" component={Responses} />
-                        <Route path="/admin/contacts" render={doContacts} />
+                        <Route path="/admin/contacts" component={Contacts} />
                         <Route path="/admin" component={Dashboard} />
                     </Switch>
                 </AdminLayout>
@@ -57,7 +52,6 @@ class Admin extends Component {
 const mapStateToProps = state => {
     return {
         authenticated: state.admin.auth.username === null ? false : true,
-        token: state.admin.auth.token
     };
 };
 

@@ -91,6 +91,27 @@ export const adminReplaceWithDeploymentSucceeded = (data) => {
     };
 };
 
+export const adminSaveNewDeploymentStarted = () => {
+    return {
+        type: actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_STARTED
+    };
+};
+
+export const adminSaveNewDeploymentFailed = (error) => {
+    return {
+        type: actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_FAILED,
+        error: error
+    };
+};
+
+export const adminSaveNewDeploymentSucceeded = (data, info) => {
+    return {
+        type: actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_SUCCEEDED,
+        data: data,
+        info: info
+    };
+};
+
 export const loadDeployments = () => {
     return (dispatch, getState) => {
         dispatch(adminFetchDeploymentsStarted());
@@ -169,6 +190,22 @@ export const replaceDatabaseWithCurrentDeployment = () => {
                     'Could not replace database with current deployment');
             });
     };
+};
 
+export const saveNewDeployment = () => {
+    return (dispatch, getState) => {
+        dispatch(adminSaveNewDeploymentStarted());
+        const data = { token: getState().admin.auth.token };
+        Api.deployAdmin(data)
+            .then(response => {
+                const json = JSON.stringify(response.data);
+                const download_info = response.data;
+                dispatch(adminSaveNewDeploymentSucceeded(json, download_info));
+            })
+            .catch(error => {
+                handleAdminApiError(dispatch, error, adminSaveNewDeploymentFailed, '53A8',
+                    'Could not replace save new deployment');
+            });
+    };
 };
 
