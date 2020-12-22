@@ -16,6 +16,11 @@ export const getInitialState = () => {
             processing: false,
             data: null,
             error: null
+        },
+        replace: {
+            processing: false,
+            data: null,
+            error: null
         }
     };
 };
@@ -92,7 +97,6 @@ export const adminFetchDeploymentSucceeded = (state, action) => {
     });
 };
 
-
 export const adminOverloadDeploymentStarted = (state, action) => {
     return updateAdminActivity(updateObject(state, {
         deploys: updateObject(state.deploys, {
@@ -121,6 +125,42 @@ export const adminOverloadDeploymentSucceeded = (state, action) => {
     return updateObject(state, {
         deploys: updateObject(state.deploys, {
             overload: updateObject(state.deploys.overload, {
+                processing: false,
+                error: null,
+                data: action.data
+            })
+        })
+    });
+};
+
+export const adminReplaceWithDeploymentStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            replace: updateObject(state.deploys.replace, {
+                processing: true,
+                error: null,
+                data: null
+            })
+        })
+    }), true);
+};
+
+export const adminReplaceWithDeploymentFailed = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            replace: updateObject(state.deploys.replace, {
+                processing: false,
+                error: action.error,
+                data: null
+            })
+        })
+    });
+};
+
+export const adminReplaceWithDeploymentSucceeded = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            replace: updateObject(state.deploys.replace, {
                 processing: false,
                 error: null,
                 data: action.data

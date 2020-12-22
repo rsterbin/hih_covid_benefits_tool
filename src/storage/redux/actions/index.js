@@ -17,6 +17,7 @@ export {
     loadDeployments,
     loadDeployment,
     overloadDeployment,
+    replaceDatabaseWithCurrentDeployment,
     loadLangList,
     loadLangInfo,
     adminHoldLangEditingText,

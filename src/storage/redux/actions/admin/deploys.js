@@ -1,7 +1,15 @@
 import * as actionTypes from '../actionTypes';
 import Api from '../../../Api';
 import { handleAdminApiError } from '../../utility';
+
 import DeployData from '../../../../data/deployment.json';
+import BenefitsData from '../../../../data/benefits.json';
+import ConditionsData from '../../../../data/conditions.json';
+import CtaData from '../../../../data/cta.json';
+import LangEnData from '../../../../data/lang_en.json';
+import LangKeysData from '../../../../data/lang_keys.json';
+import ResourcesData from '../../../../data/resources.json';
+import ScenariosData from '../../../../data/scenarios.json';
 
 export const adminFetchDeploymentsStarted = () => {
     return {
@@ -63,6 +71,26 @@ export const adminOverloadDeploymentSucceeded = (data) => {
     };
 };
 
+export const adminReplaceWithDeploymentStarted = () => {
+    return {
+        type: actionTypes.ADMIN_REPLACE_WITH_DEPLOYMENT_STARTED
+    };
+};
+
+export const adminReplaceWithDeploymentFailed = (error) => {
+    return {
+        type: actionTypes.ADMIN_REPLACE_WITH_DEPLOYMENT_FAILED,
+        error: error
+    };
+};
+
+export const adminReplaceWithDeploymentSucceeded = (data) => {
+    return {
+        type: actionTypes.ADMIN_REPLACE_WITH_DEPLOYMENT_SUCCEEDED,
+        data: data
+    };
+};
+
 export const loadDeployments = () => {
     return (dispatch, getState) => {
         dispatch(adminFetchDeploymentsStarted());
@@ -113,5 +141,34 @@ export const overloadDeployment = (id) => {
                     'Could not install deployment');
             });
     };
+};
+
+export const replaceDatabaseWithCurrentDeployment = () => {
+    return (dispatch, getState) => {
+        dispatch(adminReplaceWithDeploymentStarted());
+        const data = {
+            token: getState().admin.auth.token,
+            deployment: DeployData,
+            alldata: {
+                benefits: BenefitsData,
+                conditions: ConditionsData,
+                cta: CtaData,
+                lang_en: LangEnData,
+                lang_keys: LangKeysData,
+                resources: ResourcesData,
+                scenarios: ScenariosData
+            }
+        };
+        Api.replaceAdmin(data)
+            .then(response => {
+                const json = JSON.stringify(response.data);
+                dispatch(adminReplaceWithDeploymentSucceeded(json));
+            })
+            .catch(error => {
+                handleAdminApiError(dispatch, error, adminReplaceWithDeploymentFailed, 'A13F',
+                    'Could not replace database with current deployment');
+            });
+    };
+
 };
 
