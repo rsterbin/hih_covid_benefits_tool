@@ -141,6 +141,10 @@ class Api {
         return this.getAxios().post('/admin/session/check', data);
     }
 
+    adminLogout(data) {
+        return this.getAxios().post('/admin/session/logout', data);
+    }
+
     getRecentResponses(data) {
         return this.getAxios().post('/admin/responses/recent', data);
     }
@@ -151,6 +155,10 @@ class Api {
 
     getAllResponses(data) {
         return this.getAxios().post('/admin/responses/all', data);
+    }
+
+    getRawContacts(data) {
+        return this.getAxios().post('/admin/contacts/raw', data);
     }
 
     getAllLanguage(data) {
@@ -235,6 +243,10 @@ class Api {
 
     getResponsesDownloadUrl(token) {
         return BASE_BACKEND + '/download/responses/all/' + token;
+    }
+
+    getRawContactsDownloadUrl(token) {
+        return BASE_BACKEND + '/download/contacts/raw/' + token;
     }
 
     // Prelaunch

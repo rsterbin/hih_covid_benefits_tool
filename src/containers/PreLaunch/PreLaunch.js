@@ -1,64 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Spinner from '../../components/UI/Spinner/Spinner';
 import Main from '../Main/Main';
 import Login from '../Login/Login';
 import LoginLayout from '../../hoc/LoginLayout/LoginLayout';
-import PreLaunchCookie from '../../storage/cookies/PreLaunchCookie';
-import Api from '../../storage/Api';
-import Logger from '../../utils/Logger';
+import * as actions from '../../storage/redux/actions/index';
 
 class PreLaunch extends Component {
 
-    state = {
-        loggedIn: false,
-        loaded: false
-    };
-
-    updateLogin = (token) => {
-        this.setState({ loggedIn: true, loaded: true });
-        PreLaunchCookie.set(token);
-    };
-
     componentDidMount() {
-        let token = PreLaunchCookie.get();
-        if (token) {
-            Api.checkPrelaunchToken({ token: token })
-                .then(response => {
-                    this.setState({ loggedIn: true, loaded: true });
-                })
-                .catch(error => {
-                    if (!error.isAxiosError) {
-                        throw error;
-                    }
-                    const parsed = Api.parseAxiosError(error);
-                    if (parsed.code !== 'TOKEN_INVALID') {
-                        Logger.alert('Prelaunch session check failed', { api_error: parsed });
-                    }
-                    this.setState({ loaded: true });
-                });
-        } else {
-            this.setState({ loaded: true });
-        }
+        this.props.checkAuthState();
     }
 
     render() {
-        if (!this.state.loaded) {
-            return <Spinner />;
-        }
-
-        if (this.state.loggedIn) {
+        if (this.props.authenticated) {
             return <Main />;
         } else {
             return (
                 <LoginLayout>
-                    <Login
-                        login_type="prelaunch"
-                        updateLoginState={this.updateLogin} />
+                    <Login login_type="prelaunch" />
                 </LoginLayout>
             );
         }
     }
 }
 
-export default PreLaunch;
+const mapStateToProps = state => {
+    return {
+        authenticated: state.prelaunch.username === null ? false : true
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        checkAuthState: () => dispatch(actions.checkPrelaunchAuthState())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreLaunch);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../../hoc/Aux/Aux';
@@ -9,27 +10,16 @@ import Message from '../../../../components/UI/Message/Message';
 import ConfirmDeleteResource from '../../../../components/Admin/ConfirmDeleteResource/ConfirmDeleteResource';
 import ActionButtons from '../../../../components/Admin/ActionButtons/ActionButtons';
 import Table from '../../../../components/UI/Table/Table';
-import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import * as actions from '../../../../storage/redux/actions/index';
 
 const COMMON_CODE = 'common';
 
 class AdminResourcesList extends Component {
 
-    state = {
-        loaded: false,
-        benefit: null,
-        resources: null,
-        error: null,
-        confirming_delete: false,
-        delete_candidate: null,
-        processing_delete: false,
-        deleted: false
-    };
-
     resources_clickable = {
         delete: (row) => {
-            this.setState({ confirming_delete: true, delete_candidate: row });
+            this.props.requestDelete(row);
         },
     };
 
@@ -47,91 +37,28 @@ class AdminResourcesList extends Component {
     }
 
     refresh = () => {
-        this.fetchResources(true);
+        this.props.fetchResources();
     };
 
     cancelDelete = () => {
-        this.setState({ confirming_delete: false, delete_candidate: null });
+        this.props.cancelDelete();
     };
 
     confirmDelete = () => {
-        this.deleteResource();
+        this.props.deleteResource();
     };
 
     closeDeleteMessage = () => {
-        this.setState({ deleted: false });
+        this.props.dismissMessage();
     };
 
     componentDidMount() {
         Logger.setComponent('Admin/Resources/List');
-        this.fetchResources(true);
-    }
-
-    fetchResources(fetch_all) {
-        this.setState({ loaded: false, resources: null, error: null });
-        const data = { token: this.props.token };
-        Api.getResources(data, this.getBenefitCode())
-            .then((response) => {
-                const resources = response.data.resources ? response.data.resources : [];
-                if (fetch_all) {
-                    this.setState({ resources: resources });
-                    this.fetchBenefit();
-                } else {
-                    this.setState({ loaded: true, resources: resources });
-                }
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch resources', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not fetch resources' });
-            });
-    }
-
-    fetchBenefit() {
-        const b_code = this.getBenefitCode();
-        if (b_code && b_code !== COMMON_CODE) {
-            this.setState({ loaded: false, benefit: null, error: null });
-            const data = { token: this.props.token };
-            Api.getBenefitInfo(this.getBenefitCode(), data)
-                .then((response) => {
-                    if (!response.data.benefit) {
-                        this.setState({ error: 'That benefit is unknown' });
-                    } else {
-                        this.setState({ loaded: true, benefit: response.data.benefit });
-                    }
-                })
-                .catch((error) => {
-                    if (!error.isAxiosError) {
-                        throw error;
-                    }
-                    Logger.alert('Could not fetch benefit', { api_error: Api.parseAxiosError(error) });
-                    this.setState({ error: 'Could not fetch benefit' });
-                });
-        } else {
-            this.setState({ loaded: true });
+        const code = this.getBenefitCode();
+        this.props.fetchResources(code);
+        if (code && code !== COMMON_CODE) {
+            this.props.fetchBenefit(code);
         }
-    }
-
-    deleteResource() { 
-        this.setState({ processing_delete: true, deleted: false });
-        const data = {
-            token: this.props.token,
-            id: this.state.delete_candidate.id
-        };
-        Api.deleteResource(data)
-            .then((response) => {
-                this.setState({ processing_delete: false, deleted: true, confirming_delete: false });
-                this.fetchResources();
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not delete resource', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not delete resource', processing_delete: false });
-            });
     }
 
     getBenefitCode() {
@@ -143,10 +70,10 @@ class AdminResourcesList extends Component {
         let body = null;
         let title = 'Results: ';
         let crumbs = ['Admin' ];
-        if (this.state.loaded) {
-            if (this.state.benefit) {
-                title += this.state.benefit.abbreviation + ': Resources';
-                crumbs.push(this.state.benefit.abbreviation);
+        if (this.props.loaded) {
+            if (this.props.benefit) {
+                title += this.props.benefit.abbreviation + ': Resources';
+                crumbs.push(this.props.benefit.abbreviation);
                 crumbs.push('Resources');
             } else if (this.getBenefitCode() === COMMON_CODE) {
                 title += 'Common Resources';
@@ -155,7 +82,7 @@ class AdminResourcesList extends Component {
                 title += 'All Resources';
                 crumbs.push('Resources');
             }
-            let resources_rows = this.state.resources
+            let resources_rows = this.props.data
                 .map(resource => {
                     let edit_link = (
                         <Link to={'/admin/resources/edit/' + resource.id}>
@@ -171,13 +98,13 @@ class AdminResourcesList extends Component {
                         edit: edit_link,
                         delete: <i className="fas fa-trash-alt" title="Delete Resource"></i>
                     };
-                    if (!this.state.benefit) {
+                    if (!this.props.benefit) {
                         row.benefit = resource.benefit || 'Common';
                     }
                     return row;
                 });
             let resources_cols = [];
-            if (!this.state.benefit) {
+            if (!this.props.benefit) {
                 resources_cols.push({ key: 'benefit', title: 'Benefit' });
             }
             resources_cols.push({ key: 'link', title: 'Link' });
@@ -186,15 +113,15 @@ class AdminResourcesList extends Component {
             resources_cols.push({ key: 'delete', title: 'Delete' });
             body = (
                 <Aux>
-                    {this.state.deleted ?
+                    {this.props.deleted ?
                         <Message type="success" text="The resource was deleted" closed={this.closeDeleteMessage} />
                     : null}
                     <ConfirmDeleteResource
-                        confirming={this.state.confirming_delete}
-                        working={this.state.processing_delete}
+                        confirming={this.props.confirming_delete}
+                        working={this.props.processing_delete}
                         confirm={this.confirmDelete}
                         cancel={this.cancelDelete}
-                        candidate={this.state.delete_candidate} />
+                        candidate={this.props.delete_candidate} />
                     <ActionButtons buttons={[{icon: "fas fa-plus-circle",
                         title: "New Resource",
                         clicked: this.newResource}]} />
@@ -212,8 +139,8 @@ class AdminResourcesList extends Component {
 
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.error ?
+                        <Message type="error" text={this.props.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
@@ -228,4 +155,28 @@ class AdminResourcesList extends Component {
     }
 }
 
-export default withRouter(AdminResourcesList);
+const mapStateToProps = state => {
+    return {
+        loaded: state.admin.resources.list.loaded,
+        error: state.admin.resources.list.error,
+        data: state.admin.resources.list.data,
+        benefit: state.admin.resources.list.current_benefit,
+        delete_candidate: state.admin.resources.delete.candidate,
+        confirming_delete: state.admin.resources.delete.confirming,
+        processing_delete: state.admin.resources.delete.processing,
+        deleted: state.admin.resources.delete.deleted
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchResources: () => dispatch(actions.loadResourcesList()),
+        fetchBenefit: (code) => dispatch(actions.loadBenefit(code)),
+        requestDelete: (candidate) => dispatch(actions.adminRequestResourceDelete(candidate)),
+        cancelDelete: () => dispatch(actions.adminCancelResourceDelete()),
+        deleteResource: () => dispatch(actions.deleteResource()),
+        dismissMessage: () => dispatch(actions.adminDismissDeleteResourceMessage())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminResourcesList));

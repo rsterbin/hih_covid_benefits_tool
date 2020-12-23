@@ -6,7 +6,8 @@ const preLaunchCookie = new CookieBase(
         path: '/',
         maxAge: 60 * 60,
         sameSite: 'Strict'
-    } // spec
+    }, // spec
+    true // compressed
 );
 
 export default preLaunchCookie;

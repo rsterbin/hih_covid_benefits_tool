@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../hoc/AdminPage/AdminPage';
 import Aux from '../../../hoc/Aux/Aux';
@@ -10,15 +11,9 @@ import ActionButtons from '../../../components/Admin/ActionButtons/ActionButtons
 import Api from '../../../storage/Api';
 import Questions from '../../../logic/Questions';
 import Logger from '../../../utils/Logger';
+import * as actions from '../../../storage/redux/actions/index';
 
 class AdminResponses extends Component {
-
-    state = {
-        loaded: false,
-        error: null,
-        responses: null,
-        processing: false
-    };
 
     toggle_cols = {
         'hours per week': true,
@@ -31,39 +26,22 @@ class AdminResponses extends Component {
     };
 
     refresh = () => {
-        this.fetchResponses();
+        this.props.fetch();
     };
 
     componentDidMount() {
         Logger.setComponent('Admin/Responses/List');
-        this.fetchResponses();
-    }
-
-    fetchResponses() {
-        this.setState({ loaded: false, responses: null, error: null });
-        const data = { token: this.props.token };
-        Api.getAllResponses(data)
-            .then((response) => {
-                const all = response.data.all ? response.data.all : [];
-                this.setState({ loaded: true, responses: all });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch responses', { api_error: Api.parseAxiosError(error) });
-                this.setState({ error: 'Could not fetch responses' });
-            });
+        this.props.fetch();
     }
 
     render() {
         Logger.setComponent('Admin/Responses/List');
         let body = null;
-        if (this.state.loaded) {
+        if (this.props.loaded) {
             let cols = [
                 { key: 'date', title: 'Date' },
             ];
-            const rows = this.state.responses.map(row => {
+            const rows = this.props.data.map(row => {
                 let tablerow = {
                     key: row.response_id
                 };
@@ -83,11 +61,15 @@ class AdminResponses extends Component {
                 tablerow.date = formatted;
                 return tablerow;
             });
+            const url = Api.getResponsesDownloadUrl(this.props.token);
+            const now = DateTime.local();
+            const filename = 'hnct-' + now.toISODate() + '-responses.csv';
             body = (
                 <Aux>
                     <ActionButtons buttons={[{icon: "fas fa-download",
-                        title: "Download",
-                        link: Api.getResponsesDownloadUrl(this.props.token) }]} />
+                        title: 'Download',
+                        link: url,
+                        download: filename}]} />
                     <Table rows={rows} cols={cols}
                         toggle_cols={this.toggle_cols}
                         toggle_expand_title="show all answers"
@@ -97,8 +79,8 @@ class AdminResponses extends Component {
         } else {
             body = (
                 <Aux>
-                    {this.state.error ?
-                        <Message type="error" text={this.state.error} tryagain={this.refresh} />
+                    {this.props.error ?
+                        <Message type="error" text={this.props.error} tryagain={this.refresh} />
                     : null}
                     <Spinner />
                 </Aux>
@@ -116,4 +98,19 @@ class AdminResponses extends Component {
     }
 }
 
-export default AdminResponses;
+const mapStateToProps = state => {
+    return {
+        token: state.admin.auth.token,
+        loaded: state.admin.responses.loaded,
+        error: state.admin.responses.error,
+        data: state.admin.responses.data
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetch: () => dispatch(actions.loadResponses()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminResponses);

@@ -4,9 +4,10 @@ const loginCookie = new CookieBase(
     'hnct-login', // name
     {
         path: '/',
-        maxAge: 60 * 60,
+        maxAge: 7 * 24 * 60 * 60, // keep for a week
         sameSite: 'Strict'
-    } // spec
+    }, // spec
+    true // compressed
 );
 
 export default loginCookie;

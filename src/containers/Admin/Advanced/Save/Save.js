@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import AdminPage from '../../../../hoc/AdminPage/AdminPage';
 import FunctionBox from '../../../../components/Admin/FunctionBox/FunctionBox';
@@ -6,47 +8,14 @@ import DeployMessage from '../../../../components/Admin/DeployMessage/DeployMess
 import Message from '../../../../components/UI/Message/Message';
 import Api from '../../../../storage/Api';
 import Logger from '../../../../utils/Logger';
+import * as actions from '../../../../storage/redux/actions/index';
 
 import './Save.css';
 
 class AdminAdvancedSave extends Component {
 
-    state = {
-        processing: false,
-        process_data: null,
-        error: null,
-        download_info: null
-    };
-
     deploy = () => {
-        this.setState({
-            processing: true,
-            process_data: null,
-            error: null
-        });
-        const data = {
-            token: this.props.token
-        };
-        Api.deployAdmin(data)
-            .then(response => {
-                this.setState({
-                    processing: false,
-                    process_data: JSON.stringify(response.data),
-                    download_info: response.data,
-                    error: null
-                });
-            })
-            .catch(error => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                const parsed = Api.parseAxiosError(error);
-                Logger.alert('Could not deploy recent changes', { api_error: parsed });
-                this.setState({
-                    processing: false,
-                    error: '[' + parsed.code + '] ' + parsed.message
-                });
-            });
+        this.props.saveDeploy();
     }
 
     componentDidMount() {
@@ -56,9 +25,9 @@ class AdminAdvancedSave extends Component {
     render() {
         Logger.setComponent('Admin/Advanced/Save');
         let successBox = null;
-        if (this.state.download_info) {
-            const vnum = this.state.download_info.version;
-            const uuid = this.state.download_info.uuid;
+        if (this.props.download_info) {
+            const vnum = this.props.download_info.version;
+            const uuid = this.props.download_info.uuid;
             const url = Api.getDeployDownloadUrl(vnum, uuid, this.props.token);
             const fname = 'hnct-' + vnum + '.zip';
             const downloadLink = (
@@ -78,14 +47,14 @@ class AdminAdvancedSave extends Component {
                 advanced={true}>
                 <DeployMessage />
                 <FunctionBox
-                    working={this.state.processing}
+                    working={this.props.processing}
                     emptyText="Click Go to deploy all changes..."
-                    results={this.state.process_data}
+                    results={this.props.data}
                     title="Wrap all changes from the admin into a new deployment"
                     explainer="This will create a zip file you can download containing the new versions of the data files to be commited and deployed"
                     clicked={this.deploy}
                     buttonText="Go"
-                    error={this.state.error}
+                    error={this.props.error}
                     successBox={successBox}
                     />
             </AdminPage>
@@ -93,4 +62,20 @@ class AdminAdvancedSave extends Component {
     }
 }
 
-export default AdminAdvancedSave;
+const mapStateToProps = state => {
+    return {
+        processing: state.admin.deploys.save.processing,
+        error: state.admin.deploys.save.error,
+        data: state.admin.deploys.save.data,
+        download_info: state.admin.deploys.save.info,
+        token: state.admin.auth.token
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveDeploy: () => dispatch(actions.saveNewDeployment()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminAdvancedSave));

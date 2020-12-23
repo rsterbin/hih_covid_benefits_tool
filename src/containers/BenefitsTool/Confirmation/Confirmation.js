@@ -203,8 +203,8 @@ class Confirmation extends Component {
 
 const mapStateToProps = state => {
     return {
-        visitor_id: state.visitor_id,
-        answers: state.answers
+        visitor_id: state.tool.visitor_id,
+        answers: state.tool.answers
     };
 };
 

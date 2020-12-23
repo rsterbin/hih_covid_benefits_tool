@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import { DateTime } from 'luxon';
+import { connect } from 'react-redux';
 
 import Block from '../../../components/Admin/DashboardBlock/DashboardBlock';
-
-import Api from '../../../storage/Api';
 import Logger from '../../../utils/Logger';
-import { shuffle } from '../../../utils/utils';
+import * as actions from '../../../storage/redux/actions/index';
 
 class AdminDashboard extends Component {
-
-    state = {
-        responses_loaded: false,
-        responses_error: null,
-        responses: null,
-        contacts_loaded: false,
-        contacts_error: null,
-        contacts: null,
-    };
 
     responses_headers = [
         { key: 'date', title: 'Date' },
@@ -31,92 +20,56 @@ class AdminDashboard extends Component {
     ];
 
     componentDidMount() {
-        this.fetchRecentResponses();
-        this.fetchRecentContacts();
+        Logger.setComponent('Admin/Dashboard');
+        this.props.fetchResponses();
+        this.props.fetchContacts();
     }
 
     refreshResponses = () => {
-        this.fetchRecentResponses();
+        this.props.fetchResponses();
     };
 
     refreshContacts = () => {
-        this.fetchRecentContacts();
+        this.props.fetchContacts();
     };
 
-    fetchRecentResponses() {
-        this.setState({
-            responses_loaded: false,
-            responses: null,
-            responses_error: null });
-        const data = { token: this.props.token };
-        Api.getRecentResponses(data)
-            .then((response) => {
-                const found = response.data.recent ? response.data.recent : [];
-                const recent = found.map((row) => {
-                    let dt = DateTime.fromISO(row.submitted);
-                    let formatted = dt.toFormat('LLL dd');
-                    return { ...row, date: formatted };
-                });
-                this.setState({ responses_loaded: true, responses: recent });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch recent responses', { api_error: Api.parseAxiosError(error) });
-                this.setState({ responses_error: 'Could not fetch recent responses' });
-            });
-    }
-
-    fetchRecentContacts() {
-        this.setState({
-            contacts_loaded: false,
-            contacts: null,
-            contacts_error: null });
-        const data = { token: this.props.token };
-        Api.getRecentContacts(data)
-            .then((response) => {
-                const found = response.data.recent ? response.data.recent : [];
-                // I promised not to associate contact info with response data,
-                // but at low volume and in order, it's fairly obvious, so
-                // shuffle before displaying
-                const recent = shuffle(found.map(row => {
-                    return {
-                        email: row.email,
-                        zip: row.zip_code
-                    };
-                }));
-                this.setState({ contacts_loaded: true, contacts: recent });
-            })
-            .catch((error) => {
-                if (!error.isAxiosError) {
-                    throw error;
-                }
-                Logger.alert('Could not fetch recent contacts', { api_error: Api.parseAxiosError(error) });
-                this.setState({ contacts_error: 'Could not fetch recent contacts' });
-            });
-    }
-
     render() {
+        Logger.setComponent('Admin/Dashboard');
         return (
             <div className="Dashboard">
                 <Block
                     title="Recent Responses"
-                    loaded={this.state.responses_loaded}
-                    error={this.state.responses_error}
+                    loaded={this.props.responses.loaded}
+                    error={this.props.responses.error}
                     refresh={this.refreshResponses}
-                    rows={this.state.responses}
-                    cols={this.responses_headers} />
+                    rows={this.props.responses.data}
+                    cols={this.responses_headers}
+                    more="/admin/responses" />
                 <Block
                     title="Recent Contacts"
-                    loaded={this.state.contacts_loaded}
-                    error={this.state.contacts_error}
+                    loaded={this.props.contacts.loaded}
+                    error={this.props.contacts.error}
                     refresh={this.refreshContacts}
-                    rows={this.state.contacts}
-                    cols={this.contacts_headers} />
+                    rows={this.props.contacts.data}
+                    cols={this.contacts_headers}
+                    more="/admin/contacts" />
             </div>
         );
     }
 }
 
-export default AdminDashboard;
+const mapStateToProps = state => {
+    return {
+        responses: state.admin.dashboard.responses,
+        contacts: state.admin.dashboard.contacts
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchResponses: () => dispatch(actions.loadDashboardResponses()),
+        fetchContacts: () => dispatch(actions.loadDashboardContacts())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard);

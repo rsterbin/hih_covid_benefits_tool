@@ -72,13 +72,13 @@ export const answersPushFailed = () => {
 export const answerPush = (qcode, letter) => {
     if (!Questions.validAnswer(qcode, letter)) {
         Logger.warn('Request to push unknown question/answer pair ' + qcode + '/' + letter);
-        return (dispatch, getState) => {
+        return (dispatch) => {
             dispatch(answersPushFailed());
         };
     }
     return (dispatch, getState) => {
         dispatch(answersPushStarted());
-        let newAnswers = updateObject(getState().answers, { [qcode]: letter });
+        let newAnswers = updateObject(getState().tool.answers, { [qcode]: letter });
         AnswersCookie.set(newAnswers);
         dispatch(answersPushCompleted(newAnswers));
     };

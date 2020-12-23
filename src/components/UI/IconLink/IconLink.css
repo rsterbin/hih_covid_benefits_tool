@@ -1,0 +1,14 @@
+
+a.IconLink {
+    border: none;
+    background: transparent;
+    font-size: 0.9em;
+    text-decoration: underline;
+    color: inherit;
+    cursor: pointer;
+}
+
+a.IconLink span {
+    margin-left: 0.3em;
+}
+

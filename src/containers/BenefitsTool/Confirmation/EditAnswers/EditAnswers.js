@@ -46,7 +46,7 @@ class EditAnswers extends Component {
 
 const mapStateToProps = state => {
     return {
-        answers: state.answers
+        answers: state.tool.answers
     };
 };
 
