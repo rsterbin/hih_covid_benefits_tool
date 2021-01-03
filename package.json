@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/core": "^0.67.0",
+    "@nivo/pie": "^0.67.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -15,7 +17,7 @@
     "react-hook-form": "^6.8.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.1",
     "react-textarea-autosize": "^7.1.2",
     "react-toggle": "^4.1.1",
     "redux": "^4.0.5",
