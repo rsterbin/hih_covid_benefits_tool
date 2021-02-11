@@ -49,11 +49,15 @@ class CollectResults {
             });
         }
 
-        // Otherwise, add an intro and the benefits
+        // Otherwise, add an intro, placeholder, and the benefits
         else {
             sections.push({
                 header: null,
                 text: ProcessText.process('results_intro')
+            });
+            sections.push({
+                type: 'placeholder',
+                text: ProcessText.process('results_new_legislation_placeholder')
             });
             for (let section of benefitSections) {
                 sections.push(section);
