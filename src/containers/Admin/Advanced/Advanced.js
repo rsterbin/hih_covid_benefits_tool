@@ -5,6 +5,7 @@ import List from './List/List';
 import Save from './Save/Save';
 import Load from './Load/Load';
 import Replace from './Replace/Replace';
+import Compare from './Compare/Compare';
 import Aux from '../../../hoc/Aux/Aux';
 
 import './Advanced.css';
@@ -19,6 +20,8 @@ class AdminAdvanced extends Component {
                     <Route path="/admin/advanced/load" component={Load} />
                     <Route path="/admin/advanced/replace" component={Replace} />
                     <Route path="/admin/advanced/save" component={Save} />
+                    <Route path="/admin/advanced/compare/:avnum/:bvnum" component={Compare} />
+                    <Route path="/admin/advanced/compare" component={Compare} />
                     <Route path="/" component={List} />
                 </Switch>
                 <div className="OtherFunctions">

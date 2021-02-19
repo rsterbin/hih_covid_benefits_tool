@@ -1,0 +1,29 @@
+.AccordionWrapper {
+    border: 0.025rem solid #01BF90;
+}
+
+.AccordionWrapper .ItemHandle {
+    border-bottom: 0.025rem solid #01BF90;
+    padding: 0.5rem;
+    font-weight: bold;
+    color: #01BF90;
+    cursor: pointer;
+}
+
+.AccordionWrapper .ItemWrapper:last-child .ItemHandle {
+    border-bottom: none;
+}
+
+.AccordionWrapper .ItemWrapper.ItemActive .ItemHandle {
+    background-color: #01BF90;
+    color: white;
+}
+
+.AccordionWrapper .ItemWrapper.ItemDisabled .ItemHandle {
+    color: gray;
+    cursor: not-allowed;
+}
+
+.AccordionWrapper .ItemBody {
+    padding: 0.5rem;
+}

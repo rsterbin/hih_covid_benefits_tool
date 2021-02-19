@@ -1,0 +1,116 @@
+.LanguageKeys .LangTable {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    border: 0.025rem dotted teal;
+    border-collapse: collapse;
+}
+
+.LanguageKeys .LangLine {
+    display: table-row;
+    border-bottom: 0.025rem dotted teal;
+    max-width: 100%;
+}
+
+.LanguageKeys .LangLine:last-child {
+    border-bottom: none;
+}
+
+.LanguageKeys .LangLine.HeaderOnly {
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    background-color: lightgray;
+}
+
+.LanguageKeys .LangLine.HandleRow {
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.LanguageKeys .LangLine.HandleRow.AMissing {
+    background-color: #ffe6e6;
+}
+
+.LanguageKeys .LangLine.HandleRow.BMissing {
+    background-color: #e6f2ff;
+}
+
+.LanguageKeys .LangLine.HandleRow.Diff {
+    background-color: #ffffe6;
+}
+
+.LanguageKeys .LangLine.Closed.BodyRow {
+    display: none;
+}
+
+.LanguageKeys .LangLine.Open.BodyRow dl {
+    font-size: 0.85rem;
+}
+
+.LanguageKeys .LangLine.Open.BodyRow dt {
+    font-weight: bold;
+}
+
+.LanguageKeys .LangLine.Open.BodyRow dd {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+}
+
+.LanguageKeys .LangLine.Open.BodyRow dd .empty {
+    color: gray;
+    font-style: italic;
+}
+
+.LanguageKeys .LangLine .ASide,
+.LanguageKeys .LangLine .BSide {
+    display: table-cell;
+    min-width: 3rem;
+    max-width: 50%;
+    padding: 0.5rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+}
+
+.LanguageKeys .LangLine .BSide {
+    border-left: 0.025rem dotted teal;
+}
+
+.LanguageKeys .LangLine.AMissing.HandleRow .ASide,
+.LanguageKeys .LangLine.BMissing.HandleRow .BSide {
+    color: gray;
+    font-style: italic;
+    font-weight: normal;
+}
+
+button.mockLink.OpenRaw,
+button.mockLink.CloseRaw {
+    text-decoration: none;
+    color: teal;
+    margin-left: 0.5rem;
+}
+
+.RawData {
+    border: 0.025rem dotted teal;
+}
+
+.RawData .RawTitle {
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    background-color: lightgray;
+    padding: 0.5rem;
+}
+
+.RawData .RawBody {
+    padding: 0.5rem;
+}
+
+.RawData .RawBody pre {
+    overflow: auto;
+    width: 100%;
+}
+

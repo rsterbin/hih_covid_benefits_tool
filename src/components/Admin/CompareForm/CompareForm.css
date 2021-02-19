@@ -1,0 +1,22 @@
+.CompareForm {
+    margin-bottom: 1rem;
+}
+
+.CompareForm .Side {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+.CompareForm .Controls {
+    text-align: center;
+}
+
+.CompareForm .IconButton {
+    background-color: #01BF90;
+    padding: 0.5rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+

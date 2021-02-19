@@ -237,6 +237,10 @@ class Api {
         return this.getAxios().post('/admin/deploy/save', data);
     }
 
+    compareDeploys(data) {
+        return this.getAxios().post('/admin/deploy/compare', data);
+    }
+
     getDeployDownloadUrl(version, uuid, token) {
         return BASE_BACKEND + '/download/deploy/' + version + '/' + uuid + '/' + token;
     }

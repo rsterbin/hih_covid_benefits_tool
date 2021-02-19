@@ -112,6 +112,28 @@ export const adminSaveNewDeploymentSucceeded = (data, info) => {
     };
 };
 
+export const adminCompareDeploymentsStarted = (avnum, bvnum) => {
+    return {
+        type: actionTypes.ADMIN_COMPARE_DEPLOYMENTS_STARTED,
+        avnum: avnum,
+        bvnum: bvnum
+    };
+};
+
+export const adminCompareDeploymentsFailed = (error) => {
+    return {
+        type: actionTypes.ADMIN_COMPARE_DEPLOYMENTS_FAILED,
+        error: error
+    };
+};
+
+export const adminCompareDeploymentsSucceeded = (data) => {
+    return {
+        type: actionTypes.ADMIN_COMPARE_DEPLOYMENTS_SUCCEEDED,
+        data: data
+    };
+};
+
 export const loadDeployments = () => {
     return (dispatch, getState) => {
         dispatch(adminFetchDeploymentsStarted());
@@ -204,7 +226,27 @@ export const saveNewDeployment = () => {
             })
             .catch(error => {
                 handleAdminApiError(dispatch, error, adminSaveNewDeploymentFailed, '53A8',
-                    'Could not replace save new deployment');
+                    'Could not save new deployment');
+            });
+    };
+};
+
+export const compareDeployments = (avnum, bvnum) => {
+    return (dispatch, getState) => {
+        dispatch(adminCompareDeploymentsStarted(avnum, bvnum));
+        const data = {
+            token: getState().admin.auth.token,
+            a_vnum: avnum,
+            b_vnum: bvnum
+        };
+        Api.compareDeploys(data)
+            .then(response => {
+                const comparison = response.data.data;
+                dispatch(adminCompareDeploymentsSucceeded(comparison));
+            })
+            .catch(error => {
+                handleAdminApiError(dispatch, error, adminCompareDeploymentsFailed, 'D342',
+                    'Could not compare deployments');
             });
     };
 };
