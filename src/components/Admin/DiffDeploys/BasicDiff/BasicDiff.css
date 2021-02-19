@@ -1,0 +1,76 @@
+.BasicDiff .DiffTable {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    border: 0.025rem dotted teal;
+    border-collapse: collapse;
+}
+
+.BasicDiff .DiffLine {
+    display: table-row;
+    border-bottom: 0.025rem dotted teal;
+    max-width: 100%;
+}
+
+.BasicDiff .DiffLine:last-child {
+    border-bottom: none;
+}
+
+.BasicDiff .DiffLine.HeaderOnly {
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    background-color: lightgray;
+}
+
+.BasicDiff .DiffLine.HandleRow {
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.BasicDiff .DiffLine.HandleRow.AMissing {
+    background-color: #e6fff2;
+}
+
+.BasicDiff .DiffLine.HandleRow.BMissing {
+    background-color: #ffe6e6;
+}
+
+.BasicDiff .DiffLine.HandleRow.Diff {
+    background-color: #ffffe6;
+}
+
+.BasicDiff .DiffLine.Closed.BodyRow {
+    display: none;
+}
+
+.BasicDiff .DiffLine .ASide,
+.BasicDiff .DiffLine .BSide {
+    display: table-cell;
+    min-width: 3rem;
+    max-width: 50%;
+    padding: 0.5rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+}
+
+.BasicDiff .DiffLine .BSide {
+    border-left: 0.025rem dotted teal;
+}
+
+.BasicDiff .DiffLine.AMissing.HandleRow .ASide,
+.BasicDiff .DiffLine.BMissing.HandleRow .BSide {
+    color: gray;
+    font-style: italic;
+    font-weight: normal;
+}
+
+button.mockLink.OpenRaw {
+    text-decoration: none;
+    color: teal;
+    margin-left: 0.5rem;
+}
+

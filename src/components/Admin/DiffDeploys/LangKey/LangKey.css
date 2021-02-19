@@ -1,0 +1,19 @@
+
+.LangKey dl {
+    font-size: 0.85rem;
+}
+
+.LangKey dt {
+    font-weight: bold;
+}
+
+.LangKey dd {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+}
+
+.LangKey dd .empty {
+    color: gray;
+    font-style: italic;
+}
+
