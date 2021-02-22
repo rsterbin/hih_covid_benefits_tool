@@ -6,12 +6,13 @@ import JsonBlock from '../../UI/JsonBlock/JsonBlock';
 
 import BasicDiff from './BasicDiff/BasicDiff';
 import LangKey from './LangKey/LangKey';
+import LangText from './LangText/LangText';
 
 const DiffDeploys = (props) => {
 
     const sections = [
         { key: 'lang_keys', title: 'Language (Keys)', component: LangKey },
-        { key: 'lang_en', title: 'Language (Text)', component: JsonBlock },
+        { key: 'lang_en', title: 'Language (Text)', component: LangText },
         { key: 'questions', title: 'Questions', component: JsonBlock },
         { key: 'conditions', title: 'Conditions', component: JsonBlock },
         { key: 'scenarios', title: 'Scenarios', component: JsonBlock },

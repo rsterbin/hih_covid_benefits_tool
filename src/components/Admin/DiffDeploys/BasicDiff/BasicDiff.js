@@ -81,10 +81,10 @@ const BasicDiff = (props) => {
                 classes.push('Open');
                 clicked = () => setOpenItem(null);
                 if (item.a_version !== null) {
-                    bodyA = <props.component data={item.a_version} full={props.full.a} />;
+                    bodyA = <props.component data_key={key} data={item.a_version} full={props.full.dataA} />;
                 }
                 if (item.b_version !== null) {
-                    bodyB = <props.component data={item.b_version} full={props.full.b} />;
+                    bodyB = <props.component data_key={key} data={item.b_version} full={props.full.dataB} />;
                 }
             } else {
                 classes.push('Closed');
