@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import RawData from '../RawData/RawData';
+import { getMatchType } from '../../../../utils/comparisons';
 
 import './BasicDiff.css';
 
@@ -63,11 +64,12 @@ const BasicDiff = (props) => {
             let bodyA = null;
             let bodyB = null;
 
-            if (item.a_version === null) {
+            const matchType = getMatchType(key, props.cmp.diff);
+            if (matchType === 'aMissing') {
                 classes.push('AMissing');
                 handleA = <span>empty</span>;
                 handleB = key;
-            } else if (item.b_version === null) {
+            } else if (matchType === 'bMissing') {
                 classes.push('BMissing');
                 handleA = key;
                 handleB = <span>empty</span>;
@@ -80,11 +82,16 @@ const BasicDiff = (props) => {
             if (key === openItem) {
                 classes.push('Open');
                 clicked = () => setOpenItem(null);
-                if (item.a_version !== null) {
-                    bodyA = <props.component data_key={key} data={item.a_version} full={props.full.dataA} />;
-                }
-                if (item.b_version !== null) {
-                    bodyB = <props.component data_key={key} data={item.b_version} full={props.full.dataB} />;
+                if (matchType === 'complexDiff') {
+                    bodyA = <props.component dataKey={key} section={props.dataA} highlight={item} full={props.full.dataA} />;
+                    bodyB = <props.component dataKey={key} section={props.dataB} highlight={item} full={props.full.dataB} />;
+                } else {
+                    if (item.a_version !== null) {
+                        bodyA = <props.component dataKey={key} data={item.a_version} full={props.full.dataA} />;
+                    }
+                    if (item.b_version !== null) {
+                        bodyB = <props.component dataKey={key} data={item.b_version} full={props.full.dataB} />;
+                    }
                 }
             } else {
                 classes.push('Closed');

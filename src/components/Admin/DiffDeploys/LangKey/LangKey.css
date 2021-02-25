@@ -1,19 +1,7 @@
-
-.LangKey dl {
-    font-size: 0.85rem;
+.LangKey .SimpleKeys dd.LangKeysHelp {
+    margin-bottom: 0;
 }
 
-.LangKey dt {
-    font-weight: bold;
+.LangKey .SimpleKeys dd.LangKeysHelp p {
+    margin-top: 0;
 }
-
-.LangKey dd {
-    margin-left: 0;
-    margin-bottom: 0.5rem;
-}
-
-.LangKey dd .empty {
-    color: gray;
-    font-style: italic;
-}
-

@@ -1,37 +1,63 @@
 import React from 'react';
 
+import SimpleKeys from '../SimpleKeys/SimpleKeys';
+import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
+
 import './LangKey.css';
 
 const LangKey = (props) => {
 
-    let help = null;
-    if (props.data.help) {
-        const md = require('markdown-it')();
-        const markup = md.render(props.data.help);
-        help = <dd key="help-text" dangerouslySetInnerHTML={{__html: markup}}></dd>
-    } else {
-        help = <dd key="help-text"><span class="empty">none</span></dd>
+    const [ mydata, highlight ] = complexOrSimpleData(props);
+    if (mydata === null) {
+        return null;
     }
 
-    let tokens = null;
-    if (props.data.token_replace) {
-        tokens = <dd key="token_replace-text">{props.data.token_replace}</dd>;
+    const addMatchType = (pair) => {
+        const mt = getMatchType(pair.key, highlight);
+        if (mt) {
+            pair.matchType = mt;
+        }
+        return pair;
+    };
+
+    let pairs = [];
+
+    pairs.push(addMatchType({
+        key: 'section',
+        label: 'Section',
+        display: mydata.section
+    }));
+
+    let help = null;
+    if (mydata.help) {
+        const md = require('markdown-it')();
+        const markup = md.render(mydata.help);
+        help = <div dangerouslySetInnerHTML={{__html: markup}}></div>;
     } else {
-        tokens = <dd key="token_replace-text"><span class="empty">none</span></dd>;
+        help = <span className="empty">none</span>;
     }
+    pairs.push(addMatchType({
+        key: 'help',
+        label: 'Help',
+        display: help,
+        addClass: 'LangKeysHelp'
+    }));
+
+    pairs.push(addMatchType({
+        key: 'token_replace',
+        label: 'Tokens that can be replaced:',
+        display: mydata.token_replace ? mydata.token_replace : <span className="empty">none</span>
+    }));
+
+    pairs.push(addMatchType({
+        key: 'markdown_allowed',
+        label: 'Is markdown allowed?',
+        display: mydata.markdown_allowed ? 'Yes' : 'No'
+    }));
 
     return (
         <div className="LangKey">
-            <dl>
-                <dt key="section-label">Section</dt>
-                <dd key="section-text">{props.data.section}</dd>
-                <dt key="help-label">Help</dt>
-                {help}
-                <dt key="token_replace-label">Tokens that can be replaced:</dt>
-                {tokens}
-                <dt key="markdown_allowed-label">Is markdown allowed?</dt>
-                <dd key="markdown_allowed-text">{props.data.markdown_allowed ? 'Yes' : 'No'}</dd>
-            </dl>
+            <SimpleKeys pairs={pairs} />
         </div>
     );
 
