@@ -14,14 +14,14 @@ const UiTabs = (props) => {
     return (
         <div className="TabsWrapper">
             <div className="TabBar" key="bar">
-                {childIndex.map(el => {
+                {childIndex.map(idx => {
                     let c = [ 'TabTitle' ];
-                    if (el.key === currentTab) {
+                    if (idx.key === currentTab) {
                         c.push('ActiveTab');
                     }
                     return (
-                        <div className={c.join(' ')} onClick={() => setCurrentTab(el.key)} key={el.key}>
-                            {el.title}
+                        <div className={c.join(' ')} onClick={() => setCurrentTab(idx.key)} key={idx.key}>
+                            {idx.title}
                         </div>
                     );
                 })}

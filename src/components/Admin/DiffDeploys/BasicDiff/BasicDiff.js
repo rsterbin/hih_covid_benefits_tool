@@ -150,14 +150,14 @@ const BasicDiff = (props) => {
                 classes.push('Open');
                 clicked = () => setOpenItem(null);
                 if (matchType === 'complexDiff') {
-                    bodyA = <props.component dataKey={key} section={props.dataA} highlight={item} full={props.full.dataA} />;
-                    bodyB = <props.component dataKey={key} section={props.dataB} highlight={item} full={props.full.dataB} />;
+                    bodyA = <props.interiorComponent dataKey={key} section={props.dataA} highlight={item} full={props.full.dataA} />;
+                    bodyB = <props.interiorComponent dataKey={key} section={props.dataB} highlight={item} full={props.full.dataB} />;
                 } else {
                     if (item.a_version !== null) {
-                        bodyA = <props.component dataKey={key} data={item.a_version} full={props.full.dataA} />;
+                        bodyA = <props.interiorComponent dataKey={key} data={item.a_version} full={props.full.dataA} />;
                     }
                     if (item.b_version !== null) {
-                        bodyB = <props.component dataKey={key} data={item.b_version} full={props.full.dataB} />;
+                        bodyB = <props.interiorComponent dataKey={key} data={item.b_version} full={props.full.dataB} />;
                     }
                 }
             } else {
