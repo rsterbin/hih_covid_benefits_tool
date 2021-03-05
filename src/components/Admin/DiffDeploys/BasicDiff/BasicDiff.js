@@ -49,6 +49,73 @@ const BasicDiff = (props) => {
             </div>
         );
 
+        // Is there an order match/diff?
+        if ('order_match' in props.cmp && 'order_diff' in props.cmp) {
+            const orderA = props.cmp.order_diff.a_version;
+            const orderB = props.cmp.order_diff.b_version;
+
+            const key = '_order_diff';
+            let clicked = null;
+            let classes = ['DiffLine', 'OrderDiff'];
+            if (props.cmp.order_match === false) {
+                if (Array.isArray(orderA) && orderA.length < 1) {
+                    classes.push('AMissing');
+                } else if (Array.isArray(orderB) && orderB.length < 1) {
+                    classes.push('BMissing');
+                } else {
+                    classes.push('Diff');
+                }
+            }
+            if (key === openItem) {
+                classes.push('Open');
+                clicked = () => setOpenItem(null);
+            } else {
+                classes.push('Closed');
+                clicked = () => setOpenItem(key);
+            }
+
+            let handleClasses = [...classes];
+            handleClasses.push('HandleRow');
+            lines.push(
+                <div className={handleClasses.join(' ')} key={key + '-handle'} onClick={clicked}>
+                    <div className="ASide">
+                        <div className="SideTitle">
+                            Order of keys
+                        </div>
+                    </div>
+                    <div className="BSide">
+                        <div className="SideTitle">
+                            Order of keys
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const order_a = props.cmp.order_diff.a_version.map((code, idx) =>
+                <li key={idx}>{code}</li>
+            );
+            const order_b = props.cmp.order_diff.b_version.map((code, idx) =>
+                <li key={idx}>{code}</li>
+            );
+
+            let bodyClasses = [...classes];
+            bodyClasses.push('BodyRow');
+            lines.push(
+                <div className={bodyClasses.join(' ')} key={key + '-body'}>
+                    <div className="ASide">
+                        <ul>
+                            {order_a}
+                        </ul>
+                    </div>
+                    <div className="BSide">
+                        <ul>
+                            {order_b}
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
         // Loop through and build row sets (one for the key, one for the body)
 
         let keys = Object.keys(props.cmp.diff);

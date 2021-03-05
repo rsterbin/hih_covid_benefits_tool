@@ -29,6 +29,11 @@
     cursor: pointer;
 }
 
+.BasicDiff .DiffLine.HandleRow.OrderDiff {
+    font-style: italic;
+    text-align: center;
+}
+
 .BasicDiff .DiffLine.HandleRow.AMissing {
     background-color: #e6fff2;
 }
