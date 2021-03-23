@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Markdown from '../../../utils/Markdown';
+
 import './TranslatedText.css';
 
 const TranslatedText = (props) => {
@@ -15,9 +17,18 @@ const TranslatedText = (props) => {
         } else {
             classes.push('HideKey');
         }
+        const english = props.translations[props.lang_key];
+        let elemEn = null;
+        if (props.markdown) {
+            const markup = Markdown.render(english || '');
+            elemEn = <div className="TranslationEn" key="en" dangerouslySetInnerHTML={{__html: markup}}></div>;
+            classes.push('Markdown');
+        } else {
+            elemEn = <span className="TranslationEn" key="en">{english}</span>;
+        }
         return (
             <div className={classes.join(' ')} onClick={() => showKey ? setShowKey(false) : setShowKey(true)}>
-                <span className="TranslationEn" key="en">{props.translations[props.lang_key]}</span>
+                {elemEn}
                 <span className="TranslationKey" key="key">{props.lang_key}</span>
             </div>
         );

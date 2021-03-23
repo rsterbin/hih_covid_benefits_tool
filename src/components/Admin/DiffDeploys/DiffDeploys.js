@@ -5,10 +5,14 @@ import AccordionItem from '../../UI/Accordion/AccordionItem/AccordionItem';
 import JsonBlock from '../../UI/JsonBlock/JsonBlock';
 
 import BasicDiff from './BasicDiff/BasicDiff';
-import ConditionsDiff from './ConditionsDiff/ConditionsDiff';
+import BenefitsDiff from './BenefitsDiff/BenefitsDiff';
 import LangKey from './LangKey/LangKey';
 import LangText from './LangText/LangText';
 import Question from './Question/Question';
+import Condition from './Condition/Condition';
+import Scenario from './Scenario/Scenario';
+
+import './DiffDeploys.css';
 
 const DiffDeploys = (props) => {
 
@@ -16,8 +20,8 @@ const DiffDeploys = (props) => {
         { key: 'lang_keys', title: 'Language (Keys)', component: BasicDiff, interior: LangKey },
         { key: 'lang_en', title: 'Language (Text)', component: BasicDiff, interior: LangText },
         { key: 'questions', title: 'Questions', component: BasicDiff, interior: Question },
-        { key: 'conditions', title: 'Conditions', component: ConditionsDiff },
-        { key: 'scenarios', title: 'Scenarios', component: BasicDiff, interior: JsonBlock },
+        { key: 'conditions', title: 'Conditions', component: BenefitsDiff, interior: Condition },
+        { key: 'scenarios', title: 'Scenarios', component: BenefitsDiff, interior: Scenario },
         { key: 'resources', title: 'Resources', component: BasicDiff, interior: JsonBlock },
     ];
 
@@ -46,9 +50,11 @@ const DiffDeploys = (props) => {
         }
     }
     return (
-        <Accordion>
-            {items}
-        </Accordion>
+        <div className="DiffDeploys">
+            <Accordion>
+                {items}
+            </Accordion>
+        </div>
     );
 };
 

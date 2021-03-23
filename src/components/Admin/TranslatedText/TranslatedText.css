@@ -30,6 +30,13 @@
     margin-left: 0.25rem;
 }
 
+.TranslatedText.HideKey.Markdown .TranslationEn:after {
+    content: '\21D2  language key';
+    font-size: 0.85em;
+    font-style: italic;
+    margin: 0;
+}
+
 .TranslatedText.KeyOnly {
     color: darkorange;
     font-style: italic;

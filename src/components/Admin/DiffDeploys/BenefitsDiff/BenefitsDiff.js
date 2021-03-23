@@ -3,12 +3,11 @@ import React from 'react';
 import Tabs from '../../../UI/Tabs/Tabs';
 import Tab from '../../../UI/Tabs/Tab/Tab';
 import BasicDiff from '../BasicDiff/BasicDiff';
-import OneCondition from './OneCondition/OneCondition';
 import { getBenefitTitle, normalizeListDiff } from '../../../../utils/comparisons';
 
-import './ConditionsDiff.css';
+import './BenefitsDiff.css';
 
-const conditionsDiff = (props) => {
+const benefitsDiff = (props) => {
     let sections = [];
     if ('diff' in props.cmp && typeof props.cmp.diff === 'object') {
         sections = Object.keys(props.cmp.diff).sort();
@@ -31,12 +30,12 @@ const conditionsDiff = (props) => {
                     dataA={dataA}
                     dataB={dataB}
                     titles={props.titles}
-                    interiorComponent={OneCondition} />
+                    interiorComponent={props.interiorComponent} />
             </Tab>
         );
     }
     return (
-        <div className="ConditionsDiff">
+        <div className="BenefitsDiff">
             <Tabs>
               {tabs}
             </Tabs>
@@ -44,4 +43,4 @@ const conditionsDiff = (props) => {
     );
 };
 
-export default conditionsDiff;
+export default benefitsDiff;

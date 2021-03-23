@@ -1,0 +1,17 @@
+.DiffDeploys .TabBar {
+    border-color: #6495ED;
+}
+
+.DiffDeploys .TabTitle {
+    color: #6495ED;
+}
+
+.DiffDeploys .TabTitle.ActiveTab {
+    background-color: #6495ED;
+    color: white;
+}
+
+.DiffDeploys .TabsBody {
+    border-color: #6495ED;
+}
+

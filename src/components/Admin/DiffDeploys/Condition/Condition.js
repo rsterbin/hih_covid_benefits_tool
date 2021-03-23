@@ -1,12 +1,12 @@
 import React from 'react';
 
-import SimpleKeys from '../../SimpleKeys/SimpleKeys';
-import InnerTable from '../../SimpleKeys/InnerTable/InnerTable';
-import { getMatchType, complexOrSimpleData } from '../../../../../utils/comparisons';
+import SimpleKeys from '../SimpleKeys/SimpleKeys';
+import InnerTable from '../SimpleKeys/InnerTable/InnerTable';
+import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
 
-import './OneCondition.css';
+import './Condition.css';
 
-const oneCondition = (props) => {
+const condition = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
     if (mydata === null) {
@@ -86,4 +86,4 @@ const oneCondition = (props) => {
 
 };
 
-export default oneCondition;
+export default condition;

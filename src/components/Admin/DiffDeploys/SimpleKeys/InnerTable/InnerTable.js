@@ -21,7 +21,7 @@ const innerTable = (props) => {
         }
     }
 
-    const rows = tdata.map(row => {
+    const rows = tdata.map((row, idx) => {
         let c = null;
         let cells = [];
         for (const col of props.columns) {
@@ -34,10 +34,10 @@ const innerTable = (props) => {
             if (typeof col.display === 'function') {
                 display = col.display(row);
             }
-            cells.push(<td className={col.class}>{display}</td>);
+            cells.push(<td className={col.class} key={col.key}>{display}</td>);
         }
         return (
-            <tr key={row.letter} className={c}>
+            <tr key={'row-' + idx} className={c}>
                 {cells}
             </tr>
         );
@@ -47,7 +47,8 @@ const innerTable = (props) => {
         <table className="InnerTable">
             <thead>
                 <tr>
-                    {props.columns.map(col => <th className={col.class}>{col.label}</th>)}
+                    {props.columns.map(col =>
+                        <th className={col.class} key={col.key}>{col.label}</th>)}
                 </tr>
             </thead>
             <tbody>
