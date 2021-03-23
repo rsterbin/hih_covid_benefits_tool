@@ -65,7 +65,7 @@ const question = (props) => {
     }));
 
     return (
-        <div className="Condition">
+        <div className="Question">
             <SimpleKeys pairs={pairs} />
         </div>
     );

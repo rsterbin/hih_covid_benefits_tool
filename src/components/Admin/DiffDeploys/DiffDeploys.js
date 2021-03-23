@@ -2,15 +2,17 @@ import React from 'react';
 
 import Accordion from '../../UI/Accordion/Accordion';
 import AccordionItem from '../../UI/Accordion/AccordionItem/AccordionItem';
-import JsonBlock from '../../UI/JsonBlock/JsonBlock';
+// import JsonBlock from '../../UI/JsonBlock/JsonBlock';
 
 import BasicDiff from './BasicDiff/BasicDiff';
 import BenefitsDiff from './BenefitsDiff/BenefitsDiff';
+import ResourcesDiff from './ResourcesDiff/ResourcesDiff';
 import LangKey from './LangKey/LangKey';
 import LangText from './LangText/LangText';
 import Question from './Question/Question';
 import Condition from './Condition/Condition';
 import Scenario from './Scenario/Scenario';
+import Resource from './Resource/Resource';
 
 import './DiffDeploys.css';
 
@@ -22,7 +24,7 @@ const DiffDeploys = (props) => {
         { key: 'questions', title: 'Questions', component: BasicDiff, interior: Question },
         { key: 'conditions', title: 'Conditions', component: BenefitsDiff, interior: Condition },
         { key: 'scenarios', title: 'Scenarios', component: BenefitsDiff, interior: Scenario },
-        { key: 'resources', title: 'Resources', component: BasicDiff, interior: JsonBlock },
+        { key: 'resources', title: 'Resources', component: ResourcesDiff, interior: Resource },
     ];
 
     let items = [];

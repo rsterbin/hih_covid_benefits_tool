@@ -17,8 +17,8 @@ const benefitsDiff = (props) => {
     const benefitsB = 'benefits' in props.full.dataB ? props.full.dataB.benefits.spec : {};
     for (const code of sections) {
         const title = getBenefitTitle(code, benefitsA, benefitsB);
-        const dataA = code in props.dataA ? props.dataA[code] : [];
-        const dataB = code in props.dataB ? props.dataB[code] : [];
+        const dataA = props.dataA && code in props.dataA ? props.dataA[code] : [];
+        const dataB = props.dataB && code in props.dataB ? props.dataB[code] : [];
         const rawDiff = props.cmp.diff[code];
         const diff = normalizeListDiff(rawDiff, dataA, dataB);
         tabs.push(
