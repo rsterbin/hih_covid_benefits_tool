@@ -86,13 +86,16 @@ export const normalizeListDiff = (rawDiff, dataA, dataB) => {
         } else if (bv === null && av !== null) {
             list = dataA;
         }
-        for (const condition of list) {
-            diff.order_diff[marker].push(condition.code);
-            diff.diff[condition.code] = {
+        if (!Array.isArray(list)) {
+            list = [ list ];
+        }
+        for (const item of list) {
+            diff.order_diff[marker].push(item.code);
+            diff.diff[item.code] = {
                 a_version: null,
                 b_version: null,
             };
-            diff.diff[condition.code][marker] = condition;
+            diff.diff[item.code][marker] = item;
         }
     }
     return diff;
