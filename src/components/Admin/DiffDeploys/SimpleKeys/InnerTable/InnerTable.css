@@ -1,0 +1,25 @@
+
+.InnerTable {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.InnerTable th {
+    font-weight: normal;
+    text-align: left;
+    text-decoration: underline;
+}
+
+.InnerTable tr.aMissing {
+    background-color: #e6fff2;
+}
+
+.InnerTable tr.bMissing {
+    background-color: #ffe6e6;
+}
+
+.InnerTable tr.simpleDiff,
+.InnerTable tr.complexDiff {
+    background-color: #ffffe6;
+}
+

@@ -1,33 +1,9 @@
-.AnswersList {
-    table-layout: fixed;
-    width: 100%;
-}
-
-.AnswersList th {
-    font-weight: normal;
-    text-align: left;
-    text-decoration: underline;
-}
-
-.AnswersList th.Letter {
+.Question .InnerTable th.Letter {
     width: 20%;
 }
 
-.AnswersList th.Letter,
-.AnswersList td.Letter {
+.Question .InnerTable th.Letter,
+.Question .InnerTable td.Letter {
     padding-left: 0.5rem;
-}
-
-.AnswersList tr.aMissing {
-    background-color: #e6fff2;
-}
-
-.AnswersList tr.bMissing {
-    background-color: #ffe6e6;
-}
-
-.AnswersList tr.simpleDiff,
-.AnswersList tr.complexDiff {
-    background-color: #ffffe6;
 }
 

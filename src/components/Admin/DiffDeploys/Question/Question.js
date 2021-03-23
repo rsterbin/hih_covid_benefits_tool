@@ -1,12 +1,13 @@
 import React from 'react';
 
 import SimpleKeys from '../SimpleKeys/SimpleKeys';
+import InnerTable from '../SimpleKeys/InnerTable/InnerTable';
 import TranslatedText from '../../TranslatedText/TranslatedText';
 import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
 
 import './Question.css';
 
-const Question = (props) => {
+const question = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
     if (mydata === null) {
@@ -44,40 +45,17 @@ const Question = (props) => {
         display: keyWithTranslation(mydata.title_lang_key)
     }));
 
-    let hl = {};
-    if (highlight !== null && 'answers' in highlight) {
-        if (getMatchType('answers', highlight) === 'complexDiff') {
-            hl = highlight.answers.diff;
-        }
-    }
-    const answers = (
-        <table className="AnswersList">
-            <thead>
-                <tr>
-                    <th className="Letter">Letter</th>
-                    <th className="Text">Answer Text</th>
-                </tr>
-            </thead>
-            <tbody>
-            {mydata.answers.map(answer => {
-                let c = null;
-                if (answer.letter in hl) {
-                    c = getMatchType(answer.letter, hl);
-                }
-                return (
-                    <tr key={answer.letter} className={c}>
-                        <td className="Letter">{answer.letter}</td>
-                        <td className="Text">{keyWithTranslation(answer.lang_key)}</td>
-                    </tr>
-                );
-            })}
-            </tbody>
-        </table>
-    );
     pairs.push(addMatchType({
         key: 'answers',
         label: 'Answers',
-        display: answers
+        display: <InnerTable keyname="answers"
+            data={mydata}
+            columns={[
+                { key: 'letter', label: 'Letter', hl: true, class: 'Letter' },
+                { key: 'lang_key', label: 'Answer Text',
+                    display: (answer) => keyWithTranslation(answer.lang_key) }
+            ]}
+            highlight={highlight} />
     }));
 
     pairs.push(addMatchType({
@@ -87,7 +65,7 @@ const Question = (props) => {
     }));
 
     return (
-        <div className="Question">
+        <div className="Condition">
             <SimpleKeys pairs={pairs} />
         </div>
     );
@@ -124,4 +102,4 @@ const Question = (props) => {
 
 };
 
-export default Question;
+export default question;
