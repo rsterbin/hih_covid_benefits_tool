@@ -61,7 +61,7 @@ const DiffDeploys = (props) => {
             {!props.comparison.match && <Accordion key="explore">
                 {items}
             </Accordion>}
-            <h3>Raw Comparison Info</h3>
+            <h3>Raw Comparison Data</h3>
             <Accordion key="raw">
                 <AccordionItem key="comparison" title="Comparison">
                     <JsonBlock data={props.comparison} collapse

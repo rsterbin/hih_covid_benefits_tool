@@ -45,6 +45,16 @@ class AdminAdvancedCompare extends Component {
         }
     };
 
+    onReset = (e) => {
+        e.preventDefault();
+        if (this.state.selectedA && this.state.selectedB) {
+            this.setState({ selectedA: null, selectedB: null }, () => {
+                this.props.history.push('/admin/advanced/compare');
+                this.props.reset();
+            });
+        }
+    };
+
     componentDidMount() {
         Logger.setComponent('Admin/Advanced/Load');
         this.init();
@@ -108,7 +118,6 @@ class AdminAdvancedCompare extends Component {
             let presets = null;
             let controls = true;
             let titles = { a: 'None', b: 'None'};
-            let statement = null;
 
             if (this.getVersionA() && this.getVersionB()) {
                 presets = {a: this.getVersionA(), b: this.getVersionB()};
@@ -128,12 +137,6 @@ class AdminAdvancedCompare extends Component {
                 }
             }
 
-            if (controls) {
-                statement = <p>Use the form below to choose which versions you want to compare:</p>;
-            } else {
-                statement = <p>Compare two deployed versions:</p>;
-            }
-
             const form = (
                 <CompareForm
                     current={{ a: this.state.selectedA, b: this.state.selectedB }}
@@ -142,7 +145,8 @@ class AdminAdvancedCompare extends Component {
                     controls={controls}
                     changedA={this.onChangeA}
                     changedB={this.onChangeB}
-                    submit={this.onSubmit} />
+                    submit={this.onSubmit}
+                    reset={this.onReset} />
             );
 
             let result = null;
@@ -163,7 +167,6 @@ class AdminAdvancedCompare extends Component {
 
             body = (
                 <Aux>
-                    {statement}
                     {form}
                     {result}
                 </Aux>
@@ -199,6 +202,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchList: () => dispatch(actions.loadDeployments()),
         compare: (avnum, bvnum) => dispatch(actions.compareDeployments(avnum, bvnum)),
+        reset: () => dispatch(actions.resetCompareDeployments()),
     };
 };
 

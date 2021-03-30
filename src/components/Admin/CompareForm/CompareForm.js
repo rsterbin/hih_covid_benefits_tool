@@ -1,24 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import IconButton from '../../UI/IconButton/IconButton';
 
 import './CompareForm.css';
 
 const CompareForm = (props) => {
-    let buttons = null;
-    let labelA = null;
+    const buttons = [];
     let selectA = null;
-    let labelB = null;
     let selectB = null;
+    let statement = null;
 
+    let titleA = null;
+    let titleB = null;
     if (props.presets !== null) {
         for (const opt of props.options) {
             if (opt.value === props.presets.a) {
-                labelA = <h5>{opt.text}</h5>;
+                titleA = opt.text;
             }
             if (opt.value === props.presets.b) {
-                labelB = <h5>{opt.text}</h5>;
+                titleB = opt.text;
             }
         }
     }
@@ -46,30 +46,45 @@ const CompareForm = (props) => {
                 {options}
             </select>
         );
-        buttons = (
-            <IconButton icon="fas fa-balance-scale-right"
+        buttons.push(
+            <IconButton key="compare"
+                icon="fas fa-balance-scale-right"
                 title="Compare"
                 append_text="Compare"
                 clicked={props.submit} />
         );
+        statement = <p>Select two versions to compare:</p>;
     } else {
-        buttons = (
-            <Link to="/admin/advanced/compare">reset</Link>
+        if (props.presets !== null) {
+            selectA = <h5>{titleA}</h5>;
+            selectB = <h5>{titleB}</h5>;
+        }
+    }
+
+    if (props.presets !== null) {
+        statement = <p>Currently comparing <strong>{titleA}</strong> to <strong>{titleB}</strong>...</p>;
+        buttons.push(
+            <IconButton key="reset"
+                icon_type="refresh"
+                title="Reset"
+                append_text="Reset"
+                clicked={props.reset} />
         );
     }
 
     return (
         <div className="CompareForm">
+            <div className="Statement">
+                {statement}
+            </div>
             <div className="Side SideA">
-                {labelA}
                 {selectA}
             </div>
             <div className="Side SideB">
-                {labelB}
                 {selectB}
             </div>
             <div className="Controls">
-              {buttons}
+                {buttons}
             </div>
         </div>
     );

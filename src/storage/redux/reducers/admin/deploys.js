@@ -257,3 +257,17 @@ export const adminCompareDeploymentsSucceeded = (state, action) => {
     });
 };
 
+export const adminCompareDeploymentsReset = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            compare: updateObject(state.deploys.compare, {
+                avnum: null,
+                bvnum: null,
+                processing: false,
+                error: null,
+                data: null
+            })
+        })
+    }), true);
+};
+

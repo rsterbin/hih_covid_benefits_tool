@@ -134,6 +134,12 @@ export const adminCompareDeploymentsSucceeded = (data) => {
     };
 };
 
+export const adminCompareDeploymentsReset = () => {
+    return {
+        type: actionTypes.ADMIN_COMPARE_DEPLOYMENTS_RESET
+    };
+};
+
 export const loadDeployments = () => {
     return (dispatch, getState) => {
         dispatch(adminFetchDeploymentsStarted());
@@ -248,6 +254,12 @@ export const compareDeployments = (avnum, bvnum) => {
                 handleAdminApiError(dispatch, error, adminCompareDeploymentsFailed, 'D342',
                     'Could not compare deployments');
             });
+    };
+};
+
+export const resetCompareDeployments = () => {
+    return (dispatch, getState) => {
+        dispatch(adminCompareDeploymentsReset());
     };
 };
 

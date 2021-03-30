@@ -20,6 +20,7 @@ export {
     replaceDatabaseWithCurrentDeployment,
     saveNewDeployment,
     compareDeployments,
+    resetCompareDeployments,
     loadLangList,
     loadLangInfo,
     adminHoldLangEditingText,

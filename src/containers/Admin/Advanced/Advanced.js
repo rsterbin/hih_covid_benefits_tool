@@ -29,6 +29,7 @@ class AdminAdvanced extends Component {
                     <ul>
                         <li><Link to="/admin/advanced/save">Save Deploy</Link></li>
                         <li><Link to="/admin/advanced">List Deployments</Link></li>
+                        <li><Link to="/admin/advanced/compare">Compare Two Deployments</Link></li>
                         <li><Link to="/admin/advanced/replace">Replace Database</Link></li>
                     </ul>
                 </div>

@@ -65,6 +65,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_STARTED: return deploys.adminCompareDeploymentsStarted(state, action);
         case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_FAILED: return deploys.adminCompareDeploymentsFailed(state, action);
         case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_SUCCEEDED: return deploys.adminCompareDeploymentsSucceeded(state, action);
+        case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_RESET: return deploys.adminCompareDeploymentsReset(state, action);
 
         // Language
         case actionTypes.ADMIN_FETCH_LANG_LIST_STARTED: return language.adminFetchLangListStarted(state, action);
