@@ -1,0 +1,24 @@
+.PieChart .Legend {
+    display: table;
+}
+
+.PieChart .Legend .Item {
+    display: table-row;
+}
+
+.PieChart .Legend .Item .Cell {
+    display: table-cell;
+    padding-bottom: 0.5rem;
+}
+
+.PieChart .Legend .Item .Cell.Dot .InnerDot {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+}
+
+.PieChart .Legend .Item .Cell.Label {
+    padding-left: 0.5rem;
+}
+
