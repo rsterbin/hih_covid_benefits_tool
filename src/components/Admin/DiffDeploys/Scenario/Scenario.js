@@ -2,42 +2,29 @@ import React from 'react';
 
 import SimpleKeys from '../SimpleKeys/SimpleKeys';
 import InnerTable from '../SimpleKeys/InnerTable/InnerTable';
-import TranslatedText from '../../TranslatedText/TranslatedText';
-import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
+import { complexOrSimpleData, getTranslationWrapper, getPairWrapper } from '../../../../utils/comparisons';
 
 const scenario = (props) => {
 
-    const [ mydata, highlight ] = complexOrSimpleData(props);
+    const [ mydata, highlight ] = complexOrSimpleData(props, 'lang_key_result');
+    console.log('scenario:props', props);
+    console.log('scenario:mydata', mydata);
     if (mydata === null) {
         return null;
     }
 
-    let lang_text = {};
-    if ('lang_en' in props.full
-        && typeof props.full.lang_en === 'object') {
-        lang_text = props.full.lang_en;
-    }
-    const keyWithTranslation = (lang_key) => {
-        return <TranslatedText lang_key={lang_key} translations={lang_text} markdown />
-    };
-
-    const addMatchType = (pair) => {
-        const mt = getMatchType(pair.key, highlight);
-        if (mt) {
-            pair.matchType = mt;
-        }
-        return pair;
-    };
+    const translate = getTranslationWrapper(props.full, true); // use markdown
+    const wrap = getPairWrapper(highlight, mydata);
 
     let pairs = [];
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'enabled',
         label: 'Enabled?',
         display: mydata.enabled ? 'Yes' : 'No'
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'conditions',
         label: 'Conditions',
         display: <InnerTable keyname="conditions"
@@ -53,22 +40,22 @@ const scenario = (props) => {
             highlight={highlight} />
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'help',
         label: 'Help',
         display: <p dangerouslySetInnerHTML={{__html: mydata.help.split(/\n/).join('<br />\n')}}></p>,
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'lang_key_result',
         label: 'Short response',
-        display: keyWithTranslation(mydata.lang_key_result)
+        display: translate(mydata.lang_key_result)
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'lang_key_expanded',
         label: 'Expanded response',
-        display: keyWithTranslation(mydata.lang_key_expanded)
+        display: translate(mydata.lang_key_expanded)
     }));
 
     return (

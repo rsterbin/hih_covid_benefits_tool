@@ -24,7 +24,7 @@ const resourcesDiff = (props) => {
         const dataA = props.dataA && code in props.dataA.benefits ? props.dataA.benefits[code] : [];
         const dataB = props.dataB && code in props.dataB.benefits ? props.dataB.benefits[code] : [];
         const rawDiff = props.cmp.diff.benefits.diff[code];
-        const diff = normalizeListDiff(rawDiff, dataA, dataB);
+        const diff = normalizeListDiff(rawDiff, dataA, dataB, props.listKey);
         tabs.push(
             <Tab key={code} title={title}>
                 <h3>{title}</h3>

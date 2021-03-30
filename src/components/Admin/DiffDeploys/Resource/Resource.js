@@ -1,54 +1,42 @@
 import React from 'react';
 
 import SimpleKeys from '../SimpleKeys/SimpleKeys';
-import TranslatedText from '../../TranslatedText/TranslatedText';
-import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
+import { complexOrSimpleData, getTranslationWrapper, getPairWrapper } from '../../../../utils/comparisons';
 
 const resource = (props) => {
 
-    const [ mydata, highlight ] = complexOrSimpleData(props);
+    const [ mydata, highlight ] = complexOrSimpleData(props, 'code');
+    console.log('resource:props', props);
+    console.log('resource:mydata', mydata);
     if (mydata === null) {
         return null;
     }
 
-    let lang_text = {};
-    if ('lang_en' in props.full
-        && typeof props.full.lang_en === 'object') {
-        lang_text = props.full.lang_en;
-    }
-    const keyWithTranslation = (lang_key, markdown) => {
-        return <TranslatedText lang_key={lang_key} translations={lang_text} markdown={markdown} />
-    };
-
-    const addMatchType = (pair) => {
-        const mt = getMatchType(pair.key, highlight);
-        if (mt) {
-            pair.matchType = mt;
-        }
-        return pair;
-    };
+    const translate = getTranslationWrapper(props.full);
+    const translate_md = getTranslationWrapper(props.full, true);
+    const wrap = getPairWrapper(highlight, mydata);
 
     let pairs = [];
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'code',
         label: 'Code (auto-generated)',
         display: mydata.code
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'text',
         label: 'Link Text',
-        display: keyWithTranslation(mydata.text, false)
+        display: translate(mydata.text)
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'desc',
         label: 'Link Description',
-        display: keyWithTranslation(mydata.desc, true)
+        display: translate_md(mydata.desc)
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'link',
         label: 'URL',
         display: mydata.link.en

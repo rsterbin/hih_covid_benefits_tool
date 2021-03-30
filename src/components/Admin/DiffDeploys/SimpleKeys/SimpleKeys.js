@@ -23,8 +23,8 @@ const simpleKeys = (props) => {
         }
         return (
             <Aux key={pair.key + '-trans'}>
-                <dt key={pair.key + '-label'} className={c}>{pair.label}</dt>
-                <dd key={pair.key + '-value'} className={c}>{pair.display}</dd>
+                <dt key={pair.key + '-label'} className={c.join(' ')}>{pair.label}</dt>
+                <dd key={pair.key + '-value'} className={c.join(' ')}>{pair.display}</dd>
             </Aux>
         )
     });

@@ -1,28 +1,24 @@
 import React from 'react';
 
 import SimpleKeys from '../SimpleKeys/SimpleKeys';
-import { getMatchType, complexOrSimpleData } from '../../../../utils/comparisons';
+import { complexOrSimpleData, getPairWrapper } from '../../../../utils/comparisons';
 
 import './LangKey.css';
 
 const LangKey = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
+    console.log('langKey:props', props);
+    console.log('langKey:mydata', mydata);
     if (mydata === null) {
         return null;
     }
 
-    const addMatchType = (pair) => {
-        const mt = getMatchType(pair.key, highlight);
-        if (mt) {
-            pair.matchType = mt;
-        }
-        return pair;
-    };
+    const wrap = getPairWrapper(highlight, mydata);
 
     let pairs = [];
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'section',
         label: 'Section',
         display: mydata.section
@@ -36,20 +32,20 @@ const LangKey = (props) => {
     } else {
         help = <span className="empty">none</span>;
     }
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'help',
         label: 'Help',
         display: help,
         addClass: 'LangKeysHelp'
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'token_replace',
         label: 'Tokens that can be replaced:',
         display: mydata.token_replace ? mydata.token_replace : <span className="empty">none</span>
     }));
 
-    pairs.push(addMatchType({
+    pairs.push(wrap({
         key: 'markdown_allowed',
         label: 'Is markdown allowed?',
         display: mydata.markdown_allowed ? 'Yes' : 'No'
