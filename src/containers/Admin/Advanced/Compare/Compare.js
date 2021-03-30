@@ -37,7 +37,12 @@ class AdminAdvancedCompare extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.compare();
+        if (this.state.selectedA && this.state.selectedB) {
+            const a = this.state.selectedA;
+            const b = this.state.selectedB;
+            this.props.history.push('/admin/advanced/compare/' + a + '/' + b);
+            this.props.compare(a, b);
+        }
     };
 
     componentDidMount() {
