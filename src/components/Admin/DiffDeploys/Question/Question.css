@@ -1,0 +1,9 @@
+.Question .InnerTable th.Letter {
+    width: 20%;
+}
+
+.Question .InnerTable th.Letter,
+.Question .InnerTable td.Letter {
+    padding-left: 0.5rem;
+}
+

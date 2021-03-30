@@ -9,8 +9,14 @@ const response = (props) => {
     let i = 0;
     let answer = props.answerSections.map((section) => {
         ++i;
+        let add_class = '';
+        if (section.type === 'benefit') {
+            add_class = 'Benefit';
+        } else if (section.type === 'placeholder') {
+            add_class = 'Placeholder';
+        }
         return <ExpandedSection key={i}
-            add_class={section.type === 'benefit' ? 'Benefit' : ''}
+            add_class={add_class}
             lang={props.lang}
             {...section} />;
     });

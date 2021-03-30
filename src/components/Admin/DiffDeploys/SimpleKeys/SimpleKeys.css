@@ -1,0 +1,33 @@
+.SimpleKeys {
+    font-size: 0.85rem;
+    overflow: auto;
+}
+
+.SimpleKeys dt {
+    font-weight: bold;
+    padding: 0.25rem;
+}
+
+.SimpleKeys dt.Highlight.MissingA {
+    background-color: #e6fff2;
+}
+
+.SimpleKeys dt.Highlight.MissingB {
+    background-color: #ffe6e6;
+}
+
+.SimpleKeys dt.Highlight.Diff {
+    background-color: #ffffe6;
+}
+
+.SimpleKeys dd {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+}
+
+.SimpleKeys dd .empty {
+    color: gray;
+    font-style: italic;
+}
+

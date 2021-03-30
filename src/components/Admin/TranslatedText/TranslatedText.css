@@ -1,0 +1,51 @@
+
+.TranslatedText .TranslationKey {
+    color: darkorange;
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+    font-style: italic;
+    font-size: 0.85em;
+}
+
+.TranslatedText .TranslationKey:before {
+    color: darkorange;
+    content: '\21D2  language key:';
+    font-weight: bold;
+    margin-right: 0.25rem;
+}
+
+.TranslatedText.ShowKey .TranslationKey {
+    display: block;
+}
+
+.TranslatedText.HideKey .TranslationKey {
+    display: none;
+}
+
+.TranslatedText.HideKey .TranslationEn:after {
+    content: 'tr';
+    color: darkorange;
+    font-size: 0.5rem;
+    font-weight: bold;
+    margin-left: 0.25rem;
+}
+
+.TranslatedText.HideKey.Markdown .TranslationEn:after {
+    content: '\21D2  language key';
+    font-size: 0.85em;
+    font-style: italic;
+    margin: 0;
+}
+
+.TranslatedText.KeyOnly {
+    color: darkorange;
+    font-style: italic;
+}
+
+.TranslatedText.KeyOnly:after {
+    content: '(untranslated)';
+    color: darkorange;
+    font-size: 0.5rem;
+    font-weight: bold;
+    margin-left: 0.25rem;
+}
