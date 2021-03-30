@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ResponsivePie } from '@nivo/pie';
 
 import Block from '../../../components/Admin/DashboardBlock/DashboardBlock';
+import Table from '../../../components/UI/Table/Table';
+import PieChart from '../../../components/Admin/Charts/Pie/Pie';
 import Logger from '../../../utils/Logger';
 import * as actions from '../../../storage/redux/actions/index';
+import { statsToChartData } from '../../../utils/dashboard';
 
 class AdminDashboard extends Component {
-
-    responses_headers = [
-        { key: 'date', title: 'Date' },
-        { key: 'type', title: 'Employee Type' },
-        { key: 'agency', title: 'Agency?' },
-        { key: 'books', title: 'On the Books?' },
-    ];
-
-    contacts_headers = [
-        { key: 'email', title: 'Email' },
-        { key: 'zip', title: 'ZIP Code' },
-    ];
 
     componentDidMount() {
         Logger.setComponent('Admin/Dashboard');
         this.props.fetchResponses();
         this.props.fetchContacts();
+        this.props.fetchStats('books');
+        this.props.fetchStats('type');
     }
 
     refreshResponses = () => {
@@ -34,70 +26,94 @@ class AdminDashboard extends Component {
         this.props.fetchContacts();
     };
 
+    refreshStatsBooks = () => {
+        this.props.fetchStats('books');
+    };
+
+    refreshStatsType = () => {
+        this.props.fetchStats('type');
+    };
+
     render() {
         Logger.setComponent('Admin/Dashboard');
-        const data = [
-            {
-                id: "YES, IN COMPLIANCE",
-                label: "YES, IN COMPLIANCE",
-                value: 37,
-            },
-            {
-                id: "YES, PARTIALLY",
-                label: "YES, PARTIALLY",
-                value: 10
-            },
-            {
-                id: "NO",
-                label: "NO",
-                value: 20,
-            },
-        ];
+
+        const blocks = [];
+
+        // Responses
+        let responses = null;
+        if (this.props.responses.loaded && this.props.responses.data.length > 0) {
+            const rcols = [
+                { key: 'date', title: 'Date' },
+                { key: 'type', title: 'Employee Type' },
+                { key: 'agency', title: 'Agency?' },
+                { key: 'books', title: 'On the Books?' },
+            ];
+            responses = <Table size="tiny" rows={this.props.responses.data} cols={rcols} />;
+        }
+        blocks.push(<Block
+            key="responses"
+            title="Recent Responses"
+            loaded={this.props.responses.loaded}
+            error={this.props.responses.error}
+            refresh={this.refreshResponses}
+            more="/admin/responses">
+            {responses}
+        </Block>);
+
+        // Contacts
+        let contacts = null;
+        if (this.props.contacts.loaded && this.props.contacts.data.length > 0) {
+            const ccols = [
+                { key: 'email', title: 'Email' },
+                { key: 'zip', title: 'ZIP Code' },
+            ];
+            contacts = <Table size="tiny" rows={this.props.contacts.data} cols={ccols} />;
+        }
+        blocks.push(<Block
+            title="Recent Contacts"
+            key="contacts"
+            loaded={this.props.contacts.loaded}
+            error={this.props.contacts.error}
+            refresh={this.refreshContacts}
+            more="/admin/contacts">
+            {contacts}
+        </Block>);
+
+        // On the Books chart
+        let bchart = null;
+        if (this.props.stats.books.loaded && Object.keys(this.props.stats.books.data).length > 0) {
+            bchart = (
+                <PieChart data={statsToChartData(this.props.stats.books.data)} />
+            );
+        }
+        blocks.push(<Block
+            title="On the Books"
+            key="chart_books"
+            loaded={this.props.stats.books.loaded}
+            error={this.props.stats.books.error}
+            refresh={this.refreshStatsBooks}>
+            {bchart}
+        </Block>);
+
+        // Employee Type chart
+        let tchart = null;
+        if (this.props.stats.type.loaded && Object.keys(this.props.stats.type.data).length > 0) {
+            tchart = (
+                <PieChart data={statsToChartData(this.props.stats.type.data)} />
+            );
+        }
+        blocks.push(<Block
+            title="Employee Type"
+            key="chart_type"
+            loaded={this.props.stats.type.loaded}
+            error={this.props.stats.type.error}
+            refresh={this.refreshStatsType}>
+            {tchart}
+        </Block>);
+
         return (
             <div className="Dashboard">
-                <Block
-                    title="Recent Responses"
-                    loaded={this.props.responses.loaded}
-                    error={this.props.responses.error}
-                    refresh={this.refreshResponses}
-                    rows={this.props.responses.data}
-                    cols={this.responses_headers}
-                    more="/admin/responses" />
-                <Block
-                    title="Recent Contacts"
-                    loaded={this.props.contacts.loaded}
-                    error={this.props.contacts.error}
-                    refresh={this.refreshContacts}
-                    rows={this.props.contacts.data}
-                    cols={this.contacts_headers}
-                    more="/admin/contacts" />
-                <div className="DashboardBlock">
-                    <h4>On the Books</h4>
-                    <div className="DashboardBlockBody Loaded" style={{ height: '250px' }}>
-                        <ResponsivePie data={data}
-                            margin={{ top: 20, right: 40, bottom: 80, left: 40 }}
-                            innerRadius={0.5}
-                            padAngle={0.7}
-                            cornerRadius={3}
-                            colors={{ scheme: 'paired' }}
-                            borderWidth={0.5}
-                            borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
-                            enableRadialLabels={false}
-                            legends={[
-                                {
-                                    anchor: 'bottom',
-                                    direction: 'column',
-                                    translateX: -80,
-                                    translateY: 80,
-                                    itemsSpacing: 0,
-                                    itemWidth: 100,
-                                    itemHeight: 18,
-                                    symbolShape: 'circle',
-                                }
-                            ]}
-                            />
-                    </div>
-                </div>
+                {blocks}
             </div>
         );
     }
@@ -106,14 +122,16 @@ class AdminDashboard extends Component {
 const mapStateToProps = state => {
     return {
         responses: state.admin.dashboard.responses,
-        contacts: state.admin.dashboard.contacts
+        contacts: state.admin.dashboard.contacts,
+        stats: state.admin.dashboard.stats
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchResponses: () => dispatch(actions.loadDashboardResponses()),
-        fetchContacts: () => dispatch(actions.loadDashboardContacts())
+        fetchContacts: () => dispatch(actions.loadDashboardContacts()),
+        fetchStats: (key) => dispatch(actions.loadDashboardStats(key))
     };
 };
 

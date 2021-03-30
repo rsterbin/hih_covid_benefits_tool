@@ -72,6 +72,29 @@ export const adminDashContactsSucceeded = (data) => {
     };
 }
 
+export const adminDashStatsStarted = (key) => {
+    return {
+        type: actionTypes.ADMIN_DASH_STATS_STARTED,
+        key: key
+    };
+}
+
+export const adminDashStatsFailed = (key, error) => {
+    return {
+        type: actionTypes.ADMIN_DASH_STATS_FAILED,
+        key: key,
+        error: error
+    };
+}
+
+export const adminDashStatsSucceeded = (key, data) => {
+    return {
+        type: actionTypes.ADMIN_DASH_STATS_SUCCEEDED,
+        key: key,
+        data: data
+    };
+}
+
 export const loadDashboardContacts = () => {
     return (dispatch, getState) => {
         dispatch(adminDashContactsStarted());
@@ -99,6 +122,28 @@ export const loadDashboardContacts = () => {
                     Logger.alert(msg, { api_error: Api.parseAxiosError(error) });
                 }
                 dispatch(adminDashContactsFailed(msg));
+            });
+    };
+};
+
+export const loadDashboardStats = (key) => {
+    return (dispatch, getState) => {
+        dispatch(adminDashStatsStarted(key));
+        const data = { token: getState().admin.auth.token };
+        Api.getStats(key, data)
+            .then((response) => {
+                const stats = response.data.stats ? response.data.stats : {};
+                dispatch(adminDashStatsSucceeded(key, stats));
+            })
+            .catch(error => {
+                const msg = 'Could not fetch "' + key + '" stats';
+                if (!error.isAxiosError) {
+                    const lcode = '12C4';
+                    Logger.alert('Unknown error', { location_code: lcode, error: error });
+                } else {
+                    Logger.alert(msg, { api_error: Api.parseAxiosError(error) });
+                }
+                dispatch(adminDashStatsFailed(key, msg));
             });
     };
 };

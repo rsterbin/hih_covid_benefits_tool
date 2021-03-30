@@ -11,6 +11,18 @@ export const getInitialState = () => {
             loaded: false,
             error: null,
             data: null
+        },
+        stats: {
+            books: {
+                loaded: false,
+                error: null,
+                data: null
+            },
+            type: {
+                loaded: false,
+                error: null,
+                data: null
+            }
         }
     };
 };
@@ -82,6 +94,48 @@ export const adminDashContactsSucceeded = (state, action) => {
                 loaded: true,
                 error: null,
                 data: action.data
+            })
+        })
+    });
+};
+
+export const adminDashStatsStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        dashboard: updateObject(state.dashboard, {
+            stats: updateObject(state.dashboard.stats, {
+                [action.key]: updateObject(state.dashboard.stats[action.key], {
+                    loaded: false,
+                    error: null,
+                    data: null
+                })
+            })
+        })
+    }), true);
+};
+
+export const adminDashStatsFailed = (state, action) => {
+    return updateObject(state, {
+        dashboard: updateObject(state.dashboard, {
+            stats: updateObject(state.dashboard.stats, {
+                [action.key]: updateObject(state.dashboard.stats[action.key], {
+                    loaded: false,
+                    error: action.error,
+                    data: null
+                })
+            })
+        })
+    });
+};
+
+export const adminDashStatsSucceeded = (state, action) => {
+    return updateObject(state, {
+        dashboard: updateObject(state.dashboard, {
+            stats: updateObject(state.dashboard.stats, {
+                [action.key]: updateObject(state.dashboard.stats[action.key], {
+                    loaded: true,
+                    error: null,
+                    data: action.data
+                })
             })
         })
     });

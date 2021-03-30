@@ -153,6 +153,10 @@ class Api {
         return this.getAxios().post('/admin/contacts/recent', data);
     }
 
+    getStats(key, data) {
+        return this.getAxios().post('/admin/responses/stats/' + key, data);
+    }
+
     getAllResponses(data) {
         return this.getAxios().post('/admin/responses/all', data);
     }

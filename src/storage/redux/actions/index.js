@@ -14,6 +14,7 @@ export {
     loadContactsRaw,
     loadDashboardResponses,
     loadDashboardContacts,
+    loadDashboardStats,
     loadDeployments,
     loadDeployment,
     overloadDeployment,

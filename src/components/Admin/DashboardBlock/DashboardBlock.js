@@ -4,7 +4,6 @@ import Spinner from '../../UI/Spinner/Spinner';
 import IconButton from '../../UI/IconButton/IconButton';
 import IconLink from '../../UI/IconLink/IconLink';
 import Message from '../../UI/Message/Message';
-import Table from '../../UI/Table/Table';
 
 import './DashboardBlock.css';
 
@@ -22,10 +21,10 @@ const dashboardBlock = (props) => {
         }
         let data = null;
         let more = null;
-        if (props.rows.length > 0) {
+        if (props.children) {
             data = (
                 <div className="YesData">
-                    <Table size="tiny" rows={props.rows} cols={props.cols} />
+                    {props.children}
                 </div>
             );
             if (props.more) {

@@ -45,6 +45,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_DASH_CONTACTS_STARTED: return dashboard.adminDashContactsStarted(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_FAILED: return dashboard.adminDashContactsFailed(state, action);
         case actionTypes.ADMIN_DASH_CONTACTS_SUCCEEDED: return dashboard.adminDashContactsSucceeded(state, action);
+        case actionTypes.ADMIN_DASH_STATS_STARTED: return dashboard.adminDashStatsStarted(state, action);
+        case actionTypes.ADMIN_DASH_STATS_FAILED: return dashboard.adminDashStatsFailed(state, action);
+        case actionTypes.ADMIN_DASH_STATS_SUCCEEDED: return dashboard.adminDashStatsSucceeded(state, action);
 
         // Deploys
         case actionTypes.ADMIN_FETCH_DEPLOYMENTS_STARTED: return deploys.adminFetchDeploymentsStarted(state, action);
