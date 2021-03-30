@@ -9,8 +9,6 @@ import './Question.css';
 const question = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
-    console.log('question:props', props);
-    console.log('question:mydata', mydata);
     if (mydata === null) {
         return null;
     }

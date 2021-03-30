@@ -6,8 +6,6 @@ import { complexOrSimpleData, getPairWrapper } from '../../../../utils/compariso
 const benefit = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
-    console.log('benefit:props', props);
-    console.log('benefit:mydata', mydata);
     if (mydata === null) {
         return null;
     }

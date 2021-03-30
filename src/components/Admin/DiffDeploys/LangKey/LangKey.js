@@ -8,8 +8,6 @@ import './LangKey.css';
 const LangKey = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props);
-    console.log('langKey:props', props);
-    console.log('langKey:mydata', mydata);
     if (mydata === null) {
         return null;
     }

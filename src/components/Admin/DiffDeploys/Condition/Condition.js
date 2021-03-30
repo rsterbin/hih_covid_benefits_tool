@@ -9,8 +9,6 @@ import './Condition.css';
 const condition = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props, 'code');
-    console.log('condition:props', props);
-    console.log('condition:mydata', mydata);
     if (mydata === null) {
         return null;
     }

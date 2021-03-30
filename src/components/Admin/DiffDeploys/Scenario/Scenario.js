@@ -7,8 +7,6 @@ import { complexOrSimpleData, getTranslationWrapper, getPairWrapper } from '../.
 const scenario = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props, 'lang_key_result');
-    console.log('scenario:props', props);
-    console.log('scenario:mydata', mydata);
     if (mydata === null) {
         return null;
     }

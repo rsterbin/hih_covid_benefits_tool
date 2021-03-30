@@ -6,8 +6,6 @@ import { complexOrSimpleData, getTranslationWrapper, getPairWrapper } from '../.
 const resource = (props) => {
 
     const [ mydata, highlight ] = complexOrSimpleData(props, 'code');
-    console.log('resource:props', props);
-    console.log('resource:mydata', mydata);
     if (mydata === null) {
         return null;
     }
