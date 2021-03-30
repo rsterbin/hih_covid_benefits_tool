@@ -1,0 +1,9 @@
+.Condition .InnerTable th.Letter {
+    width: 20%;
+}
+
+.Condition .InnerTable th.Letter,
+.Condition .InnerTable td.Letter {
+    padding-left: 0.5rem;
+}
+

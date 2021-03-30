@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { connect } from 'react-redux';
 
@@ -23,11 +23,8 @@ class AdminAdvancedList extends Component {
         { key: 'deploy_date', title: 'Created At' },
         { key: 'download', title: 'Download' },
         { key: 'load', title: 'Revert' },
+        { key: 'compare', title: 'Compare' },
     ];
-
-    clickable = {
-        load: (row) => { this.revertToRow(row); }
-    };
 
     refresh = () => {
         this.props.fetchDeploys();
@@ -36,10 +33,6 @@ class AdminAdvancedList extends Component {
     componentDidMount() {
         Logger.setComponent('Admin/Advanced/List');
         this.props.fetchDeploys();
-    }
-
-    revertToRow(row) {
-        this.props.history.push('/admin/advanced/load/' + row.id);
     }
 
     render() {
@@ -56,8 +49,18 @@ class AdminAdvancedList extends Component {
                 const fname = 'hnct-' + item.version_num + '.zip';
                 const download = (
                     <a className="DownloadDeploy" download={fname} href={url}>
-                        <i className="fas fa-download" title="download"></i>
+                        <i className="fas fa-download" title="Download this version"></i>
                     </a>
+                );
+                const load = (
+                    <Link to={'/admin/advanced/load/' + item.id}>
+                        <i className="fas fa-history" title="Revert to this version"></i>
+                    </Link>
+                );
+                const compare = (
+                    <Link to={'/admin/advanced/compare/' + item.version_num + '/admin'}>
+                        <i className="fas fa-balance-scale-right" title="Compare to the current state of the admin"></i>
+                    </Link>
                 );
                 return {
                     id: item.deployment_id,
@@ -65,18 +68,16 @@ class AdminAdvancedList extends Component {
                     uuid: item.uuid,
                     deploy_date: formatted,
                     download: download,
-                    load: <i className="fas fa-history" title="revert"></i>
+                    load: load,
+                    compare: compare,
                 };
             });
             body = (
                 <div className="DeployList">
                     <div className="RefreshWrapper">
-                    <IconButton icon_type="refresh"
-                        clicked={this.refresh} />
+                    <IconButton icon_type="refresh" clicked={this.refresh} />
                     </div>
-                    <Table rows={rows}
-                        cols={this.cols}
-                        clickable={this.clickable} />
+                    <Table rows={rows} cols={this.cols} />
                 </div>
             );
         } else {

@@ -27,6 +27,13 @@ export const getInitialState = () => {
             data: null,
             info: null,
             error: null
+        },
+        compare: {
+            avnum: null,
+            bvnum: null,
+            processing: false,
+            error: null,
+            data: null,
         }
     };
 };
@@ -210,5 +217,57 @@ export const adminSaveNewDeploymentSucceeded = (state, action) => {
             })
         })
     });
+};
+
+export const adminCompareDeploymentsStarted = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            compare: updateObject(state.deploys.compare, {
+                avnum: action.avnum,
+                bvnum: action.bvnum,
+                processing: true,
+                error: null,
+                data: null
+            })
+        })
+    }), true);
+};
+
+export const adminCompareDeploymentsFailed = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            compare: updateObject(state.deploys.compare, {
+                processing: false,
+                error: action.error,
+                data: null
+            })
+        })
+    });
+};
+
+export const adminCompareDeploymentsSucceeded = (state, action) => {
+    return updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            compare: updateObject(state.deploys.compare, {
+                processing: false,
+                error: null,
+                data: action.data
+            })
+        })
+    });
+};
+
+export const adminCompareDeploymentsReset = (state, action) => {
+    return updateAdminActivity(updateObject(state, {
+        deploys: updateObject(state.deploys, {
+            compare: updateObject(state.deploys.compare, {
+                avnum: null,
+                bvnum: null,
+                processing: false,
+                error: null,
+                data: null
+            })
+        })
+    }), true);
 };
 

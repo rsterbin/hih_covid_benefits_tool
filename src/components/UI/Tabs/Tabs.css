@@ -1,0 +1,30 @@
+.TabsWrapper {
+    padding: 0.5rem 0;
+}
+
+.TabBar {
+    border: 0.025rem solid #01BF90;
+}
+
+.TabTitle {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    color: #01BF90;
+    font-weight: bold;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.TabTitle.ActiveTab {
+    color: white;
+    background-color: #01BF90;
+    text-decoration: none;
+}
+
+.TabsBody {
+    border: 0.025rem solid #01BF90;
+    border-top: none;
+    padding: 0.25rem 1rem;
+}
+

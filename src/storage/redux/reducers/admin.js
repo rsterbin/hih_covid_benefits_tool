@@ -62,6 +62,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_STARTED: return deploys.adminSaveNewDeploymentStarted(state, action);
         case actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_FAILED: return deploys.adminSaveNewDeploymentFailed(state, action);
         case actionTypes.ADMIN_SAVE_NEW_DEPLOYMENT_SUCCEEDED: return deploys.adminSaveNewDeploymentSucceeded(state, action);
+        case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_STARTED: return deploys.adminCompareDeploymentsStarted(state, action);
+        case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_FAILED: return deploys.adminCompareDeploymentsFailed(state, action);
+        case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_SUCCEEDED: return deploys.adminCompareDeploymentsSucceeded(state, action);
+        case actionTypes.ADMIN_COMPARE_DEPLOYMENTS_RESET: return deploys.adminCompareDeploymentsReset(state, action);
 
         // Language
         case actionTypes.ADMIN_FETCH_LANG_LIST_STARTED: return language.adminFetchLangListStarted(state, action);

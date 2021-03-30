@@ -1,0 +1,22 @@
+.RawData {
+    border: 0.025rem dotted teal;
+}
+
+.RawData .RawTitle {
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    background-color: lightgray;
+    padding: 0.5rem;
+}
+
+button.mockLink.CloseRaw {
+    text-decoration: none;
+    color: teal;
+    margin-left: 0.5rem;
+}
+
+.RawData .RawBody {
+    padding: 0.5rem;
+}
+

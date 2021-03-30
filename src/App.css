@@ -6,3 +6,23 @@ body {
     padding: 0;
 }
 
+body * {
+    box-sizing: border-box;
+}
+
+button.mockLink {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    padding: 0;
+    text-decoration: underline;
+    color: inherit;
+    cursor: pointer;
+}
+
+button.mockLink:focus {
+  outline: none;
+  box-shadow: none;
+  background: inherit;
+}
+
