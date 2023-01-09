@@ -11,7 +11,7 @@
     "axios": "^0.21.1",
     "d3-scale-chromatic": "^2.0.0",
     "email-validator": "^2.0.4",
-    "luxon": "^1.24.1",
+    "luxon": "^2.5.2",
     "markdown-it": "^12.3.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
